@@ -97,6 +97,14 @@ class Validator {
   }
 
   /**
+   * @param {any} value
+   */
+  throwWhenNotSupportedValidatorTypeError_(value) {
+    if (![Validator, ComplexValidator].includes(value.constructor))
+      throw new Error(`Type ${typeof value} with ${value.constructor} constructor is not supported by validator`)
+  }
+
+  /**
    * @param {BaseType} type - A type.
    */
   constructor(type) {
@@ -115,7 +123,7 @@ class Validator {
    * @param {object} input
    * @param {Object.<string, Validator | ComplexValidator>} propertiesConstraint
    * 
-   * @returns {boolean}.
+   * @returns {boolean}
    */
   withRequiredProperties_(input, propertiesConstraint) {
     for (let requiredProperty in propertiesConstraint) {
@@ -140,7 +148,7 @@ class Validator {
    * @param {object} input
    * @param {Object.<string, Validator | ComplexValidator>} propertiesConstraint
    * 
-   * @returns {boolean}.
+   * @returns {boolean}
    */
   withOptionalProperties_(input, propertiesConstraint) {
     for (let optionalProperty in propertiesConstraint) {
@@ -155,6 +163,24 @@ class Validator {
         this.throwWhenNotTrue_(validator)
     }
 
+    return true
+  }
+
+  /**
+   * @param {object} input
+   * @param {Validator | ComplexValidator} propertiesConstraint
+   * 
+   * @returns {boolean}
+   */
+  withAdditionalProperties_(input, propertiesConstraint) {
+    const additionalProperties = Object.keys(input).filter(property => {
+      return !this.requiredProperties_.includes(property) && !this.optionalProperties_.includes(property)
+    })
+
+    for (let additionalProperty of additionalProperties)
+      if (!propertiesConstraint.validate(input[additionalProperty]))
+        return false
+    
     return true
   }
 
@@ -464,6 +490,21 @@ class Validator {
     this.predicateDescriptions_.push(`with optional properties: (${nestedDescriptions.join(", ")})`)
 
     this.predicates_.push(input => this.withOptionalProperties_(input, propertiesConstraint))
+    return this
+  }
+
+  /**
+   * Require value to have additional properties those satisfy their constraints.
+   * 
+   * @param {Validator | ComplexValidator} propertiesConstraint - A constraint.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withAdditionalProperties(propertiesConstraint) {
+    this.throwWhenNotCompatibleTypeWithObjectComparison_()
+    this.throwWhenNotSupportedValidatorTypeError_(propertiesConstraint)
+    this.predicates_.push(input => this.withAdditionalProperties_(input, propertiesConstraint))
+    this.predicateDescriptions_.push(`with additional properties: (${propertiesConstraint.description})`)
     return this
   }
 
