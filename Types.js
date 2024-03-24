@@ -19,7 +19,7 @@
 /**
  * A basic type.
  * 
- * @typedef {"boolean" | "number" | "string" | "bigint" | "object"} BaseType
+ * @typedef {"boolean" | "number" | "string" | "bigint" | "array" | "object"} BaseType
  */
 
 /**

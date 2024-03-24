@@ -35,6 +35,15 @@ function isBigint() {
 }
 
 /**
+ * Require value to be array.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isArray() {
+  return new Validator("array")
+}
+
+/**
  * Require value to be object.
  * 
  * @returns {Validator} - The validator.

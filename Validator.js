@@ -6,7 +6,7 @@ class Validator {
    * @param {string} type
    */
   throwWhenNotSupportedTypeError_(type) {
-    if (!["bigint", "boolean", "number", "object", "string"].includes(type))
+    if (!["bigint", "boolean", "number", "object", "string", "array"].includes(type))
       throw new Error(`Type ${type} is not supported by validator`)
   }
 
@@ -104,6 +104,11 @@ class Validator {
       throw new Error(`Type ${typeof value} with ${value.constructor} constructor is not supported by validator`)
   }
 
+  throwWhenNotCompatibleTypeWithArrayComparison_() {
+    if (!this.isArray)
+      throw new Error(`Type ${this.type} is not compatible with array comparison`)
+  }
+
   /**
    * @param {BaseType} type - A type.
    */
@@ -112,11 +117,18 @@ class Validator {
 
     this.type = type
     this.predicates_ = [input => typeof input === this.type]
+    this.isArray = false
+    this.predicateDescriptions_ = [`is ${this.type}`]
+
+    if (type === "array") {
+      this.type = "object"
+      this.predicates_ = [input => Array.isArray(input)]
+      this.isArray = true
+      this.predicateDescriptions_ = ["is array"]
+    }
 
     this.requiredProperties_ = []
     this.optionalProperties_ = []
-
-    this.predicateDescriptions_ = [`is ${this.type}`]
   }
 
   /**
@@ -180,7 +192,7 @@ class Validator {
     for (let additionalProperty of additionalProperties)
       if (!propertiesConstraint.validate(input[additionalProperty]))
         return false
-    
+
     return true
   }
 
@@ -442,6 +454,29 @@ class Validator {
     this.throwWhenNotRegExp_(constraint)
     this.predicates_.push(input => !constraint.test(input))
     this.predicateDescriptions_.push(`not matching ${constraint} pattern`)
+    return this
+  }
+
+  /**
+   * Require value to have items those satisfy their constraints.
+   * 
+   * @param {Validator | ComplexValidator} itemsConstraint - A constraint.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItems(itemsConstraint) {
+    this.throwWhenNotCompatibleTypeWithArrayComparison_()
+    this.throwWhenNotObject_(typeof itemsConstraint)
+
+    this.predicates_.push(input => {
+      for (let item of input)
+        if (!itemsConstraint.validate(item))
+          return false
+      
+      return true
+    })
+
+    this.predicateDescriptions_.push(`with items: (${itemsConstraint.description})`)
     return this
   }
 
