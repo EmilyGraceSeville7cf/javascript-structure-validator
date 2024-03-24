@@ -91,6 +91,11 @@ class Validator {
       throw new Error(`Object can't be of ${type} type`)
   }
 
+  throwWhenRequiredAndOptionPropertiesIntersect_() {
+    if (this.requiredProperties_.filter(property => this.optionalProperties_.includes(property)).length !== 0)
+      throw new Error("Required and optional properties can't intersect")
+  }
+
   /**
    * @param {BaseType} type - A type.
    */
@@ -428,6 +433,8 @@ class Validator {
     for (let requiredProperty in propertiesConstraint)
       this.requiredProperties_.push(requiredProperty)
 
+    this.throwWhenRequiredAndOptionPropertiesIntersect_()
+
     const nestedDescriptions = []
     Object.keys(propertiesConstraint).forEach(property => nestedDescriptions.push(`${property}: ${propertiesConstraint[property].description}`))
     this.predicateDescriptions_.push(`with required properties: (${nestedDescriptions.join(", ")})`)
@@ -449,6 +456,8 @@ class Validator {
 
     for (let optionalProperty in propertiesConstraint)
       this.optionalProperties_.push(optionalProperty)
+
+    this.throwWhenRequiredAndOptionPropertiesIntersect_()
 
     const nestedDescriptions = []
     Object.keys(propertiesConstraint).forEach(property => nestedDescriptions.push(`${property}: ${propertiesConstraint[property].description}`))
