@@ -468,7 +468,7 @@ class Validator {
   }
 
   /**
-   * Require value to doesn't have additional properties except ones specified via withRequiredProperties.
+   * Require value to doesn't have additional properties except ones specified via withRequiredProperties and withOptionalProperties.
    * 
    * @returns {Validator} - The current validator.
    */
