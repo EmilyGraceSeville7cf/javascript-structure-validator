@@ -433,8 +433,10 @@ Basic validator.
   - [validator.throwWhenNotTrue\_(value)](#validatorthrowwhennottrue_value)
   - [validator.throwWhenNotValidatorTypeError\_(value)](#validatorthrowwhennotvalidatortypeerror_value)
   - [validator.throwWhenNotFunction\_(type)](#validatorthrowwhennotfunction_type)
+  - [validator.throwWhenNotSupportedValidatorTypeError\_(value)](#validatorthrowwhennotsupportedvalidatortypeerror_value)
   - [validator.withRequiredProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithrequiredproperties_input-propertiesconstraint--boolean)
   - [validator.withOptionalProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithoptionalproperties_input-propertiesconstraint--boolean)
+  - [validator.withAdditionalProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithadditionalproperties_input-propertiesconstraint--boolean)
   - [validator.lessThan(constraint) ⇒ Validator](#validatorlessthanconstraint--validator)
   - [validator.greaterThan(constraint) ⇒ Validator](#validatorgreaterthanconstraint--validator)
   - [validator.lessThanOrEqualTo(constraint) ⇒ Validator](#validatorlessthanorequaltoconstraint--validator)
@@ -455,6 +457,7 @@ Basic validator.
   - [validator.notMatching(constraint) ⇒ Validator](#validatornotmatchingconstraint--validator)
   - [validator.withRequiredProperties(propertiesConstraint) ⇒ Validator](#validatorwithrequiredpropertiespropertiesconstraint--validator)
   - [validator.withOptionalProperties(propertiesConstraint) ⇒ Validator](#validatorwithoptionalpropertiespropertiesconstraint--validator)
+  - [validator.withAdditionalProperties(propertiesConstraint) ⇒ Validator](#validatorwithadditionalpropertiespropertiesconstraint--validator)
   - [validator.notWithAdditionalProperties() ⇒ Validator](#validatornotwithadditionalproperties--validator)
   - [validator.withPropertyCountLessThan(constraint) ⇒ Validator](#validatorwithpropertycountlessthanconstraint--validator)
   - [validator.withPropertyCountGreaterThan(constraint) ⇒ Validator](#validatorwithpropertycountgreaterthanconstraint--validator)
@@ -574,11 +577,19 @@ A description.
 | ----- | ------------------- |
 | type  | <code>string</code> |
 
+<a name="Validator+throwWhenNotSupportedValidatorTypeError_"></a>
+
+### validator.throwWhenNotSupportedValidatorTypeError\_(value)
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+
+| Param | Type             |
+| ----- | ---------------- |
+| value | <code>any</code> |
+
 <a name="Validator+withRequiredProperties_"></a>
 
 ### validator.withRequiredProperties\_(input, propertiesConstraint) ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: <code>boolean</code> - .  
 
 | Param                | Type                                                              |
 | -------------------- | ----------------------------------------------------------------- |
@@ -589,12 +600,21 @@ A description.
 
 ### validator.withOptionalProperties\_(input, propertiesConstraint) ⇒ <code>boolean</code>
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: <code>boolean</code> - .  
 
 | Param                | Type                                                              |
 | -------------------- | ----------------------------------------------------------------- |
 | input                | <code>object</code>                                               |
 | propertiesConstraint | <code>Object.&lt;string, (Validator\|ComplexValidator)&gt;</code> |
+
+<a name="Validator+withAdditionalProperties_"></a>
+
+### validator.withAdditionalProperties\_(input, propertiesConstraint) ⇒ <code>boolean</code>
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+
+| Param                | Type                                                                  |
+| -------------------- | --------------------------------------------------------------------- |
+| input                | <code>object</code>                                                   |
+| propertiesConstraint | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> |
 
 <a name="Validator+lessThan"></a>
 
@@ -840,10 +860,22 @@ Require value to have all optional properties and satisfy their constraints.
 | -------------------- | --------------------------------------------- | ------------- |
 | propertiesConstraint | <code>Object.&lt;string, Validator&gt;</code> | A constraint. |
 
+<a name="Validator+withAdditionalProperties"></a>
+
+### validator.withAdditionalProperties(propertiesConstraint) ⇒ [<code>Validator</code>](#Validator)
+Require value to have additional properties those satisfy their constraints.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param                | Type                                                                  | Description   |
+| -------------------- | --------------------------------------------------------------------- | ------------- |
+| propertiesConstraint | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> | A constraint. |
+
 <a name="Validator+notWithAdditionalProperties"></a>
 
 ### validator.notWithAdditionalProperties() ⇒ [<code>Validator</code>](#Validator)
-Require value to doesn't have additional properties except ones specified via withRequiredProperties.
+Require value to doesn't have additional properties except ones specified via withRequiredProperties and withOptionalProperties.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
