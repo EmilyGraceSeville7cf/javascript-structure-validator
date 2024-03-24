@@ -1,4 +1,4 @@
-# Presentation generator
+# Structure validator
 
 [![documentation](https://img.shields.io/badge/Documentation-open-blue)](./Documentation.md)
 [![editor](https://img.shields.io/badge/Web%20editor-open-red)](https://script.google.com/d/1qEHq1x99G4OOAWbchj3emkcBk3bgdOWvMrzqp597FxHS_8mezPm9X18F/edit?usp=sharing)
