@@ -32,15 +32,6 @@ class ComplexValidator {
   }
 
   /**
-   * A description.
-   * 
-   * @type {string}
-   */
-  get description() {
-    return `${this.mode.description}: [${this.validators.map(validator => validator.description).join(", ")}]`
-  }
-
-  /**
    * Check whether an input value satisfies all conditions.
    * 
    * @param {any} input - An input to validate.
@@ -59,5 +50,23 @@ class ComplexValidator {
       case Mode.ALL_OF:
         return results.all(result => result === true)
     }
+  }
+
+  /**
+   * A description.
+   * 
+   * @type {string}
+   */
+  get description() {
+    return `${this.mode.description}: [${this.validators.map(validator => validator.description).join(", ")}]`
+  }
+
+  /**
+   * Converts object to string.
+   * 
+   * @returns {string} - A string representation.
+   */
+  toString() {
+    return this.description
   }
 }

@@ -3,117 +3,117 @@
  */
 class Validator {
   /**
-   * @param {string} type
+   * @param {BaseType} type
    */
-  throwWhenNotSupportedTypeError_(type) {
-    if (!["bigint", "boolean", "number", "object", "string", "array"].includes(type))
-      throw new Error(`Type ${type} is not supported by validator`)
+  requireSomeTypeMessage_(type) {
+    const validationType = this.isArray ? "array" : this.type
+    return `Constraint for ${validationType} is expected, but constraint for ${type} is met, use another is* function at the beginning to set it`
   }
 
-  /**
-   * @param {string} type
-   */
-  throwWhenNotCompatibleTypes_(type) {
-    if (type !== this.type)
-      throw new Error(`Types ${type} and ${this.type} are not compatible`)
-  }
-
-  throwWhenNotCompatibleTypeWithStringComparison_() {
+  requireStringType_() {
     if (this.type !== "string")
-      throw new Error(`Type ${this.type} is not compatible with string comparison`)
+      throw new Error(this.requireSomeTypeMessage_("string"))
   }
 
-  /**
-   * @param {string} type
-   */
-  throwWhenNotNumber_(type) {
-    if (type !== "number")
-      throw new Error(`Length can't be of ${type} type`)
-  }
-
-  throwWhenNotCompatibleTypeWithObjectComparison_() {
+  requireObjectType_() {
     if (this.type !== "object")
-      throw new Error(`Type ${this.type} is not compatible with object comparison`)
+      throw new Error(this.requireSomeTypeMessage_("object"))
   }
 
-  /**
-   * @param {string} type
-   */
-  throwWhenNotObject_(type) {
-    if (type !== "object")
-      throw new Error(`Object can't be of ${type} type`)
+  requireArrayType_() {
+    if (!this.isArray)
+      throw new Error(this.requireSomeTypeMessage_("array"))
   }
 
-  throwWhenNoRequiredProperties_() {
-    if (this.requiredProperties_.length === 0 && this.optionalProperties_.length === 0 && this.requiredPatternProperties.length === 0)
-      throw new Error(`Object can't require no additional properties with no properties defined`)
+  requirePropertiesSet_() {
+    if (this.type === "object" && this.requiredProperties_.length === 0 && this.optionalProperties_.length === 0)
+      throw new Error("Required or optional properties are expected to be defined")
   }
 
-  /**
-   * @param {any} value
-   */
-  throwWhenNotRegExp_(value) {
-    if (typeof value !== "object" && value.constructor !== RegExp)
-      throw new Error(`Object can't be of ${typeof value} type with ${value.constructor} constructor`)
-  }
-
-  /**
-   * @param {any} value
-   */
-  throwWhenNotTrue_(value) {
-    if (value !== true)
-      throw new Error(`Boolean can't be of anything except true`)
-  }
-
-  /**
-   * @param {any} value
-   */
-  throwWhenNotValidatorTypeError_(value) {
-    if (![Validator, ComplexValidator].includes(value.constructor))
-      throw new Error(`Type ${typeof value} with ${value.constructor} constructor is not supported by validator`)
-  }
-
-  throwWhenNotObjectFromGetter_() {
+  requireObjectTypeForGetter_() {
     if (this.type !== "object")
       throw new Error(`Getter can't be accessed when ${this.type} type is set`)
   }
 
-  throwWhenNotPropertiesSetError_() {
-    if (this.type === "object" && this.requiredProperties_.length === 0 && this.optionalProperties_.length === 0)
-      throw new Error("Conditions can't be set when no properties are set")
-  }
-
-  /**
-   * @param {string} type
-   */
-  throwWhenNotFunction_(type) {
-    if (type !== "function")
-      throw new Error(`Object can't be of ${type} type`)
-  }
-
-  throwWhenRequiredAndOptionPropertiesIntersect_() {
+  requireRequiredPropertiesAndOptionalNotIntersect_() {
     if (this.requiredProperties_.filter(property => this.optionalProperties_.includes(property)).length !== 0)
       throw new Error("Required and optional properties can't intersect")
   }
 
   /**
-   * @param {any} value
+   * @param {string} input
    */
-  throwWhenNotSupportedValidatorTypeError_(value) {
-    if (![Validator, ComplexValidator].includes(value.constructor))
-      throw new Error(`Type ${typeof value} with ${value.constructor} constructor is not supported by validator`)
+  throwWhenInputTypeIsNotCompatible_(input) {
+    if (typeof input !== this.type)
+      throw new Error(`Types ${typeof input} and ${this.type} are not compatible, value of ${this.type} is expected (actual value: ${input})`)
   }
 
-  throwWhenNotCompatibleTypeWithArrayComparison_() {
-    if (!this.isArray)
-      throw new Error(`Type ${this.type} is not compatible with array comparison`)
+  /**
+   * @param {string} value
+   */
+  requireCount_(value) {
+    if (typeof value !== "number" || value < 0)
+      throw new Error(`Count can't be ${typeof value} or negative number (actual value: ${value})`)
+  }
+
+  /**
+   * @param {any} value
+   */
+  requirePattern_(value) {
+    if (value.constructor !== RegExp)
+      throw new Error(`Pattern of RegExp type is expected (actual constructor: ${value.constructor})`)
+  }
+
+  /**
+   * @param {any} value
+   */
+  requireTrue_(value) {
+    if (value !== true)
+      throw new Error(`true value is expected for property without any constraint (actual value: ${value})`)
+  }
+
+  /**
+   * @param {any} from
+   * @param {any} to
+   */
+  requireRange_(from, to) {
+    this.requireCount_(from)
+    this.requireCount_(to)
+
+    if (from > to)
+      throw new Error(`Range [${to}..${from}] is expected, swap boundaries (actual range: [${from}..${to}])`)
+  }
+
+  /**
+   * @param {any} value
+   */
+  requireValidator_(value) {
+    if (![Validator, ComplexValidator].includes(value.constructor))
+      throw new Error(`Validator of Validator or ComplexValidator type is expected (actual constructor: ${value.constructor})`)
+  }
+
+  /**
+   * @param {any} value
+   */
+  requireProperties_(value) {
+    if (typeof value !== "object")
+      throw new Error(`Property definitions presented as object are expected (actual value: ${value})`)
+  }
+
+  /**
+   * @param {string} value
+   */
+  requirePredicate_(value) {
+    if (typeof value !== "function")
+      throw new Error(`Object can't be of ${typeof value} type`)
   }
 
   /**
    * @param {BaseType} type - A type.
    */
   constructor(type) {
-    this.throwWhenNotSupportedTypeError_(type)
+    if (!["bigint", "boolean", "number", "object", "string", "array"].includes(type))
+      throw new TypeError(`Type ${type} is not supported by validator`)
 
     this.type = type
     this.predicates_ = [input => typeof input === this.type]
@@ -129,53 +129,6 @@ class Validator {
 
     this.requiredProperties_ = []
     this.optionalProperties_ = []
-  }
-
-  /**
-   * @param {object} input
-   * @param {Object.<string, Validator | ComplexValidator>} propertiesConstraint
-   * 
-   * @returns {boolean}
-   */
-  withRequiredProperties_(input, propertiesConstraint) {
-    for (let requiredProperty in propertiesConstraint) {
-      if (!input.hasOwnProperty(requiredProperty))
-        return false
-
-      let validator = propertiesConstraint[requiredProperty]
-
-      if (typeof validator !== "boolean") {
-        this.throwWhenNotValidatorTypeError_(validator)
-
-        if (!validator.validate(input[requiredProperty]))
-          return false
-      } else
-        this.throwWhenNotTrue_(validator)
-    }
-
-    return true
-  }
-
-  /**
-   * @param {object} input
-   * @param {Object.<string, Validator | ComplexValidator>} propertiesConstraint
-   * 
-   * @returns {boolean}
-   */
-  withOptionalProperties_(input, propertiesConstraint) {
-    for (let optionalProperty in propertiesConstraint) {
-      let validator = propertiesConstraint[optionalProperty]
-
-      if (typeof validator !== "boolean") {
-        this.throwWhenNotValidatorTypeError_(validator)
-
-        if (input.hasOwnProperty(optionalProperty) && !validator.validate(input[optionalProperty]))
-          return false
-      } else
-        this.throwWhenNotTrue_(validator)
-    }
-
-    return true
   }
 
   /**
@@ -197,359 +150,585 @@ class Validator {
   }
 
   /**
-   * Require value to be less than a constraint.
+   * Require value to be less than a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  lessThan(constraint) {
-    this.throwWhenNotCompatibleTypes_(typeof constraint)
-    this.predicates_.push(input => input < constraint)
-    this.predicateDescriptions_.push(`less than ${constraint}`)
+  lessThan(constant) {
+    this.throwWhenInputTypeIsNotCompatible_(constant)
+
+    this.predicates_.push(input => input < constant)
+    this.predicateDescriptions_.push(`less than ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to be greater than a constraint.
+   * Require value to be greater than a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  greaterThan(constraint) {
-    this.throwWhenNotCompatibleTypes_(typeof constraint)
-    this.predicates_.push(input => input > constraint)
-    this.predicateDescriptions_.push(`greater than ${constraint}`)
+  greaterThan(constant) {
+    this.throwWhenInputTypeIsNotCompatible_(constant)
+
+    this.predicates_.push(input => input > constant)
+    this.predicateDescriptions_.push(`greater than ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to be less than or equal to a constraint.
+   * Require value to be less than or equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  lessThanOrEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypes_(typeof constraint)
-    this.predicates_.push(input => input <= constraint)
-    this.predicateDescriptions_.push(`less than or equal to ${constraint}`)
+  lessThanOrEqualTo(constant) {
+    this.throwWhenInputTypeIsNotCompatible_(constant)
+
+    this.predicates_.push(input => input <= constant)
+    this.predicateDescriptions_.push(`less than or equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to be greater than or equal to a constraint.
+   * Require value to be greater than or equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  greaterThanOrEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypes_(typeof constraint)
-    this.predicates_.push(input => input >= constraint)
-    this.predicateDescriptions_.push(`greater than or equal to ${constraint}`)
+  greaterThanOrEqualTo(constant) {
+    this.throwWhenInputTypeIsNotCompatible_(typeof constant)
+
+    this.predicates_.push(input => input >= constant)
+    this.predicateDescriptions_.push(`greater than or equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to be equal to a constraint.
+   * Require value to be equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  equalTo(constraint) {
-    this.throwWhenNotCompatibleTypes_(typeof constraint)
-    this.predicates_.push(input => input === constraint)
-    this.predicateDescriptions_.push(`equal to ${constraint}`)
+  equalTo(constant) {
+    this.throwWhenInputTypeIsNotCompatible_(constant)
+
+    this.predicates_.push(input => input === constant)
+    this.predicateDescriptions_.push(`equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to be not equal to a constraint.
+   * Require value to be not equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  notEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypes_(typeof constraint)
-    this.predicates_.push(input => input !== constraint)
-    this.predicateDescriptions_.push(`not equal to ${constraint}`)
+  notEqualTo(constant) {
+    this.throwWhenInputTypeIsNotCompatible_(constant)
+
+    this.predicates_.push(input => input !== constant)
+    this.predicateDescriptions_.push(`not equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to be within a constraint range.
+   * Require value to be within a range.
    * 
-   * @param {BaseComparableType} fromConstraint - A lowest constraint.
-   * @param {BaseComparableType} toConstraint - A highest constraint.
+   * @param {BaseComparableType} from - A lowest boundary.
+   * @param {BaseComparableType} to - A highest boundary.
    * 
    * @returns {Validator} - The current validator.
    */
-  inRange(fromConstraint, toConstraint) {
-    return this.greaterThanOrEqualTo(fromConstraint).lessThanOrEqualTo(toConstraint)
-  }
+  inRange(from, to) {
+    this.throwWhenInputTypeIsNotCompatible_(from)
+    this.throwWhenInputTypeIsNotCompatible_(to)
 
-  /**
-   * Require value to be outside of a constraint range.
-   * 
-   * @param {BaseComparableType} fromConstraint - A lowest constraint.
-   * @param {BaseComparableType} toConstraint - A highest constraint.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  notInRange(fromConstraint, toConstraint) {
-    this.throwWhenNotCompatibleTypes_(typeof fromConstraint)
-    this.throwWhenNotCompatibleTypes_(typeof toConstraint)
-    this.predicates_.push(input => input < fromConstraint || input > toConstraint)
-    this.predicateDescriptions_.push(`less than ${fromConstraint} || greater than ${toConstraint}`)
+    this.predicates_.push(input => input >= from && input <= to)
+    this.predicateDescriptions_.push(`in [${from}..${to}] range`)
+
     return this
   }
 
   /**
-   * Require value length to be shorter than a constraint.
+   * Require value to be outside of a range.
    * 
-   * @param {number} constraint - A constraint.
+   * @param {BaseComparableType} from - A lowest boundary.
+   * @param {BaseComparableType} to - A highest boundary.
    * 
    * @returns {Validator} - The current validator.
    */
-  shorterThan(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => input.length < constraint)
-    this.predicateDescriptions_.push(`shorter than ${constraint}`)
+  notInRange(from, to) {
+    this.throwWhenInputTypeIsNotCompatible_(from)
+    this.throwWhenInputTypeIsNotCompatible_(to)
+
+    this.predicates_.push(input => input < from || input > to)
+    this.predicateDescriptions_.push(`not in [${from}..${to}] range`)
+
     return this
   }
 
   /**
-   * Require value length to be longer than a constraint.
+   * Require length to be shorter than a constant.
    * 
-   * @param {number} constraint - A constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  longerThan(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => input.length > constraint)
-    this.predicateDescriptions_.push(`longer than ${constraint}`)
+  withLengthLessThan(count) {
+    this.requireStringType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length < count)
+    this.predicateDescriptions_.push(`shorter than ${count}`)
+
     return this
   }
 
   /**
-   * Require value length to be shorter than or is a constraint.
+   * Require length to be longer than a constant.
    * 
-   * @param {number} constraint - A constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  shorterThanOrIs(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => input.length <= constraint)
-    this.predicateDescriptions_.push(`shorter than or is ${constraint}`)
+  withLengthGreaterThan(count) {
+    this.requireStringType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length > count)
+    this.predicateDescriptions_.push(`longer than ${count}`)
+
     return this
   }
 
   /**
-   * Require value length to be longer than or is a constraint.
+   * Require length to be shorter than or is a constant.
    * 
-   * @param {number} constraint - A constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  longerThanOrIs(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => input.length >= constraint)
-    this.predicateDescriptions_.push(`longer than or is ${constraint}`)
+  withLengthLessThanOrEqualTo(count) {
+    this.requireStringType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length <= count)
+    this.predicateDescriptions_.push(`shorter than or is ${count}`)
+
     return this
   }
 
   /**
-   * Require value length to be a constraint.
+   * Require length to be longer than or is a constant.
    * 
-   * @param {number} constraint - A constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withLength(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => input.length === constraint)
-    this.predicateDescriptions_.push(`with length equal to ${constraint}`)
+  withLengthGreaterThanOrEqualTo(count) {
+    this.requireStringType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length >= count)
+    this.predicateDescriptions_.push(`longer than or is ${count}`)
+
     return this
   }
 
   /**
-   * Require value length to be not a constraint.
+   * Require length to be equal to a constant.
    * 
-   * @param {number} constraint - A constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  notWithLength(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => input.length !== constraint)
-    this.predicateDescriptions_.push(`with length not equal to ${constraint}`)
+  withLengthEqualTo(count) {
+    this.requireStringType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length === count)
+    this.predicateDescriptions_.push(`with length equal to ${count}`)
+
     return this
   }
 
   /**
-   * Require value length to be within a constraint range.
+   * Require length not to be equal to a constant.
    * 
-   * @param {number} fromConstraint - A lowest constraint.
-   * @param {number} toConstraint - A highest constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withLengthInRange(fromConstraint, toConstraint) {
-    return this.longerThanOrIs(fromConstraint).shorterThanOrIs(toConstraint)
-  }
+  withLengthNotEqualTo(count) {
+    this.requireStringType_()
+    this.requireCount_(count)
 
-  /**
-   * Require value length to be outside of a constraint range.
-   * 
-   * @param {number} fromConstraint - A lowest constraint.
-   * @param {number} toConstraint - A highest constraint.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  notWithLengthInRange(fromConstraint, toConstraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotNumber_(typeof fromConstraint)
-    this.throwWhenNotNumber_(typeof toConstraint)
-    this.predicates_.push(input => input.length < fromConstraint || input.length > toConstraint)
-    this.predicateDescriptions_.push(`shorter than ${fromConstraint} || longer than ${toConstraint}`)
+    this.predicates_.push(input => input.length !== count)
+    this.predicateDescriptions_.push(`with length not equal to ${count}`)
+
     return this
   }
 
   /**
-   * Require value to match a constraint.
+   * Require length to be within a range.
    * 
-   * @param {RegExp} constraint - A constraint.
+   * @param {number} from - A lowest boundary.
+   * @param {number} to - A highest boundary.
    * 
    * @returns {Validator} - The current validator.
    */
-  matching(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotRegExp_(constraint)
-    this.predicates_.push(input => constraint.test(input))
-    this.predicateDescriptions_.push(`matching ${constraint} pattern`)
+  withLengthInRange(from, to) {
+    this.requireStringType_()
+    this.requireRange_(from, to)
+
+    this.predicates_.push(input => input.length >= from && input.length <= to)
+    this.predicateDescriptions_.push(`with length in [${from}..${to}] range`)
+
     return this
   }
 
   /**
-   * Require value not to match a constraint.
+   * Require length to be outside of a range.
    * 
-   * @param {RegExp} constraint - A constraint.
+   * @param {number} from - A lowest boundary.
+   * @param {number} to - A highest boundary.
    * 
    * @returns {Validator} - The current validator.
    */
-  notMatching(constraint) {
-    this.throwWhenNotCompatibleTypeWithStringComparison_()
-    this.throwWhenNotRegExp_(constraint)
-    this.predicates_.push(input => !constraint.test(input))
-    this.predicateDescriptions_.push(`not matching ${constraint} pattern`)
+  withLengthNotInRange(from, to) {
+    this.requireStringType_()
+    this.requireRange_(from, to)
+
+    this.predicates_.push(input => input.length < from || input.length > to)
+    this.predicateDescriptions_.push(`with length not in [${from}..${to}] range`)
+
     return this
   }
 
   /**
-   * Require value to have items those satisfy their constraints.
+   * Require value to match a regular expression.
    * 
-   * @param {Validator | ComplexValidator} itemsConstraint - A constraint.
+   * @param {RegExp} regex - A regular expression.
    * 
    * @returns {Validator} - The current validator.
    */
-  withItems(itemsConstraint) {
-    this.throwWhenNotCompatibleTypeWithArrayComparison_()
-    this.throwWhenNotObject_(typeof itemsConstraint)
+  matching(regex) {
+    this.requireStringType_()
+    this.requirePattern_(regex)
+
+    this.predicates_.push(input => regex.test(input))
+    this.predicateDescriptions_.push(`matching ${regex} pattern`)
+
+    return this
+  }
+
+  /**
+   * Require value not to match a regular expression.
+   * 
+   * @param {RegExp} regex - A regular expression.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  notMatching(regex) {
+    this.requireStringType_()
+    this.requirePattern_(regex)
+
+    this.predicates_.push(input => !regex.test(input))
+    this.predicateDescriptions_.push(`not matching ${regex} pattern`)
+
+    return this
+  }
+
+  /**
+   * Require items to satisfy their constraints.
+   * 
+   * @param {Validator | ComplexValidator} items - Constraints.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItems(items) {
+    this.requireArrayType_()
+    this.requireValidator_(items)
 
     this.predicates_.push(input => {
       for (let item of input)
-        if (!itemsConstraint.validate(item))
+        if (!items.validate(item))
           return false
-      
+
       return true
     })
 
-    this.predicateDescriptions_.push(`with items: (${itemsConstraint.description})`)
+    this.predicateDescriptions_.push(`with items: ${items.description}`)
+
     return this
   }
 
   /**
-   * Require value to have all required properties and satisfy their constraints.
+   * Require item count to be less than a constant.
    * 
-   * @param {Object.<string, Validator>} propertiesConstraint - A constraint.
+   * @param {number} count - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withRequiredProperties(propertiesConstraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotObject_(typeof propertiesConstraint)
+  withItemCountLessThan(count) {
+    this.requireArrayType_()
+    this.requireCount_(count)
 
-    for (let requiredProperty in propertiesConstraint)
+    this.predicates_.push(input => input.length < count)
+    this.predicateDescriptions_.push(`with item count less than ${count}`)
+
+    return this
+  }
+
+  /**
+   * Require item count to be greater than a constant.
+   * 
+   * @param {number} count - A constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountGreaterThan(count) {
+    this.requireArrayType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length > count)
+    this.predicateDescriptions_.push(`with item count less than ${count}`)
+
+    return this
+  }
+
+  /**
+   * Require item count to be less than or equal to a constant.
+   * 
+   * @param {number} count - A constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountLessThanOrEqualTo(count) {
+    this.requireArrayType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length <= count)
+    this.predicateDescriptions_.push(`with item count less than or equal to ${count}`)
+
+    return this
+  }
+
+  /**
+   * Require item count to be greater than or equal to a constant.
+   * 
+   * @param {number} count - A constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountGreaterThanOrEqualTo(count) {
+    this.requireArrayType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length >= count)
+    this.predicateDescriptions_.push(`with item count greater than or equal to ${count}`)
+
+    return this
+  }
+
+  /**
+   * Require item count to be equal to a constant.
+   * 
+   * @param {number} count - A constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountEqualTo(count) {
+    this.requireArrayType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length === count)
+    this.predicateDescriptions_.push(`with item count not equal to ${count}`)
+
+    return this
+  }
+
+  /**
+   * Require item count not to be equal to a constant.
+   * 
+   * @param {number} count - A constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountNotEqualTo(count) {
+    this.requireArrayType_()
+    this.requireCount_(count)
+
+    this.predicates_.push(input => input.length === count)
+    this.predicateDescriptions_.push(`with item count equal to ${count}`)
+
+    return this
+  }
+
+  /**
+   * Require length to be within a range.
+   * 
+   * @param {number} from - A lowest boundary.
+   * @param {number} to - A highest boundary.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountInRange(from, to) {
+    this.requireArrayType_()
+    this.requireRange_(from, to)
+
+    this.predicates_.push(input => input.length >= from && input.length <= to)
+    this.predicateDescriptions_.push(`with item count in [${from}..${to}] range`)
+
+    return this
+  }
+
+  /**
+   * Require length to be outside of a range.
+   * 
+   * @param {number} from - A lowest boundary.
+   * @param {number} to - A highest boundary.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withItemCountNotInRange(from, to) {
+    this.requireArrayType_()
+    this.requireRange_(from, to)
+
+    this.predicates_.push(input => input.length < from || input.length > to)
+    this.predicateDescriptions_.push(`with item count not in [${from}..${to}] range`)
+
+    return this
+  }
+
+  /**
+   * Require specified properties.
+   * 
+   * @param {Object.<string, Validator>} properties - A constraint.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withRequiredProperties(properties) {
+    this.requireObjectType_()
+    this.requireProperties_(properties)
+
+    for (let requiredProperty in properties)
       this.requiredProperties_.push(requiredProperty)
 
-    this.throwWhenRequiredAndOptionPropertiesIntersect_()
+    this.requireRequiredPropertiesAndOptionalNotIntersect_()
 
     const nestedDescriptions = []
-    Object.keys(propertiesConstraint).forEach(property => nestedDescriptions.push(`${property}: ${propertiesConstraint[property].description}`))
+    Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
     this.predicateDescriptions_.push(`with required properties: (${nestedDescriptions.join(", ")})`)
 
-    this.predicates_.push(input => this.withRequiredProperties_(input, propertiesConstraint))
+    this.predicates_.push(input => {
+      for (let requiredProperty in properties) {
+        if (!input.hasOwnProperty(requiredProperty))
+          return false
+
+        let validator = properties[requiredProperty]
+
+        if (typeof validator !== "boolean") {
+          this.requireValidator_(validator)
+
+          if (!validator.validate(input[requiredProperty]))
+            return false
+        } else
+          this.requireTrue_(validator)
+      }
+
+      return true
+    })
     return this
   }
 
   /**
-   * Require value to have all optional properties and satisfy their constraints.
+   * Permit specified optional properties.
    * 
-   * @param {Object.<string, Validator>} propertiesConstraint - A constraint.
+   * @param {Object.<string, Validator>} properties - A constraint.
    * 
    * @returns {Validator} - The current validator.
    */
-  withOptionalProperties(propertiesConstraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotObject_(typeof propertiesConstraint)
+  withOptionalProperties(properties) {
+    this.requireObjectType_()
+    this.requireProperties_(properties)
 
-    for (let optionalProperty in propertiesConstraint)
+    for (let optionalProperty in properties)
       this.optionalProperties_.push(optionalProperty)
 
-    this.throwWhenRequiredAndOptionPropertiesIntersect_()
+    this.requireRequiredPropertiesAndOptionalNotIntersect_()
 
     const nestedDescriptions = []
-    Object.keys(propertiesConstraint).forEach(property => nestedDescriptions.push(`${property}: ${propertiesConstraint[property].description}`))
+    Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
     this.predicateDescriptions_.push(`with optional properties: (${nestedDescriptions.join(", ")})`)
 
-    this.predicates_.push(input => this.withOptionalProperties_(input, propertiesConstraint))
+    this.predicates_.push(input => {
+      for (let optionalProperty in properties) {
+        let validator = properties[optionalProperty]
+
+        if (typeof validator !== "boolean") {
+          this.requireValidator_(validator)
+
+          if (input.hasOwnProperty(optionalProperty) && !validator.validate(input[optionalProperty]))
+            return false
+        } else
+          this.requireTrue_(validator)
+      }
+
+      return true
+    })
     return this
   }
 
   /**
-   * Require value to have additional properties those satisfy their constraints.
+   * Permit additional properties.
    * 
-   * @param {Validator | ComplexValidator} propertiesConstraint - A constraint.
+   * @param {Validator | ComplexValidator} properties - A constraint.
    * 
    * @returns {Validator} - The current validator.
    */
-  withAdditionalProperties(propertiesConstraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotSupportedValidatorTypeError_(propertiesConstraint)
-    this.predicates_.push(input => this.withAdditionalProperties_(input, propertiesConstraint))
-    this.predicateDescriptions_.push(`with additional properties: (${propertiesConstraint.description})`)
+  withAdditionalProperties(properties) {
+    this.requireObjectType_()
+    this.requireValidator_(properties)
+
+    this.predicates_.push(input => {
+      const additionalProperties = Object.keys(input).filter(property => {
+        return !this.requiredProperties_.includes(property) && !this.optionalProperties_.includes(property)
+      })
+
+      for (let additionalProperty of additionalProperties)
+        if (!properties.validate(input[additionalProperty]))
+          return false
+
+      return true
+    })
+    
+    this.predicateDescriptions_.push(`with additional properties: (${properties.description})`)
+
     return this
   }
 
   /**
-   * Require value to doesn't have additional properties except ones specified via withRequiredProperties and withOptionalProperties.
+   * Require no additional properties.
    * 
    * @returns {Validator} - The current validator.
    */
-  notWithAdditionalProperties() {
-    this.throwWhenNoRequiredProperties_()
+  withNotAdditionalProperties() {
+    this.requirePropertiesSet_()
 
     this.predicates_.push(input => {
       for (let inputProperty in input)
@@ -558,128 +737,153 @@ class Validator {
 
       return true
     })
+
     return this
   }
 
   /**
-   * Require value to contain property amount less than a constraint.
+   * Require property amount to be less than a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withPropertyCountLessThan(constraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => Object.keys(input).length < constraint)
-    this.predicateDescriptions_.push(`with property amount less than ${constraint}`)
+  withPropertyCountLessThan(constant) {
+    this.requireObjectType_()
+    this.requireCount_(constant)
+
+    this.predicates_.push(input => Object.keys(input).length < constant)
+    this.predicateDescriptions_.push(`with property amount less than ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to contain property amount greater than a constraint.
+   * Require property amount to be greater than a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withPropertyCountGreaterThan(constraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => Object.keys(input).length > constraint)
-    this.predicateDescriptions_.push(`with property amount greater than ${constraint}`)
+  withPropertyCountGreaterThan(constant) {
+    this.requireObjectType_()
+    this.requireCount_(constant)
+
+    this.predicates_.push(input => Object.keys(input).length > constant)
+    this.predicateDescriptions_.push(`with property amount greater than ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to contain property amount less than or equal to a constraint.
+   * Require property amount to be less than or equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withPropertyCountLessThanOrEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => Object.keys(input).length <= constraint)
-    this.predicateDescriptions_.push(`with property amount less than or equal to ${constraint}`)
+  withPropertyCountLessThanOrEqualTo(constant) {
+    this.requireObjectType_()
+    this.requireCount_(constant)
+
+    this.predicates_.push(input => Object.keys(input).length <= constant)
+    this.predicateDescriptions_.push(`with property amount less than or equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to contain property amount greater than or equal to a constraint.
+   * Require property amount to be greater than or equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withPropertyCountGreaterThanOrEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => Object.keys(input).length >= constraint)
-    this.predicateDescriptions_.push(`with property amount greater than or equal to ${constraint}`)
+  withPropertyCountGreaterThanOrEqualTo(constant) {
+    this.requireObjectType_()
+    this.requireCount_(constant)
+
+    this.predicates_.push(input => Object.keys(input).length >= constant)
+    this.predicateDescriptions_.push(`with property amount greater than or equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to contain property amount equal to a constraint.
+   * Require property amount to be equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  withPropertyCountEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => Object.keys(input).length === constraint)
-    this.predicateDescriptions_.push(`with property amount equal to ${constraint}`)
+  withPropertyCountEqualTo(constant) {
+    this.requireObjectType_()
+    this.requireCount_(constant)
+
+    this.predicates_.push(input => Object.keys(input).length === constant)
+    this.predicateDescriptions_.push(`with property amount equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value not to contain property amount equal to a constraint.
+   * Require property amount not to be equal to a constant.
    * 
-   * @param {BaseComparableType} constraint - A constraint.
+   * @param {BaseComparableType} constant - A constant.
    * 
    * @returns {Validator} - The current validator.
    */
-  notWithPropertyCountEqualTo(constraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof constraint)
-    this.predicates_.push(input => Object.keys(input).length !== constraint)
-    this.predicateDescriptions_.push(`with property amount not equal to ${constraint}`)
+  notWithPropertyCountEqualTo(constant) {
+    this.requireObjectType_()
+    this.requireCount_(constant)
+
+    this.predicates_.push(input => Object.keys(input).length !== constant)
+    this.predicateDescriptions_.push(`with property amount not equal to ${constant}`)
+
     return this
   }
 
   /**
-   * Require value to contain property amount within a constraint range.
+   * Require property amount to be within a range.
    * 
-   * @param {number} fromConstraint - A lowest constraint.
-   * @param {number} toConstraint - A highest constraint.
+   * @param {number} from - A lowest boundary.
+   * @param {number} to - A highest boundary.
    * 
    * @returns {Validator} - The current validator.
    */
-  withPropertyCountInRange(fromConstraint, toConstraint) {
-    return this.withPropertyCountGreaterThanOrEqualTo(fromConstraint).withPropertyCountLessThanOrEqualTo(toConstraint)
-  }
+  withPropertyCountInRange(from, to) {
+    this.requireObjectType_()
+    this.requireCount_(from)
+    this.requireCount_(to)
 
-  /**
-   * Require value to contain property amount outside of a constraint range.
-   * 
-   * @param {number} fromConstraint - A lowest constraint.
-   * @param {number} toConstraint - A highest constraint.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  notWithPropertyCountInRange(fromConstraint, toConstraint) {
-    this.throwWhenNotCompatibleTypeWithObjectComparison_()
-    this.throwWhenNotNumber_(typeof fromConstraint)
-    this.throwWhenNotNumber_(typeof toConstraint)
     this.predicates_.push(input => {
       const count = Object.keys(input).length
-      return count < fromConstraint || count > toConstraint
+      return count >= from && count <= to
     })
-    this.predicateDescriptions_.push(`with property amount less than ${fromConstraint} || greater than ${toConstraint}`)
+    this.predicateDescriptions_.push(`with property amount in [${from}..${to}] range`)
+    
+    return this
+  }
+
+  /**
+   * Require property amount to be outside of a range.
+   * 
+   * @param {number} from - A lowest boundary.
+   * @param {number} to - A highest boundary.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withPropertyCountNotInRange(from, to) {
+    this.requireObjectType_()
+    this.requireCount_(from)
+    this.requireCount_(to)
+
+    this.predicates_.push(input => {
+      const count = Object.keys(input).length
+      return count < from || count > to
+    })
+    this.predicateDescriptions_.push(`with property amount not in [${from}..${to}] range`)
+
     return this
   }
 
@@ -691,40 +895,11 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   where(predicate) {
-    this.throwWhenNotFunction_(typeof predicate)
-    this.throwWhenNotPropertiesSetError_()
+    this.requirePredicate_(predicate)
+    this.requirePropertiesSet_()
 
     this.predicates_.push(input => Object.values(predicate(input)).every(condition => condition === true))
     return this
-  }
-
-  /**
-   * Used for readability.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  and() {
-    return this
-  }
-
-  /**
-   * Used for readability.
-   * 
-   * @param {Object.<string, Validator>} propertiesConstraint - A constraint.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  with(propertiesConstraint) {
-    return this.withRequiredProperties(propertiesConstraint)
-  }
-
-  /**
-   * Used for readability.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  andNothingElse() {
-    return this.notWithAdditionalProperties()
   }
 
   /**
@@ -753,7 +928,7 @@ class Validator {
    * @type {Array.<string>}
    */
   get expectedRequiredProperties() {
-    this.throwWhenNotObjectFromGetter_()
+    this.requireObjectTypeForGetter_()
     return [...this.requiredProperties_]
   }
 
@@ -763,7 +938,7 @@ class Validator {
    * @type {Array.<string>}
    */
   get expectedOptionalProperties() {
-    this.throwWhenNotObjectFromGetter_()
+    this.requireObjectTypeForGetter_()
     return [...this.optionalProperties_]
   }
 
@@ -782,5 +957,14 @@ class Validator {
     }
 
     return `${prefix}${this.predicateDescriptions_.join(", ")}${suffix}`
+  }
+
+  /**
+   * Converts object to string.
+   * 
+   * @returns {string} - A string representation.
+   */
+  toString() {
+    return this.description
   }
 }
