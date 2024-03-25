@@ -17,7 +17,6 @@ For installation steps consult [this][libraries] article.
 
 - :green_circle: Simple and readable configuration format
 - :green_circle: Fluent-style validation
-- :red_circle: No array validation support
 
 ## Introduction example
 
