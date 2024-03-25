@@ -12,6 +12,7 @@ Complex validator.
     * [.throwWhenNotSupportedTypeError_(value)](#ComplexValidator+throwWhenNotSupportedTypeError_)
     * [.add(validator)](#ComplexValidator+add) ⇒ <code>Validator</code>
     * [.validate(input)](#ComplexValidator+validate) ⇒ <code>boolean</code>
+    * [.toString()](#ComplexValidator+toString) ⇒ <code>string</code>
 
 <a name="new_ComplexValidator_new"></a>
 
@@ -59,6 +60,13 @@ Check whether an input value satisfies all conditions.
 | ----- | ---------------- | --------------------- |
 | input | <code>any</code> | An input to validate. |
 
+<a name="ComplexValidator+toString"></a>
+
+### complexValidator.toString() ⇒ <code>string</code>
+Converts object to string.
+
+**Kind**: instance method of [<code>ComplexValidator</code>](#ComplexValidator)  
+**Returns**: <code>string</code> - - A string representation.  
 <a name="Mode"></a>
 
 ## Mode
@@ -215,7 +223,7 @@ Check whether object is a color.
 <dt><a href="#WherePredicate">WherePredicate</a> ⇒ <code>Array.&lt;boolean&gt;</code></dt>
 <dd><p>A where predicate.</p>
 </dd>
-<dt><a href="#BaseType">BaseType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;object&quot;</code></dt>
+<dt><a href="#BaseType">BaseType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;array&quot;</code> | <code>&quot;object&quot;</code></dt>
 <dd><p>A basic type.</p>
 </dd>
 <dt><a href="#BaseComparableType">BaseComparableType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code></dt>
@@ -249,7 +257,7 @@ A where predicate.
 
 <a name="BaseType"></a>
 
-## BaseType : <code>&quot;boolean&quot;</code> \| <code>&quot;number&quot;</code> \| <code>&quot;string&quot;</code> \| <code>&quot;bigint&quot;</code> \| <code>&quot;object&quot;</code>
+## BaseType : <code>&quot;boolean&quot;</code> \| <code>&quot;number&quot;</code> \| <code>&quot;string&quot;</code> \| <code>&quot;bigint&quot;</code> \| <code>&quot;array&quot;</code> \| <code>&quot;object&quot;</code>
 A basic type.
 
 **Kind**: global typedef  
@@ -273,6 +281,9 @@ A basic comparable type.
 </dd>
 <dt><a href="#isBigint">isBigint()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be bigint.</p>
+</dd>
+<dt><a href="#isArray">isArray()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be array.</p>
 </dd>
 <dt><a href="#isObject">isObject()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be object.</p>
@@ -319,6 +330,13 @@ Require value to be string.
 
 ## isBigint() ⇒ <code>Validator</code>
 Require value to be bigint.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - The validator.  
+<a name="isArray"></a>
+
+## isArray() ⇒ <code>Validator</code>
+Require value to be array.
 
 **Kind**: global function  
 **Returns**: <code>Validator</code> - - The validator.  
@@ -388,6 +406,7 @@ Basic validator.
   - [complexValidator.throwWhenNotSupportedTypeError\_(value)](#complexvalidatorthrowwhennotsupportedtypeerror_value)
   - [complexValidator.add(validator) ⇒ Validator](#complexvalidatoraddvalidator--validator)
   - [complexValidator.validate(input) ⇒ boolean](#complexvalidatorvalidateinput--boolean)
+  - [complexValidator.toString() ⇒ string](#complexvalidatortostring--string)
 - [Mode](#mode)
 - [Functions](#functions)
 - [isTrue() ⇒ Validator](#istrue--validator)
@@ -406,13 +425,14 @@ Basic validator.
 - [Typedefs](#typedefs)
 - [Predicate ⇒ boolean](#predicate--boolean)
 - [WherePredicate ⇒ Array.\<boolean\>](#wherepredicate--arrayboolean)
-- [BaseType : "boolean" | "number" | "string" | "bigint" | "object"](#basetype--boolean--number--string--bigint--object)
+- [BaseType : "boolean" | "number" | "string" | "bigint" | "array" | "object"](#basetype--boolean--number--string--bigint--array--object)
 - [BaseComparableType : "boolean" | "number" | "string" | "bigint"](#basecomparabletype--boolean--number--string--bigint)
 - [Functions](#functions-1)
 - [isBoolean() ⇒ Validator](#isboolean--validator)
 - [isNumber() ⇒ Validator](#isnumber--validator)
 - [isString() ⇒ Validator](#isstring--validator)
 - [isBigint() ⇒ Validator](#isbigint--validator)
+- [isArray() ⇒ Validator](#isarray--validator)
 - [isObject() ⇒ Validator](#isobject--validator)
 - [isAnyOf() ⇒ Array.\<(Validator|ComplexValidator)\>](#isanyof--arrayvalidatorcomplexvalidator)
 - [isOneOf() ⇒ Array.\<(Validator|ComplexValidator)\>](#isoneof--arrayvalidatorcomplexvalidator)
@@ -425,53 +445,58 @@ Basic validator.
   - [validator.expectedRequiredProperties : Array.\<string\>](#validatorexpectedrequiredproperties--arraystring)
   - [validator.expectedOptionalProperties : Array.\<string\>](#validatorexpectedoptionalproperties--arraystring)
   - [validator.description : string](#validatordescription--string)
-  - [validator.throwWhenNotSupportedTypeError\_(type)](#validatorthrowwhennotsupportedtypeerror_type)
-  - [validator.throwWhenNotCompatibleTypes\_(type)](#validatorthrowwhennotcompatibletypes_type)
-  - [validator.throwWhenNotNumber\_(type)](#validatorthrowwhennotnumber_type)
-  - [validator.throwWhenNotObject\_(type)](#validatorthrowwhennotobject_type)
-  - [validator.throwWhenNotRegExp\_(value)](#validatorthrowwhennotregexp_value)
-  - [validator.throwWhenNotTrue\_(value)](#validatorthrowwhennottrue_value)
-  - [validator.throwWhenNotValidatorTypeError\_(value)](#validatorthrowwhennotvalidatortypeerror_value)
-  - [validator.throwWhenNotFunction\_(type)](#validatorthrowwhennotfunction_type)
-  - [validator.throwWhenNotSupportedValidatorTypeError\_(value)](#validatorthrowwhennotsupportedvalidatortypeerror_value)
-  - [validator.withRequiredProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithrequiredproperties_input-propertiesconstraint--boolean)
-  - [validator.withOptionalProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithoptionalproperties_input-propertiesconstraint--boolean)
+  - [validator.requireSomeTypeMessage\_(type)](#validatorrequiresometypemessage_type)
+  - [validator.throwWhenInputTypeIsNotCompatible\_(input)](#validatorthrowwheninputtypeisnotcompatible_input)
+  - [validator.requireCount\_(value)](#validatorrequirecount_value)
+  - [validator.requirePattern\_(value)](#validatorrequirepattern_value)
+  - [validator.requireTrue\_(value)](#validatorrequiretrue_value)
+  - [validator.requireRange\_(from, to)](#validatorrequirerange_from-to)
+  - [validator.requireValidator\_(value)](#validatorrequirevalidator_value)
+  - [validator.requireProperties\_(value)](#validatorrequireproperties_value)
+  - [validator.requirePredicate\_(value)](#validatorrequirepredicate_value)
   - [validator.withAdditionalProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithadditionalproperties_input-propertiesconstraint--boolean)
-  - [validator.lessThan(constraint) ⇒ Validator](#validatorlessthanconstraint--validator)
-  - [validator.greaterThan(constraint) ⇒ Validator](#validatorgreaterthanconstraint--validator)
-  - [validator.lessThanOrEqualTo(constraint) ⇒ Validator](#validatorlessthanorequaltoconstraint--validator)
-  - [validator.greaterThanOrEqualTo(constraint) ⇒ Validator](#validatorgreaterthanorequaltoconstraint--validator)
-  - [validator.equalTo(constraint) ⇒ Validator](#validatorequaltoconstraint--validator)
-  - [validator.notEqualTo(constraint) ⇒ Validator](#validatornotequaltoconstraint--validator)
-  - [validator.inRange(fromConstraint, toConstraint) ⇒ Validator](#validatorinrangefromconstraint-toconstraint--validator)
-  - [validator.notInRange(fromConstraint, toConstraint) ⇒ Validator](#validatornotinrangefromconstraint-toconstraint--validator)
-  - [validator.shorterThan(constraint) ⇒ Validator](#validatorshorterthanconstraint--validator)
-  - [validator.longerThan(constraint) ⇒ Validator](#validatorlongerthanconstraint--validator)
-  - [validator.shorterThanOrIs(constraint) ⇒ Validator](#validatorshorterthanorisconstraint--validator)
-  - [validator.longerThanOrIs(constraint) ⇒ Validator](#validatorlongerthanorisconstraint--validator)
-  - [validator.withLength(constraint) ⇒ Validator](#validatorwithlengthconstraint--validator)
-  - [validator.notWithLength(constraint) ⇒ Validator](#validatornotwithlengthconstraint--validator)
-  - [validator.withLengthInRange(fromConstraint, toConstraint) ⇒ Validator](#validatorwithlengthinrangefromconstraint-toconstraint--validator)
-  - [validator.notWithLengthInRange(fromConstraint, toConstraint) ⇒ Validator](#validatornotwithlengthinrangefromconstraint-toconstraint--validator)
-  - [validator.matching(constraint) ⇒ Validator](#validatormatchingconstraint--validator)
-  - [validator.notMatching(constraint) ⇒ Validator](#validatornotmatchingconstraint--validator)
-  - [validator.withRequiredProperties(propertiesConstraint) ⇒ Validator](#validatorwithrequiredpropertiespropertiesconstraint--validator)
-  - [validator.withOptionalProperties(propertiesConstraint) ⇒ Validator](#validatorwithoptionalpropertiespropertiesconstraint--validator)
-  - [validator.withAdditionalProperties(propertiesConstraint) ⇒ Validator](#validatorwithadditionalpropertiespropertiesconstraint--validator)
-  - [validator.notWithAdditionalProperties() ⇒ Validator](#validatornotwithadditionalproperties--validator)
-  - [validator.withPropertyCountLessThan(constraint) ⇒ Validator](#validatorwithpropertycountlessthanconstraint--validator)
-  - [validator.withPropertyCountGreaterThan(constraint) ⇒ Validator](#validatorwithpropertycountgreaterthanconstraint--validator)
-  - [validator.withPropertyCountLessThanOrEqualTo(constraint) ⇒ Validator](#validatorwithpropertycountlessthanorequaltoconstraint--validator)
-  - [validator.withPropertyCountGreaterThanOrEqualTo(constraint) ⇒ Validator](#validatorwithpropertycountgreaterthanorequaltoconstraint--validator)
-  - [validator.withPropertyCountEqualTo(constraint) ⇒ Validator](#validatorwithpropertycountequaltoconstraint--validator)
-  - [validator.notWithPropertyCountEqualTo(constraint) ⇒ Validator](#validatornotwithpropertycountequaltoconstraint--validator)
-  - [validator.withPropertyCountInRange(fromConstraint, toConstraint) ⇒ Validator](#validatorwithpropertycountinrangefromconstraint-toconstraint--validator)
-  - [validator.notWithPropertyCountInRange(fromConstraint, toConstraint) ⇒ Validator](#validatornotwithpropertycountinrangefromconstraint-toconstraint--validator)
+  - [validator.lessThan(constant) ⇒ Validator](#validatorlessthanconstant--validator)
+  - [validator.greaterThan(constant) ⇒ Validator](#validatorgreaterthanconstant--validator)
+  - [validator.lessThanOrEqualTo(constant) ⇒ Validator](#validatorlessthanorequaltoconstant--validator)
+  - [validator.greaterThanOrEqualTo(constant) ⇒ Validator](#validatorgreaterthanorequaltoconstant--validator)
+  - [validator.equalTo(constant) ⇒ Validator](#validatorequaltoconstant--validator)
+  - [validator.notEqualTo(constant) ⇒ Validator](#validatornotequaltoconstant--validator)
+  - [validator.inRange(from, to) ⇒ Validator](#validatorinrangefrom-to--validator)
+  - [validator.notInRange(from, to) ⇒ Validator](#validatornotinrangefrom-to--validator)
+  - [validator.withLengthLessThan(count) ⇒ Validator](#validatorwithlengthlessthancount--validator)
+  - [validator.withLengthGreaterThan(count) ⇒ Validator](#validatorwithlengthgreaterthancount--validator)
+  - [validator.withLengthLessThanOrEqualTo(count) ⇒ Validator](#validatorwithlengthlessthanorequaltocount--validator)
+  - [validator.withLengthGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithlengthgreaterthanorequaltocount--validator)
+  - [validator.withLengthEqualTo(count) ⇒ Validator](#validatorwithlengthequaltocount--validator)
+  - [validator.withLengthNotEqualTo(count) ⇒ Validator](#validatorwithlengthnotequaltocount--validator)
+  - [validator.withLengthInRange(from, to) ⇒ Validator](#validatorwithlengthinrangefrom-to--validator)
+  - [validator.withLengthNotInRange(from, to) ⇒ Validator](#validatorwithlengthnotinrangefrom-to--validator)
+  - [validator.matching(regex) ⇒ Validator](#validatormatchingregex--validator)
+  - [validator.notMatching(regex) ⇒ Validator](#validatornotmatchingregex--validator)
+  - [validator.withItems(items) ⇒ Validator](#validatorwithitemsitems--validator)
+  - [validator.withItemCountLessThan(count) ⇒ Validator](#validatorwithitemcountlessthancount--validator)
+  - [validator.withItemCountGreaterThan(count) ⇒ Validator](#validatorwithitemcountgreaterthancount--validator)
+  - [validator.withItemCountLessThanOrEqualTo(count) ⇒ Validator](#validatorwithitemcountlessthanorequaltocount--validator)
+  - [validator.withItemCountGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithitemcountgreaterthanorequaltocount--validator)
+  - [validator.withItemCountEqualTo(count) ⇒ Validator](#validatorwithitemcountequaltocount--validator)
+  - [validator.withItemCountNotEqualTo(count) ⇒ Validator](#validatorwithitemcountnotequaltocount--validator)
+  - [validator.withItemCountInRange(from, to) ⇒ Validator](#validatorwithitemcountinrangefrom-to--validator)
+  - [validator.withItemCountNotInRange(from, to) ⇒ Validator](#validatorwithitemcountnotinrangefrom-to--validator)
+  - [validator.withRequiredProperties(properties) ⇒ Validator](#validatorwithrequiredpropertiesproperties--validator)
+  - [validator.withOptionalProperties(properties) ⇒ Validator](#validatorwithoptionalpropertiesproperties--validator)
+  - [validator.withAdditionalProperties(properties) ⇒ Validator](#validatorwithadditionalpropertiesproperties--validator)
+  - [validator.withNotAdditionalProperties() ⇒ Validator](#validatorwithnotadditionalproperties--validator)
+  - [validator.withPropertyCountLessThan(constant) ⇒ Validator](#validatorwithpropertycountlessthanconstant--validator)
+  - [validator.withPropertyCountGreaterThan(constant) ⇒ Validator](#validatorwithpropertycountgreaterthanconstant--validator)
+  - [validator.withPropertyCountLessThanOrEqualTo(constant) ⇒ Validator](#validatorwithpropertycountlessthanorequaltoconstant--validator)
+  - [validator.withPropertyCountGreaterThanOrEqualTo(constant) ⇒ Validator](#validatorwithpropertycountgreaterthanorequaltoconstant--validator)
+  - [validator.withPropertyCountEqualTo(constant) ⇒ Validator](#validatorwithpropertycountequaltoconstant--validator)
+  - [validator.notWithPropertyCountEqualTo(constant) ⇒ Validator](#validatornotwithpropertycountequaltoconstant--validator)
+  - [validator.withPropertyCountInRange(from, to) ⇒ Validator](#validatorwithpropertycountinrangefrom-to--validator)
+  - [validator.withPropertyCountNotInRange(from, to) ⇒ Validator](#validatorwithpropertycountnotinrangefrom-to--validator)
   - [validator.where(predicate) ⇒ Validator](#validatorwherepredicate--validator)
-  - [validator.and() ⇒ Validator](#validatorand--validator)
-  - [validator.with(propertiesConstraint) ⇒ Validator](#validatorwithpropertiesconstraint--validator)
-  - [validator.andNothingElse() ⇒ Validator](#validatorandnothingelse--validator)
   - [validator.validate(input) ⇒ boolean](#validatorvalidateinput--boolean)
+  - [validator.toString() ⇒ string](#validatortostring--string)
 
 <a name="new_Validator_new"></a>
 
@@ -505,106 +530,87 @@ Optional properties.
 A description.
 
 **Kind**: instance property of [<code>Validator</code>](#Validator)  
-<a name="Validator+throwWhenNotSupportedTypeError_"></a>
+<a name="Validator+requireSomeTypeMessage_"></a>
 
-### validator.throwWhenNotSupportedTypeError\_(type)
+### validator.requireSomeTypeMessage\_(type)
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+
+| Param | Type                  |
+| ----- | --------------------- |
+| type  | <code>BaseType</code> |
+
+<a name="Validator+throwWhenInputTypeIsNotCompatible_"></a>
+
+### validator.throwWhenInputTypeIsNotCompatible\_(input)
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 
 | Param | Type                |
 | ----- | ------------------- |
-| type  | <code>string</code> |
+| input | <code>string</code> |
 
-<a name="Validator+throwWhenNotCompatibleTypes_"></a>
+<a name="Validator+requireCount_"></a>
 
-### validator.throwWhenNotCompatibleTypes\_(type)
+### validator.requireCount\_(value)
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 
 | Param | Type                |
 | ----- | ------------------- |
-| type  | <code>string</code> |
+| value | <code>string</code> |
 
-<a name="Validator+throwWhenNotNumber_"></a>
+<a name="Validator+requirePattern_"></a>
 
-### validator.throwWhenNotNumber\_(type)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type                |
-| ----- | ------------------- |
-| type  | <code>string</code> |
-
-<a name="Validator+throwWhenNotObject_"></a>
-
-### validator.throwWhenNotObject\_(type)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type                |
-| ----- | ------------------- |
-| type  | <code>string</code> |
-
-<a name="Validator+throwWhenNotRegExp_"></a>
-
-### validator.throwWhenNotRegExp\_(value)
+### validator.requirePattern\_(value)
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 
 | Param | Type             |
 | ----- | ---------------- |
 | value | <code>any</code> |
 
-<a name="Validator+throwWhenNotTrue_"></a>
+<a name="Validator+requireTrue_"></a>
 
-### validator.throwWhenNotTrue\_(value)
+### validator.requireTrue\_(value)
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 
 | Param | Type             |
 | ----- | ---------------- |
 | value | <code>any</code> |
 
-<a name="Validator+throwWhenNotValidatorTypeError_"></a>
+<a name="Validator+requireRange_"></a>
 
-### validator.throwWhenNotValidatorTypeError\_(value)
+### validator.requireRange\_(from, to)
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+
+| Param | Type             |
+| ----- | ---------------- |
+| from  | <code>any</code> |
+| to    | <code>any</code> |
+
+<a name="Validator+requireValidator_"></a>
+
+### validator.requireValidator\_(value)
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 
 | Param | Type             |
 | ----- | ---------------- |
 | value | <code>any</code> |
 
-<a name="Validator+throwWhenNotFunction_"></a>
+<a name="Validator+requireProperties_"></a>
 
-### validator.throwWhenNotFunction\_(type)
+### validator.requireProperties\_(value)
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+
+| Param | Type             |
+| ----- | ---------------- |
+| value | <code>any</code> |
+
+<a name="Validator+requirePredicate_"></a>
+
+### validator.requirePredicate\_(value)
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 
 | Param | Type                |
 | ----- | ------------------- |
-| type  | <code>string</code> |
-
-<a name="Validator+throwWhenNotSupportedValidatorTypeError_"></a>
-
-### validator.throwWhenNotSupportedValidatorTypeError\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type             |
-| ----- | ---------------- |
-| value | <code>any</code> |
-
-<a name="Validator+withRequiredProperties_"></a>
-
-### validator.withRequiredProperties\_(input, propertiesConstraint) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param                | Type                                                              |
-| -------------------- | ----------------------------------------------------------------- |
-| input                | <code>object</code>                                               |
-| propertiesConstraint | <code>Object.&lt;string, (Validator\|ComplexValidator)&gt;</code> |
-
-<a name="Validator+withOptionalProperties_"></a>
-
-### validator.withOptionalProperties\_(input, propertiesConstraint) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param                | Type                                                              |
-| -------------------- | ----------------------------------------------------------------- |
-| input                | <code>object</code>                                               |
-| propertiesConstraint | <code>Object.&lt;string, (Validator\|ComplexValidator)&gt;</code> |
+| value | <code>string</code> |
 
 <a name="Validator+withAdditionalProperties_"></a>
 
@@ -618,364 +624,474 @@ A description.
 
 <a name="Validator+lessThan"></a>
 
-### validator.lessThan(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be less than a constraint.
+### validator.lessThan(constant) ⇒ [<code>Validator</code>](#Validator)
+Require value to be less than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+greaterThan"></a>
 
-### validator.greaterThan(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be greater than a constraint.
+### validator.greaterThan(constant) ⇒ [<code>Validator</code>](#Validator)
+Require value to be greater than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+lessThanOrEqualTo"></a>
 
-### validator.lessThanOrEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be less than or equal to a constraint.
+### validator.lessThanOrEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require value to be less than or equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+greaterThanOrEqualTo"></a>
 
-### validator.greaterThanOrEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be greater than or equal to a constraint.
+### validator.greaterThanOrEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require value to be greater than or equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+equalTo"></a>
 
-### validator.equalTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be equal to a constraint.
+### validator.equalTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require value to be equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+notEqualTo"></a>
 
-### validator.notEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be not equal to a constraint.
+### validator.notEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require value to be not equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+inRange"></a>
 
-### validator.inRange(fromConstraint, toConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be within a constraint range.
+### validator.inRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require value to be within a range.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param          | Type                            | Description           |
-| -------------- | ------------------------------- | --------------------- |
-| fromConstraint | <code>BaseComparableType</code> | A lowest constraint.  |
-| toConstraint   | <code>BaseComparableType</code> | A highest constraint. |
+| Param | Type                            | Description         |
+| ----- | ------------------------------- | ------------------- |
+| from  | <code>BaseComparableType</code> | A lowest boundary.  |
+| to    | <code>BaseComparableType</code> | A highest boundary. |
 
 <a name="Validator+notInRange"></a>
 
-### validator.notInRange(fromConstraint, toConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to be outside of a constraint range.
+### validator.notInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require value to be outside of a range.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param          | Type                            | Description           |
-| -------------- | ------------------------------- | --------------------- |
-| fromConstraint | <code>BaseComparableType</code> | A lowest constraint.  |
-| toConstraint   | <code>BaseComparableType</code> | A highest constraint. |
+| Param | Type                            | Description         |
+| ----- | ------------------------------- | ------------------- |
+| from  | <code>BaseComparableType</code> | A lowest boundary.  |
+| to    | <code>BaseComparableType</code> | A highest boundary. |
 
-<a name="Validator+shorterThan"></a>
+<a name="Validator+withLengthLessThan"></a>
 
-### validator.shorterThan(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be shorter than a constraint.
-
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
-
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>number</code> | A constraint. |
-
-<a name="Validator+longerThan"></a>
-
-### validator.longerThan(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be longer than a constraint.
+### validator.withLengthLessThan(count) ⇒ [<code>Validator</code>](#Validator)
+Require length to be shorter than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>number</code> | A constraint. |
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
 
-<a name="Validator+shorterThanOrIs"></a>
+<a name="Validator+withLengthGreaterThan"></a>
 
-### validator.shorterThanOrIs(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be shorter than or is a constraint.
-
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
-
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>number</code> | A constraint. |
-
-<a name="Validator+longerThanOrIs"></a>
-
-### validator.longerThanOrIs(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be longer than or is a constraint.
+### validator.withLengthGreaterThan(count) ⇒ [<code>Validator</code>](#Validator)
+Require length to be longer than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>number</code> | A constraint. |
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
 
-<a name="Validator+withLength"></a>
+<a name="Validator+withLengthLessThanOrEqualTo"></a>
 
-### validator.withLength(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be a constraint.
-
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
-
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>number</code> | A constraint. |
-
-<a name="Validator+notWithLength"></a>
-
-### validator.notWithLength(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be not a constraint.
+### validator.withLengthLessThanOrEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require length to be shorter than or is a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>number</code> | A constraint. |
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withLengthGreaterThanOrEqualTo"></a>
+
+### validator.withLengthGreaterThanOrEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require length to be longer than or is a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withLengthEqualTo"></a>
+
+### validator.withLengthEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require length to be equal to a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withLengthNotEqualTo"></a>
+
+### validator.withLengthNotEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require length not to be equal to a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
 
 <a name="Validator+withLengthInRange"></a>
 
-### validator.withLengthInRange(fromConstraint, toConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be within a constraint range.
+### validator.withLengthInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require length to be within a range.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param          | Type                | Description           |
-| -------------- | ------------------- | --------------------- |
-| fromConstraint | <code>number</code> | A lowest constraint.  |
-| toConstraint   | <code>number</code> | A highest constraint. |
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| from  | <code>number</code> | A lowest boundary.  |
+| to    | <code>number</code> | A highest boundary. |
 
-<a name="Validator+notWithLengthInRange"></a>
+<a name="Validator+withLengthNotInRange"></a>
 
-### validator.notWithLengthInRange(fromConstraint, toConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value length to be outside of a constraint range.
+### validator.withLengthNotInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require length to be outside of a range.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param          | Type                | Description           |
-| -------------- | ------------------- | --------------------- |
-| fromConstraint | <code>number</code> | A lowest constraint.  |
-| toConstraint   | <code>number</code> | A highest constraint. |
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| from  | <code>number</code> | A lowest boundary.  |
+| to    | <code>number</code> | A highest boundary. |
 
 <a name="Validator+matching"></a>
 
-### validator.matching(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to match a constraint.
+### validator.matching(regex) ⇒ [<code>Validator</code>](#Validator)
+Require value to match a regular expression.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>RegExp</code> | A constraint. |
+| Param | Type                | Description           |
+| ----- | ------------------- | --------------------- |
+| regex | <code>RegExp</code> | A regular expression. |
 
 <a name="Validator+notMatching"></a>
 
-### validator.notMatching(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value not to match a constraint.
+### validator.notMatching(regex) ⇒ [<code>Validator</code>](#Validator)
+Require value not to match a regular expression.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                | Description   |
-| ---------- | ------------------- | ------------- |
-| constraint | <code>RegExp</code> | A constraint. |
+| Param | Type                | Description           |
+| ----- | ------------------- | --------------------- |
+| regex | <code>RegExp</code> | A regular expression. |
+
+<a name="Validator+withItems"></a>
+
+### validator.withItems(items) ⇒ [<code>Validator</code>](#Validator)
+Require items to satisfy their constraints.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                                                                  | Description  |
+| ----- | --------------------------------------------------------------------- | ------------ |
+| items | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> | Constraints. |
+
+<a name="Validator+withItemCountLessThan"></a>
+
+### validator.withItemCountLessThan(count) ⇒ [<code>Validator</code>](#Validator)
+Require item count to be less than a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withItemCountGreaterThan"></a>
+
+### validator.withItemCountGreaterThan(count) ⇒ [<code>Validator</code>](#Validator)
+Require item count to be greater than a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withItemCountLessThanOrEqualTo"></a>
+
+### validator.withItemCountLessThanOrEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require item count to be less than or equal to a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withItemCountGreaterThanOrEqualTo"></a>
+
+### validator.withItemCountGreaterThanOrEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require item count to be greater than or equal to a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withItemCountEqualTo"></a>
+
+### validator.withItemCountEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require item count to be equal to a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withItemCountNotEqualTo"></a>
+
+### validator.withItemCountNotEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
+Require item count not to be equal to a constant.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description |
+| ----- | ------------------- | ----------- |
+| count | <code>number</code> | A constant. |
+
+<a name="Validator+withItemCountInRange"></a>
+
+### validator.withItemCountInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require length to be within a range.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| from  | <code>number</code> | A lowest boundary.  |
+| to    | <code>number</code> | A highest boundary. |
+
+<a name="Validator+withItemCountNotInRange"></a>
+
+### validator.withItemCountNotInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require length to be outside of a range.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| from  | <code>number</code> | A lowest boundary.  |
+| to    | <code>number</code> | A highest boundary. |
 
 <a name="Validator+withRequiredProperties"></a>
 
-### validator.withRequiredProperties(propertiesConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to have all required properties and satisfy their constraints.
+### validator.withRequiredProperties(properties) ⇒ [<code>Validator</code>](#Validator)
+Require specified properties.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param                | Type                                          | Description   |
-| -------------------- | --------------------------------------------- | ------------- |
-| propertiesConstraint | <code>Object.&lt;string, Validator&gt;</code> | A constraint. |
+| Param      | Type                                          | Description   |
+| ---------- | --------------------------------------------- | ------------- |
+| properties | <code>Object.&lt;string, Validator&gt;</code> | A constraint. |
 
 <a name="Validator+withOptionalProperties"></a>
 
-### validator.withOptionalProperties(propertiesConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to have all optional properties and satisfy their constraints.
+### validator.withOptionalProperties(properties) ⇒ [<code>Validator</code>](#Validator)
+Permit specified optional properties.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param                | Type                                          | Description   |
-| -------------------- | --------------------------------------------- | ------------- |
-| propertiesConstraint | <code>Object.&lt;string, Validator&gt;</code> | A constraint. |
+| Param      | Type                                          | Description   |
+| ---------- | --------------------------------------------- | ------------- |
+| properties | <code>Object.&lt;string, Validator&gt;</code> | A constraint. |
 
 <a name="Validator+withAdditionalProperties"></a>
 
-### validator.withAdditionalProperties(propertiesConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to have additional properties those satisfy their constraints.
+### validator.withAdditionalProperties(properties) ⇒ [<code>Validator</code>](#Validator)
+Permit additional properties.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param                | Type                                                                  | Description   |
-| -------------------- | --------------------------------------------------------------------- | ------------- |
-| propertiesConstraint | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> | A constraint. |
+| Param      | Type                                                                  | Description   |
+| ---------- | --------------------------------------------------------------------- | ------------- |
+| properties | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> | A constraint. |
 
-<a name="Validator+notWithAdditionalProperties"></a>
+<a name="Validator+withNotAdditionalProperties"></a>
 
-### validator.notWithAdditionalProperties() ⇒ [<code>Validator</code>](#Validator)
-Require value to doesn't have additional properties except ones specified via withRequiredProperties and withOptionalProperties.
+### validator.withNotAdditionalProperties() ⇒ [<code>Validator</code>](#Validator)
+Require no additional properties.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 <a name="Validator+withPropertyCountLessThan"></a>
 
-### validator.withPropertyCountLessThan(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount less than a constraint.
+### validator.withPropertyCountLessThan(constant) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be less than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountGreaterThan"></a>
 
-### validator.withPropertyCountGreaterThan(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount greater than a constraint.
+### validator.withPropertyCountGreaterThan(constant) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be greater than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountLessThanOrEqualTo"></a>
 
-### validator.withPropertyCountLessThanOrEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount less than or equal to a constraint.
+### validator.withPropertyCountLessThanOrEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be less than or equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountGreaterThanOrEqualTo"></a>
 
-### validator.withPropertyCountGreaterThanOrEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount greater than or equal to a constraint.
+### validator.withPropertyCountGreaterThanOrEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be greater than or equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountEqualTo"></a>
 
-### validator.withPropertyCountEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount equal to a constraint.
+### validator.withPropertyCountEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+notWithPropertyCountEqualTo"></a>
 
-### validator.notWithPropertyCountEqualTo(constraint) ⇒ [<code>Validator</code>](#Validator)
-Require value not to contain property amount equal to a constraint.
+### validator.notWithPropertyCountEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+Require property amount not to be equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                            | Description   |
-| ---------- | ------------------------------- | ------------- |
-| constraint | <code>BaseComparableType</code> | A constraint. |
+| Param    | Type                            | Description |
+| -------- | ------------------------------- | ----------- |
+| constant | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountInRange"></a>
 
-### validator.withPropertyCountInRange(fromConstraint, toConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount within a constraint range.
+### validator.withPropertyCountInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be within a range.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param          | Type                | Description           |
-| -------------- | ------------------- | --------------------- |
-| fromConstraint | <code>number</code> | A lowest constraint.  |
-| toConstraint   | <code>number</code> | A highest constraint. |
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| from  | <code>number</code> | A lowest boundary.  |
+| to    | <code>number</code> | A highest boundary. |
 
-<a name="Validator+notWithPropertyCountInRange"></a>
+<a name="Validator+withPropertyCountNotInRange"></a>
 
-### validator.notWithPropertyCountInRange(fromConstraint, toConstraint) ⇒ [<code>Validator</code>](#Validator)
-Require value to contain property amount outside of a constraint range.
+### validator.withPropertyCountNotInRange(from, to) ⇒ [<code>Validator</code>](#Validator)
+Require property amount to be outside of a range.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param          | Type                | Description           |
-| -------------- | ------------------- | --------------------- |
-| fromConstraint | <code>number</code> | A lowest constraint.  |
-| toConstraint   | <code>number</code> | A highest constraint. |
+| Param | Type                | Description         |
+| ----- | ------------------- | ------------------- |
+| from  | <code>number</code> | A lowest boundary.  |
+| to    | <code>number</code> | A highest boundary. |
 
 <a name="Validator+where"></a>
 
@@ -989,32 +1105,6 @@ Require property relationships.
 | --------- | --------------------------- | ------------ |
 | predicate | <code>WherePredicate</code> | A predicate. |
 
-<a name="Validator+and"></a>
-
-### validator.and() ⇒ [<code>Validator</code>](#Validator)
-Used for readability.
-
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
-<a name="Validator+with"></a>
-
-### validator.with(propertiesConstraint) ⇒ [<code>Validator</code>](#Validator)
-Used for readability.
-
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
-
-| Param                | Type                                          | Description   |
-| -------------------- | --------------------------------------------- | ------------- |
-| propertiesConstraint | <code>Object.&lt;string, Validator&gt;</code> | A constraint. |
-
-<a name="Validator+andNothingElse"></a>
-
-### validator.andNothingElse() ⇒ [<code>Validator</code>](#Validator)
-Used for readability.
-
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 <a name="Validator+validate"></a>
 
 ### validator.validate(input) ⇒ <code>boolean</code>
@@ -1026,3 +1116,10 @@ Check whether an input value satisfies all conditions.
 | ----- | ---------------- | --------------------- |
 | input | <code>any</code> | An input to validate. |
 
+<a name="Validator+toString"></a>
+
+### validator.toString() ⇒ <code>string</code>
+Converts object to string.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: <code>string</code> - - A string representation.  
