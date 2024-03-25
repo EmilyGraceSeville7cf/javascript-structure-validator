@@ -52,7 +52,7 @@ function isIn(fromConstraint, toConstraint) {
  * @returns {Validator} - Check whether object is not an empty string.
  */
 function isNotEmptyString() {
-  return isString().longerThan(0)
+  return isString().withLengthGreaterThan(0)
 }
 
 /**
