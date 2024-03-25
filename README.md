@@ -87,20 +87,20 @@ function main() {
   const schema = isObject().withRequiredProperties({
     general: isObject().withRequiredProperties({
       name: isNotEmptyString().matching(/[^ ]/)
-    }).andNothingElse()
+    }).withNotAdditionalProperties()
   }).withOptionalProperties({
     styles: isObject().withOptionalProperties({
       foreground: isObject().withRequiredProperties({
         red: isIn(0, 255),
         green: isIn(0, 255),
         blue: isIn(0, 255)
-      }).andNothingElse(),
+      }).withNotAdditionalProperties(),
       background: isOneOf(
-        isObject().with({
+        isObject().withRequiredProperties({
           red: isIn(0, 255),
           green: isIn(0, 255),
           blue: isIn(0, 255)
-        }).andNothingElse(),
+        }).withNotAdditionalProperties(),
         isNotEmptyString().matching(/^https:\/\/./).where(url => [
           (() => {
             try {
@@ -120,8 +120,8 @@ function main() {
 
         return background.red ? background.red !== foreground.red || background.green !== foreground.green || background.blue !== foreground.blue : true
       })()
-    ]).andNothingElse()
-  }).andNothingElse()
+    ]).withNotAdditionalProperties()
+  }).withNotAdditionalProperties()
 
   throwOnFailure(objectToValidate, schema) // Throw error on validation failure
 }
