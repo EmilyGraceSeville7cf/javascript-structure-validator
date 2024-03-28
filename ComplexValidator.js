@@ -6,7 +6,7 @@ class ComplexValidator {
    * @param {any} value
    */
   throwWhenNotSupportedTypeError_(value) {
-    if (value.constructor !== SimpleValidator)
+    if (value.constructor !== Validator)
       throw new Error(`Type ${typeof value} with ${value.constructor} constructor is not supported by complex validator`)
   }
 

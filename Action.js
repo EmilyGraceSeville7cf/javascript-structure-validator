@@ -1,7 +1,7 @@
 /**
  * A validation action.
  */
-class ActionInfo {
+class ActionInfo_ {
   /**
    * @param {object} kind - An action kind.
    * @param {object} target - An action target.
