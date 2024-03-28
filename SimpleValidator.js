@@ -109,6 +109,13 @@ class SimpleValidator {
   }
 
   /**
+   * @param {RegExp} regex
+   */
+  regexToPlainString_(regex) {
+    return `${regex}`.replace(/^\/|\/$/g, "")
+  }
+
+  /**
    * @param {object} schema
    * @param {object} simpleSubschemas
    * @param {ActionInfo_} action
@@ -146,6 +153,16 @@ class SimpleValidator {
           not: {
             minimum: action.value[0],
             maximum: action.value[1]
+          }
+        })
+        break
+      case ActionMode.MATCH:
+        schema.pattern = `${this.regexToPlainString_(action.value)}`
+        break
+      case ActionMode.NOT_MATCH:
+        simpleSubschemas.push({
+          not: {
+            pattern: `${this.regexToPlainString_(action.value)}`
           }
         })
         break
@@ -1321,6 +1338,7 @@ class SimpleValidator {
                 schema.additionalProperties = false
                 break
             }
+            break
           
           case ActionTargetMode.PROPERTIES:
             schema.$comment = "This schema doesn't contain validations performed in JavaScript as they can't expressed within JSON schema (predicate-based validation is omitted)"
