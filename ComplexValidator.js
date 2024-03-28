@@ -6,7 +6,7 @@ class ComplexValidator {
    * @param {any} value
    */
   throwWhenNotSupportedTypeError_(value) {
-    if (value.constructor !== Validator)
+    if (value.constructor !== SimpleValidator)
       throw new Error(`Type ${typeof value} with ${value.constructor} constructor is not supported by complex validator`)
   }
 
@@ -21,9 +21,9 @@ class ComplexValidator {
   /**
    * Add a validator.
    * 
-   * @param {Validator | ComplexValidator} validator - A validator.
+   * @param {SimpleValidator | ComplexValidator} validator - A validator.
    * 
-  * @returns {Validator} - The validator.
+  * @returns {SimpleValidator} - The validator.
    */
   add(validator) {
     this.throwWhenNotSupportedTypeError_(validator)
@@ -41,13 +41,13 @@ class ComplexValidator {
   validate(input) {
     let results = this.validators.map(validator => validator.validate(input))
     switch (this.mode) {
-      case Mode.ANY_OF:
+      case ComplexValidatorMode.ANY_OF:
         return results.some(result => result === true)
 
-      case Mode.ONE_OF:
+      case ComplexValidatorMode.ONE_OF:
         return results.filter(result => result === true).length === 1
 
-      case Mode.ALL_OF:
+      case ComplexValidatorMode.ALL_OF:
         return results.all(result => result === true)
     }
   }
