@@ -109,6 +109,199 @@ class SimpleValidator {
   }
 
   /**
+   * @param {object} schema
+   * @param {object} simpleSubschemas
+   * @param {ActionInfo_} action
+   */
+  addValueConstraints_(schema, simpleSubschemas, action) {
+    switch (action.kind) {
+      case ActionMode.LESS_THAN:
+        schema.exclusiveMaximum = action.value
+        break
+      case ActionMode.GREATER_THAN:
+        schema.exclusiveMinimum = action.value
+        break
+      case ActionMode.LESS_THAN_OR_EQUAL_TO:
+        schema.maximum = action.value
+        break
+      case ActionMode.GREATER_THAN_OR_EQUAL_TO:
+        schema.minimum = action.value
+        break
+      case ActionMode.EQUAL_TO:
+        schema.const = action.value
+        break
+      case ActionMode.NOT_EQUAL_TO:
+        simpleSubschemas.push({
+          not: {
+            const: action.value
+          }
+        })
+        break
+      case ActionMode.IN_RANGE:
+        schema.minimum = action.value[0]
+        schema.maximum = action.value[1]
+        break
+      case ActionMode.NOT_IN_RANGE:
+        simpleSubschemas.push({
+          not: {
+            minimum: action.value[0],
+            maximum: action.value[1]
+          }
+        })
+        break
+    }
+  }
+
+  /**
+   * @param {object} schema
+   * @param {object} simpleSubschemas
+   * @param {ActionInfo_} action
+   */
+  addLengthConstraints_(schema, simpleSubschemas, action) {
+    switch (action.kind) {
+      case ActionMode.LESS_THAN:
+        schema.maxLength = action.value - 1
+        break
+      case ActionMode.GREATER_THAN:
+        schema.minLength = action.value + 1
+        break
+      case ActionMode.LESS_THAN_OR_EQUAL_TO:
+        schema.maxLength = action.value
+        break
+      case ActionMode.GREATER_THAN_OR_EQUAL_TO:
+        schema.minLength = action.value
+        break
+      case ActionMode.EQUAL_TO:
+        schema.minLength = action.value
+        schema.maxLength = action.value
+        break
+      case ActionMode.NOT_EQUAL_TO:
+        simpleSubschemas.push({
+          not: {
+            minLength: action.value,
+            maxLength: action.value
+          }
+        })
+        break
+      case ActionMode.IN_RANGE:
+        schema.minLength = action.value[0]
+        schema.maxLength = action.value[1]
+        break
+      case ActionMode.NOT_IN_RANGE:
+        simpleSubschemas.push({
+          not: {
+            minLength: action.value[0],
+            maxLength: action.value[1]
+          }
+        })
+        break
+    }
+  }
+
+  /**
+   * @param {object} schema
+   * @param {object} simpleSubschemas
+   * @param {ActionInfo_} action
+   */
+  addItemCountConstraints_(schema, simpleSubschemas, action) {
+    switch (action.kind) {
+      case ActionMode.LESS_THAN:
+        schema.maxItems = action.value - 1
+        break
+      case ActionMode.GREATER_THAN:
+        schema.minItems = action.value + 1
+        break
+      case ActionMode.LESS_THAN_OR_EQUAL_TO:
+        schema.maxItems = action.value
+        break
+      case ActionMode.GREATER_THAN_OR_EQUAL_TO:
+        schema.minItems = action.value
+        break
+      case ActionMode.EQUAL_TO:
+        schema.minItems = action.value
+        schema.maxItems = action.value
+        break
+      case ActionMode.NOT_EQUAL_TO:
+        simpleSubschemas.push({
+          not: {
+            minItems: action.value,
+            maxItems: action.value
+          }
+        })
+        break
+      case ActionMode.IN_RANGE:
+        schema.minItems = action.value[0]
+        schema.maxItems = action.value[1]
+        break
+      case ActionMode.NOT_IN_RANGE:
+        simpleSubschemas.push({
+          not: {
+            minItems: action.value[0],
+            maxItems: action.value[1]
+          }
+        })
+        break
+    }
+  }
+
+  /**
+   * @param {object} schema
+   * @param {object} simpleSubschemas
+   * @param {ActionInfo_} action
+   */
+  addPropertyCountConstraints_(schema, simpleSubschemas, action) {
+    switch (action.kind) {
+      case ActionMode.LESS_THAN:
+        schema.maxProperties = action.value - 1
+        break
+      case ActionMode.GREATER_THAN:
+        schema.minProperties = action.value + 1
+        break
+      case ActionMode.LESS_THAN_OR_EQUAL_TO:
+        schema.maxProperties = action.value
+        break
+      case ActionMode.GREATER_THAN_OR_EQUAL_TO:
+        schema.minProperties = action.value
+        break
+      case ActionMode.EQUAL_TO:
+        schema.minProperties = action.value
+        schema.maxProperties = action.value
+        break
+      case ActionMode.NOT_EQUAL_TO:
+        simpleSubschemas.push({
+          not: {
+            minProperties: action.value,
+            maxProperties: action.value
+          }
+        })
+        break
+      case ActionMode.IN_RANGE:
+        schema.minProperties = action.value[0]
+        schema.maxProperties = action.value[1]
+        break
+      case ActionMode.NOT_IN_RANGE:
+        simpleSubschemas.push({
+          not: {
+            minProperties: action.value[0],
+            maxProperties: action.value[1]
+          }
+        })
+        break
+    }
+  }
+
+  /**
+   * @param {object} schema
+   * @param {ActionInfo_} action
+   */
+  addProperties_(schema, action) {
+    let propertySchemas = {}
+    Object.keys(action.value).forEach(property => propertySchemas[property] = action.value[property].toJSONSchema())
+    schema.properties = propertySchemas
+
+  }
+
+  /**
    * @param {BaseType} type - A type.
    */
   constructor(type) {
@@ -510,7 +703,7 @@ class SimpleValidator {
     this.predicateDescriptions_.push(`with items: ${items.description}`)
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.ITEMS,
-      null,
+      items,
       input => {
         for (let item of input)
           if (!items.validate(item))
@@ -657,7 +850,7 @@ class SimpleValidator {
     this.predicateDescriptions_.push(`with item count in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.ITEM_COUNT,
-      count,
+      [from, to],
       input => input.length >= from && input.length <= to))
 
     return this
@@ -678,7 +871,7 @@ class SimpleValidator {
     this.predicateDescriptions_.push(`with item count not in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.ITEM_COUNT,
-      count,
+      [from, to],
       input => input.length < from || input.length > to))
 
     return this
@@ -706,7 +899,7 @@ class SimpleValidator {
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.REQUIRED_PROPERTIES,
-      null,
+      properties,
       input => {
         for (let requiredProperty in properties) {
           if (!input.hasOwnProperty(requiredProperty))
@@ -751,7 +944,7 @@ class SimpleValidator {
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.OPTIONAL_PROPERTIES,
-      null,
+      properties,
       input => {
         for (let optionalProperty in properties) {
           let validator = properties[optionalProperty]
@@ -786,8 +979,8 @@ class SimpleValidator {
     this.predicateDescriptions_.push(`with additional properties: (${properties.description})`)
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
-      ActionTargetMode.OPTIONAL_PROPERTIES,
-      null,
+      ActionTargetMode.ADDITIONAL_PROPERTIES,
+      properties,
       input => {
         const additionalProperties = Object.keys(input).filter(property => {
           return !this.requiredProperties_.includes(property) && !this.optionalProperties_.includes(property)
@@ -1071,6 +1264,70 @@ class SimpleValidator {
     }
 
     return `${prefix}${this.predicateDescriptions_.join(", ")}${suffix}`
+  }
+
+  /**
+   * Convert object to JSON schema (draft 04) representation.
+   * 
+   * @returns {object}
+   */
+  toJSONSchema() {
+    let schema = {}
+    let simpleSubschemas = []
+
+    this.actions_//.filter(action => action.kind !== ActionMode.BE)
+      .forEach(action => {
+        switch (action.target) {
+          case ActionTargetMode.TYPE:
+            schema.type = this.type_
+            break
+
+          case ActionTargetMode.VALUE:
+            this.addValueConstraints_(schema, simpleSubschemas, action)
+            break
+
+          case ActionTargetMode.LENGTH:
+            this.addLengthConstraints_(schema, simpleSubschemas, action)
+            break
+
+          case ActionTargetMode.ITEM_COUNT:
+            this.addItemCountConstraints_(schema, simpleSubschemas, action)
+            break
+
+          case ActionTargetMode.PROPERTY_COUNT:
+            this.addPropertyCountConstraints_(schema, simpleSubschemas, action)
+            break
+
+          case ActionTargetMode.ITEMS:
+            schema.type = "array"
+            schema.items = action.value.toJSONSchema()
+            break
+
+          case ActionTargetMode.REQUIRED_PROPERTIES:
+            this.addProperties_(schema, action)
+            schema.required = Object.keys(action.value)
+            break
+
+          case ActionTargetMode.OPTIONAL_PROPERTIES:
+            this.addProperties_(schema, action)
+            break
+
+          case ActionTargetMode.ADDITIONAL_PROPERTIES:
+            switch (action.kind) {
+              case ActionMode.BE:
+                schema.additionalProperties = action.value.toJSONSchema()
+                break
+              case ActionMode.NOT_HAVE:
+                schema.additionalProperties = false
+                break
+            }
+        }
+      })
+
+    if (simpleSubschemas.length > 0)
+      schema.allOf = simpleSubschemas
+
+    return schema
   }
 
   /**

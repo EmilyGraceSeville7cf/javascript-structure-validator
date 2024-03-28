@@ -555,4 +555,15 @@ class Validator {
     return this.simpleValidator_.validate(input) &&
       this.complexValidators_.map(validator => validator.validate(input)).every(result => result === true)
   }
+
+  /**
+   * Convert object to JSON schema (draft 04) representation.
+   * 
+   * @returns {object}
+   */
+  toJSONSchema() {
+    return {
+      $schema: "http://json-schema.org/draft-07/schema#"
+    }
+  }
 }
