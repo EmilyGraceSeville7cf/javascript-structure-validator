@@ -504,11 +504,7 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   andAnyOf(...validators) {
-    let complexValidator = new ComplexValidator(ComplexValidatorMode.ANY_OF)
-    for (let validator of validators)
-      complexValidator.add(validator)
-    this.complexValidators_.push(complexValidator)
-
+    this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ANY_OF))
     return this
   }
 
@@ -520,11 +516,7 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   andOneOf(...validators) {
-    let complexValidator = new ComplexValidator(ComplexValidatorMode.ONE_OF)
-    for (let validator of validators)
-      complexValidator.add(validator)
-    this.complexValidators_.push(complexValidator)
-
+    this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ONE_OF))
     return this
   }
 
@@ -536,11 +528,7 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   andAllOf(...validators) {
-    let complexValidator = new ComplexValidator(ComplexValidatorMode.ALL_OF)
-    for (let validator of validators)
-      complexValidator.add(validator)
-    this.complexValidators_.push(complexValidator)
-
+    this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ALL_OF))
     return this
   }
 
@@ -562,8 +550,11 @@ class Validator {
    * @returns {object}
    */
   toJSONSchema() {
-    return {
-      $schema: "http://json-schema.org/draft-07/schema#"
-    }
+    let schema = {}
+
+    Object.assign(schema, this.simpleValidator_.toJSONSchema())
+    this.complexValidators_.forEach(validator => Object.assign(schema, validator.toJSONSchema()))
+
+    return schema
   }
 }

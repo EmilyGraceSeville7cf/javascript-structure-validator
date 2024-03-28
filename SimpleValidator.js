@@ -1284,7 +1284,7 @@ class SimpleValidator {
   }
 
   /**
-   * Convert object to JSON schema (draft 04) representation.
+   * Convert object to JSON schema (draft 07) representation.
    * 
    * @returns {object}
    */
@@ -1292,11 +1292,10 @@ class SimpleValidator {
     let schema = {}
     let simpleSubschemas = []
 
-    this.actions_//.filter(action => action.kind !== ActionMode.BE)
-      .forEach(action => {
+    this.actions_.forEach(action => {
         switch (action.target) {
           case ActionTargetMode.TYPE:
-            schema.type = this.type_
+            schema.type = this.isArray_ ? "array" : this.type_
             break
 
           case ActionTargetMode.VALUE:
@@ -1358,6 +1357,6 @@ class SimpleValidator {
    * @returns {string} - A string representation.
    */
   toString() {
-    return this.description
+    return this.toJSONSchema()
   }
 }
