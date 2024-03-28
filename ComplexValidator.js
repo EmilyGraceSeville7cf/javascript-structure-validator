@@ -7,10 +7,8 @@ class ComplexValidator {
    * @param {object} mode - A condition combination mode.
    */
   constructor(validators, mode) {
-    if (!Array.isArray(validators))
-      throw new Error("Validator's array expected")
-    if (validators.filter(validator => ![Validator, SimpleValidator, ComplexValidator].includes(validator.constructor)).length !== 0)
-      throw new Error("Validators with Validator constructor are expected")
+    requireBasicArray(validators, "validators")
+    validators.forEach((validator, index) => requireBasicValidator(validator, "validators", index))
 
     this.validators = validators
     this.mode = mode
