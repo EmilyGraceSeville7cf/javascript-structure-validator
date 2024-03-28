@@ -1321,6 +1321,10 @@ class SimpleValidator {
                 schema.additionalProperties = false
                 break
             }
+          
+          case ActionTargetMode.PROPERTIES:
+            schema.$comment = "This schema doesn't contain validations performed in JavaScript as they can't expressed within JSON schema (predicate-based validation is omitted)"
+            break
         }
       })
 
