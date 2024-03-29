@@ -1,3 +1,20 @@
+const urlRegex_ = new RegExp("^https?://")
+
+/**
+ * @param {string} url
+ * 
+ * @returns {boolean}
+ */
+function isExistingUrl_(url) {
+  try {
+    return UrlFetchApp.fetch(url, {
+      muteHttpExceptions: true
+    }).getResponseCode() === 200
+  } catch {
+    return false
+  }
+}
+
 /**
  * Check whether object is true.
  *  
@@ -37,13 +54,22 @@ function isNegative() {
 /**
  * Check whether object is a number in range.
  * 
- * @param {BaseComparableType} fromConstraint - A lowest constraint.
- * @param {BaseComparableType} toConstraint - A highest constraint.
+ * @param {BaseComparableType} from - A lowest constraint.
+ * @param {BaseComparableType} to - A highest constraint.
  * 
  * @returns {Validator} - Check whether object is a number in range.
  */
-function isIn(fromConstraint, toConstraint) {
-  return isNumber().inRange(fromConstraint, toConstraint)
+function isIn(from, to) {
+  return isNumber().inRange(from, to)
+}
+
+/**
+ * Check whether object is an empty string.
+ *  
+ * @returns {Validator} - Check whether object is an empty string.
+ */
+function isEmptyString() {
+  return isString().withLengthEqualTo(0)
 }
 
 /**
@@ -53,6 +79,46 @@ function isIn(fromConstraint, toConstraint) {
  */
 function isNotEmptyString() {
   return isString().withLengthGreaterThan(0)
+}
+
+/**
+ * Check whether object is a string matching regular expression.
+ * 
+ * @param {RegExp} regex - A regular expression.
+ *  
+ * @returns {Validator} - Check whether object is a string matching regular expression.
+ */
+function isMatching(regex) {
+  return isString().matching(regex)
+}
+
+/**
+ * Check whether object is a string not matching regular expression.
+ * 
+ * @param {RegExp} regex - A regular expression.
+ *  
+ * @returns {Validator} - Check whether object is a string not matching regular expression.
+ */
+function isNotMatching(regex) {
+  return isString().notMatching(regex)
+}
+
+/**
+ * Check whether object is a URL string.
+ * 
+ * @returns {Validator} - Check whether object is a URL string.
+ */
+function isUrl() {
+  return isMatching(urlRegex_).where(url => [isExistingUrl_(url)])
+}
+
+/**
+ * Check whether object is not a URL string.
+ * 
+ * @returns {Validator} - Check whether object is not a URL string.
+ */
+function isNotUrl() {
+  return isNotMatching(urlRegex_)
 }
 
 /**
@@ -73,11 +139,11 @@ function isVector2D() {
  * @returns {Validator} - Check whether object is a 3D vector.
  */
 function isVector3D() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     x: isNumber(),
     y: isNumber(),
     z: isNumber()
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }
 
 /**
@@ -86,10 +152,11 @@ function isVector3D() {
  * @returns {Validator} - Check whether object is a range.
  */
 function isRange() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     from: isNumber(),
     to: isNumber(),
-  }).andNothingElse()
+  }).where(range => [range.from <= range.to])
+    .withNotAdditionalProperties()
 }
 
 /**
@@ -98,11 +165,12 @@ function isRange() {
  * @returns {Validator} - Check whether object is a stepped range.
  */
 function isSteppedRange() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     from: isNumber(),
     to: isNumber(),
     step: isNumber().greaterThan(0)
-  }).andNothingElse()
+  }).where(range => [range.from <= range.to])
+    .withNotAdditionalProperties()
 }
 
 /**
@@ -111,10 +179,10 @@ function isSteppedRange() {
  * @returns {Validator} - Check whether object is a 2D size.
  */
 function isSize2D() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     width: isNumber().greaterThan(0),
     height: isNumber().greaterThan(0)
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }
 
 /**
@@ -123,11 +191,11 @@ function isSize2D() {
  * @returns {Validator} - Check whether object is a 3D size.
  */
 function isSize3D() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     width: isNumber().greaterThan(0),
     height: isNumber().greaterThan(0),
     depth: isNumber().greaterThan(0)
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }
 
 /**
@@ -136,9 +204,9 @@ function isSize3D() {
  * @returns {Validator} - Check whether object is a color.
  */
 function isColor() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     red: isNumber().inRange(0, 255),
     green: isNumber().inRange(0, 255),
     blue: isNumber().inRange(0, 255)
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }

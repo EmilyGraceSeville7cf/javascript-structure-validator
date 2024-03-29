@@ -1,81 +1,558 @@
 
-<a name="ComplexValidator"></a>
+<a name="Basic"></a>
 
-## ComplexValidator
-Complex validator.
+## Basic
+Basic validation tools.
 
 **Kind**: global class  
 
-* [ComplexValidator](#ComplexValidator)
-    * [new ComplexValidator(mode)](#new_ComplexValidator_new)
-    * [.description](#ComplexValidator+description) : <code>string</code>
-    * [.throwWhenNotSupportedTypeError_(value)](#ComplexValidator+throwWhenNotSupportedTypeError_)
-    * [.add(validator)](#ComplexValidator+add) ⇒ <code>Validator</code>
-    * [.validate(input)](#ComplexValidator+validate) ⇒ <code>boolean</code>
-    * [.toString()](#ComplexValidator+toString) ⇒ <code>string</code>
+* [Basic](#Basic)
+    * [.isBoolean(value)](#Basic.isBoolean) ⇒ <code>boolean</code>
+    * [.isNumber(value)](#Basic.isNumber) ⇒ <code>boolean</code>
+    * [.isString(value)](#Basic.isString) ⇒ <code>boolean</code>
+    * [.isBigint(value)](#Basic.isBigint) ⇒ <code>boolean</code>
+    * [.isArray(value)](#Basic.isArray) ⇒ <code>boolean</code>
+    * [.isObject(value)](#Basic.isObject) ⇒ <code>boolean</code>
+    * [.isSupported(value)](#Basic.isSupported) ⇒ <code>boolean</code>
+    * [.isComparableSupported(value)](#Basic.isComparableSupported) ⇒ <code>boolean</code>
+    * [.isValidator(value)](#Basic.isValidator) ⇒ <code>boolean</code>
+    * [.requireTypeByPredicate_(predicate, value, argumentName, [argumentIndex])](#Basic.requireTypeByPredicate_)
+    * [.requireBoolean(value, argumentName, [argumentIndex])](#Basic.requireBoolean)
+    * [.requireNumber(value, argumentName, [argumentIndex])](#Basic.requireNumber)
+    * [.requireString(value, argumentName, [argumentIndex])](#Basic.requireString)
+    * [.requireBigint(value, argumentName, [argumentIndex])](#Basic.requireBigint)
+    * [.requireArray(value, argumentName, [argumentIndex])](#Basic.requireArray)
+    * [.requireObject(value, argumentName, [argumentIndex])](#Basic.requireObject)
+    * [.requireSupported(value, argumentName, [argumentIndex])](#Basic.requireSupported)
+    * [.requireComparableSupported(value, argumentName, [argumentIndex])](#Basic.requireComparableSupported)
+    * [.requireValidator(value, argumentName, [argumentIndex])](#Basic.requireValidator)
 
-<a name="new_ComplexValidator_new"></a>
+<a name="Basic.isBoolean"></a>
 
-### new ComplexValidator(mode)
+### Basic.isBoolean(value) ⇒ <code>boolean</code>
+Check whether a value is a boolean value.
 
-| Param | Type                | Description                   |
-| ----- | ------------------- | ----------------------------- |
-| mode  | <code>object</code> | A condition combination mode. |
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a boolean value.  
 
-<a name="ComplexValidator+description"></a>
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
 
-### complexValidator.description : <code>string</code>
-A description.
+<a name="Basic.isNumber"></a>
 
-**Kind**: instance property of [<code>ComplexValidator</code>](#ComplexValidator)  
-<a name="ComplexValidator+throwWhenNotSupportedTypeError_"></a>
+### Basic.isNumber(value) ⇒ <code>boolean</code>
+Check whether a value is a number value.
 
-### complexValidator.throwWhenNotSupportedTypeError\_(value)
-**Kind**: instance method of [<code>ComplexValidator</code>](#ComplexValidator)  
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a number value.  
 
-| Param | Type             |
-| ----- | ---------------- |
-| value | <code>any</code> |
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
 
-<a name="ComplexValidator+add"></a>
+<a name="Basic.isString"></a>
 
-### complexValidator.add(validator) ⇒ <code>Validator</code>
-Add a validator.
+### Basic.isString(value) ⇒ <code>boolean</code>
+Check whether a value is a string value.
 
-**Kind**: instance method of [<code>ComplexValidator</code>](#ComplexValidator)  
-**Returns**: <code>Validator</code> - - The validator.  
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a string value.  
 
-| Param     | Type                                                                         | Description  |
-| --------- | ---------------------------------------------------------------------------- | ------------ |
-| validator | <code>Validator</code> \| [<code>ComplexValidator</code>](#ComplexValidator) | A validator. |
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
 
-<a name="ComplexValidator+validate"></a>
+<a name="Basic.isBigint"></a>
 
-### complexValidator.validate(input) ⇒ <code>boolean</code>
-Check whether an input value satisfies all conditions.
+### Basic.isBigint(value) ⇒ <code>boolean</code>
+Check whether a value is a bigint value.
 
-**Kind**: instance method of [<code>ComplexValidator</code>](#ComplexValidator)  
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a bigint value.  
 
-| Param | Type             | Description           |
-| ----- | ---------------- | --------------------- |
-| input | <code>any</code> | An input to validate. |
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
 
-<a name="ComplexValidator+toString"></a>
+<a name="Basic.isArray"></a>
 
-### complexValidator.toString() ⇒ <code>string</code>
-Converts object to string.
+### Basic.isArray(value) ⇒ <code>boolean</code>
+Check whether a value is an array value.
 
-**Kind**: instance method of [<code>ComplexValidator</code>](#ComplexValidator)  
-**Returns**: <code>string</code> - - A string representation.  
-<a name="Mode"></a>
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is an array value.  
 
-## Mode
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isObject"></a>
+
+### Basic.isObject(value) ⇒ <code>boolean</code>
+Check whether a value is an object value.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is an object value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isSupported"></a>
+
+### Basic.isSupported(value) ⇒ <code>boolean</code>
+Check whether a value is a supported validator type value.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a supported validator type value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isComparableSupported"></a>
+
+### Basic.isComparableSupported(value) ⇒ <code>boolean</code>
+Check whether a value is a supported comparable validator type value.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a supported comparable validator type value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isValidator"></a>
+
+### Basic.isValidator(value) ⇒ <code>boolean</code>
+Check whether a value is a validator value.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+**Returns**: <code>boolean</code> - - Whether a value is a validator value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.requireTypeByPredicate_"></a>
+
+### Basic.requireTypeByPredicate\_(predicate, value, argumentName, [argumentIndex])
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                   | Description        |
+| --------------- | ---------------------- | ------------------ |
+| predicate       | <code>Predicate</code> | A predicate.       |
+| value           | <code>any</code>       | A value.           |
+| argumentName    | <code>string</code>    | An argument name.  |
+| [argumentIndex] | <code>number</code>    | An argument index. |
+
+<a name="Basic.requireBoolean"></a>
+
+### Basic.requireBoolean(value, argumentName, [argumentIndex])
+Check whether a value is a boolean value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireNumber"></a>
+
+### Basic.requireNumber(value, argumentName, [argumentIndex])
+Check whether a value is a number value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireString"></a>
+
+### Basic.requireString(value, argumentName, [argumentIndex])
+Check whether a value is a string value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireBigint"></a>
+
+### Basic.requireBigint(value, argumentName, [argumentIndex])
+Check whether a value is a bigint value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireArray"></a>
+
+### Basic.requireArray(value, argumentName, [argumentIndex])
+Check whether a value is an array value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireObject"></a>
+
+### Basic.requireObject(value, argumentName, [argumentIndex])
+Check whether a value is an object value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireSupported"></a>
+
+### Basic.requireSupported(value, argumentName, [argumentIndex])
+Check whether a value is a basic supported validator type value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireComparableSupported"></a>
+
+### Basic.requireComparableSupported(value, argumentName, [argumentIndex])
+Check whether a value is a basic supported comparable validator type value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireValidator"></a>
+
+### Basic.requireValidator(value, argumentName, [argumentIndex])
+Check whether a value is a validator value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+## Functions
+
+<dl>
+<dt><a href="#isBasicBoolean">isBasicBoolean(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a boolean value.</p>
+</dd>
+<dt><a href="#isBasicNumber">isBasicNumber(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a number value.</p>
+</dd>
+<dt><a href="#isBasicString">isBasicString(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a string value.</p>
+</dd>
+<dt><a href="#isBasicBigint">isBasicBigint(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a bigint value.</p>
+</dd>
+<dt><a href="#isBasicArray">isBasicArray(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is an array value.</p>
+</dd>
+<dt><a href="#isBasicObject">isBasicObject(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is an object value.</p>
+</dd>
+<dt><a href="#isBasicSupported">isBasicSupported(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a supported validator type value.</p>
+</dd>
+<dt><a href="#isBasicComparableSupported">isBasicComparableSupported(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a supported comparable validator type value.</p>
+</dd>
+<dt><a href="#isBasicValidator">isBasicValidator(value)</a> ⇒ <code>boolean</code></dt>
+<dd><p>Check whether a value is a validator value.</p>
+</dd>
+<dt><a href="#requireBasicBoolean">requireBasicBoolean(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is a boolean value and throw if not.</p>
+</dd>
+<dt><a href="#requireBasicNumber">requireBasicNumber(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is a number value and throw if not.</p>
+</dd>
+<dt><a href="#requireBasicString">requireBasicString(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is a string value and throw if not.</p>
+</dd>
+<dt><a href="#requireBasicBigint">requireBasicBigint(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is a bigint value and throw if not.</p>
+</dd>
+<dt><a href="#requireBasicArray">requireBasicArray(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is an array value and throw if not.</p>
+</dd>
+<dt><a href="#requireBasicObject">requireBasicObject(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is an object value and throw if not.</p>
+</dd>
+<dt><a href="#requireBasicValidator">requireBasicValidator(value, argumentName, [argumentIndex])</a></dt>
+<dd><p>Check whether a value is a validator value and throw if not.</p>
+</dd>
+</dl>
+
+<a name="isBasicBoolean"></a>
+
+## isBasicBoolean(value) ⇒ <code>boolean</code>
+Check whether a value is a boolean value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a boolean value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicNumber"></a>
+
+## isBasicNumber(value) ⇒ <code>boolean</code>
+Check whether a value is a number value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a number value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicString"></a>
+
+## isBasicString(value) ⇒ <code>boolean</code>
+Check whether a value is a string value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a string value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicBigint"></a>
+
+## isBasicBigint(value) ⇒ <code>boolean</code>
+Check whether a value is a bigint value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a bigint value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicArray"></a>
+
+## isBasicArray(value) ⇒ <code>boolean</code>
+Check whether a value is an array value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is an array value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicObject"></a>
+
+## isBasicObject(value) ⇒ <code>boolean</code>
+Check whether a value is an object value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is an object value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicSupported"></a>
+
+## isBasicSupported(value) ⇒ <code>boolean</code>
+Check whether a value is a supported validator type value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a supported validator type value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicComparableSupported"></a>
+
+## isBasicComparableSupported(value) ⇒ <code>boolean</code>
+Check whether a value is a supported comparable validator type value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a supported comparable validator type value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="isBasicValidator"></a>
+
+## isBasicValidator(value) ⇒ <code>boolean</code>
+Check whether a value is a validator value.
+
+**Kind**: global function  
+**Returns**: <code>boolean</code> - - Whether a value is a validator value.  
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="requireBasicBoolean"></a>
+
+## requireBasicBoolean(value, argumentName, [argumentIndex])
+Check whether a value is a boolean value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="requireBasicNumber"></a>
+
+## requireBasicNumber(value, argumentName, [argumentIndex])
+Check whether a value is a number value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="requireBasicString"></a>
+
+## requireBasicString(value, argumentName, [argumentIndex])
+Check whether a value is a string value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="requireBasicBigint"></a>
+
+## requireBasicBigint(value, argumentName, [argumentIndex])
+Check whether a value is a bigint value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="requireBasicArray"></a>
+
+## requireBasicArray(value, argumentName, [argumentIndex])
+Check whether a value is an array value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="requireBasicObject"></a>
+
+## requireBasicObject(value, argumentName, [argumentIndex])
+Check whether a value is an object value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+<a name="requireBasicValidator"></a>
+
+## requireBasicValidator(value, argumentName, [argumentIndex])
+Check whether a value is a validator value and throw if not.
+
+**Kind**: global function  
+
+| Param           | Type                | Description        |
+| --------------- | ------------------- | ------------------ |
+| value           | <code>any</code>    | A value.           |
+| argumentName    | <code>string</code> | An argument name.  |
+| [argumentIndex] | <code>number</code> | An argument index. |
+
+## Members
+
+<dl>
+<dt><a href="#ComplexValidatorMode">ComplexValidatorMode</a></dt>
+<dd><p>Complex validator mode.</p>
+</dd>
+<dt><a href="#ActionMode">ActionMode</a></dt>
+<dd><p>Action constraint mode.</p>
+</dd>
+<dt><a href="#ActionTargetMode">ActionTargetMode</a></dt>
+<dd><p>Action target mode.</p>
+</dd>
+</dl>
+
+<a name="ComplexValidatorMode"></a>
+
+## ComplexValidatorMode
 Complex validator mode.
+
+**Kind**: global variable  
+<a name="ActionMode"></a>
+
+## ActionMode
+Action constraint mode.
+
+**Kind**: global variable  
+<a name="ActionTargetMode"></a>
+
+## ActionTargetMode
+Action target mode.
 
 **Kind**: global variable  
 ## Functions
 
 <dl>
+<dt><a href="#isExistingUrl_">isExistingUrl_(url)</a> ⇒ <code>boolean</code></dt>
+<dd></dd>
 <dt><a href="#isTrue">isTrue()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is true.</p>
 </dd>
@@ -88,11 +565,26 @@ Complex validator mode.
 <dt><a href="#isNegative">isNegative()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is a negative number.</p>
 </dd>
-<dt><a href="#isIn">isIn(fromConstraint, toConstraint)</a> ⇒ <code>Validator</code></dt>
+<dt><a href="#isIn">isIn(from, to)</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is a number in range.</p>
+</dd>
+<dt><a href="#isEmptyString">isEmptyString()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Check whether object is an empty string.</p>
 </dd>
 <dt><a href="#isNotEmptyString">isNotEmptyString()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is not an empty string.</p>
+</dd>
+<dt><a href="#isMatching">isMatching(regex)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Check whether object is a string matching regular expression.</p>
+</dd>
+<dt><a href="#isNotMatching">isNotMatching(regex)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Check whether object is a string not matching regular expression.</p>
+</dd>
+<dt><a href="#isUrl">isUrl()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Check whether object is a URL string.</p>
+</dd>
+<dt><a href="#isNotUrl">isNotUrl()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Check whether object is not a URL string.</p>
 </dd>
 <dt><a href="#isVector2D">isVector2D()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is a 2D vector.</p>
@@ -116,6 +608,15 @@ Complex validator mode.
 <dd><p>Check whether object is a color.</p>
 </dd>
 </dl>
+
+<a name="isExistingUrl_"></a>
+
+## isExistingUrl\_(url) ⇒ <code>boolean</code>
+**Kind**: global function  
+
+| Param | Type                |
+| ----- | ------------------- |
+| url   | <code>string</code> |
 
 <a name="isTrue"></a>
 
@@ -147,17 +648,24 @@ Check whether object is a negative number.
 **Returns**: <code>Validator</code> - - Check whether object is a negative number.  
 <a name="isIn"></a>
 
-## isIn(fromConstraint, toConstraint) ⇒ <code>Validator</code>
+## isIn(from, to) ⇒ <code>Validator</code>
 Check whether object is a number in range.
 
 **Kind**: global function  
 **Returns**: <code>Validator</code> - - Check whether object is a number in range.  
 
-| Param          | Type                            | Description           |
-| -------------- | ------------------------------- | --------------------- |
-| fromConstraint | <code>BaseComparableType</code> | A lowest constraint.  |
-| toConstraint   | <code>BaseComparableType</code> | A highest constraint. |
+| Param | Type                            | Description           |
+| ----- | ------------------------------- | --------------------- |
+| from  | <code>BaseComparableType</code> | A lowest constraint.  |
+| to    | <code>BaseComparableType</code> | A highest constraint. |
 
+<a name="isEmptyString"></a>
+
+## isEmptyString() ⇒ <code>Validator</code>
+Check whether object is an empty string.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - Check whether object is an empty string.  
 <a name="isNotEmptyString"></a>
 
 ## isNotEmptyString() ⇒ <code>Validator</code>
@@ -165,6 +673,44 @@ Check whether object is not an empty string.
 
 **Kind**: global function  
 **Returns**: <code>Validator</code> - - Check whether object is not an empty string.  
+<a name="isMatching"></a>
+
+## isMatching(regex) ⇒ <code>Validator</code>
+Check whether object is a string matching regular expression.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - Check whether object is a string matching regular expression.  
+
+| Param | Type                | Description           |
+| ----- | ------------------- | --------------------- |
+| regex | <code>RegExp</code> | A regular expression. |
+
+<a name="isNotMatching"></a>
+
+## isNotMatching(regex) ⇒ <code>Validator</code>
+Check whether object is a string not matching regular expression.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - Check whether object is a string not matching regular expression.  
+
+| Param | Type                | Description           |
+| ----- | ------------------- | --------------------- |
+| regex | <code>RegExp</code> | A regular expression. |
+
+<a name="isUrl"></a>
+
+## isUrl() ⇒ <code>Validator</code>
+Check whether object is a URL string.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - Check whether object is a URL string.  
+<a name="isNotUrl"></a>
+
+## isNotUrl() ⇒ <code>Validator</code>
+Check whether object is not a URL string.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - Check whether object is not a URL string.  
 <a name="isVector2D"></a>
 
 ## isVector2D() ⇒ <code>Validator</code>
@@ -288,15 +834,6 @@ A basic comparable type.
 <dt><a href="#isObject">isObject()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be object.</p>
 </dd>
-<dt><a href="#isAnyOf">isAnyOf()</a> ⇒ <code>Array.&lt;(Validator|ComplexValidator)&gt;</code></dt>
-<dd><p>Require value to be any of.</p>
-</dd>
-<dt><a href="#isOneOf">isOneOf()</a> ⇒ <code>Array.&lt;(Validator|ComplexValidator)&gt;</code></dt>
-<dd><p>Require value to be one of.</p>
-</dd>
-<dt><a href="#isAllOf">isAllOf()</a> ⇒ <code>Array.&lt;(Validator|ComplexValidator)&gt;</code></dt>
-<dd><p>Require value to be all of.</p>
-</dd>
 <dt><a href="#checkWhether">checkWhether(input, validator)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Check whether value satisfies all conditions.</p>
 </dd>
@@ -347,27 +884,6 @@ Require value to be object.
 
 **Kind**: global function  
 **Returns**: <code>Validator</code> - - The validator.  
-<a name="isAnyOf"></a>
-
-## isAnyOf() ⇒ <code>Array.&lt;(Validator\|ComplexValidator)&gt;</code>
-Require value to be any of.
-
-**Kind**: global function  
-**Returns**: <code>Array.&lt;(Validator\|ComplexValidator)&gt;</code> - - The validator.  
-<a name="isOneOf"></a>
-
-## isOneOf() ⇒ <code>Array.&lt;(Validator\|ComplexValidator)&gt;</code>
-Require value to be one of.
-
-**Kind**: global function  
-**Returns**: <code>Array.&lt;(Validator\|ComplexValidator)&gt;</code> - - The validator.  
-<a name="isAllOf"></a>
-
-## isAllOf() ⇒ <code>Array.&lt;(Validator\|ComplexValidator)&gt;</code>
-Require value to be all of.
-
-**Kind**: global function  
-**Returns**: <code>Array.&lt;(Validator\|ComplexValidator)&gt;</code> - - The validator.  
 <a name="checkWhether"></a>
 
 ## checkWhether(input, validator) ⇒ <code>boolean</code>
@@ -376,10 +892,10 @@ Check whether value satisfies all conditions.
 **Kind**: global function  
 **Returns**: <code>boolean</code> - - Whether value satisfies all conditions.  
 
-| Param     | Type                                                    | Description  |
-| --------- | ------------------------------------------------------- | ------------ |
-| input     | <code>any</code>                                        | An input.    |
-| validator | <code>Validator</code> \| <code>ComplexValidator</code> | A validator. |
+| Param     | Type                   | Description  |
+| --------- | ---------------------- | ------------ |
+| input     | <code>any</code>       | An input.    |
+| validator | <code>Validator</code> | A validator. |
 
 <a name="throwOnFailure"></a>
 
@@ -388,115 +904,65 @@ Check whether value satisfies all conditions and print error in case.
 
 **Kind**: global function  
 
-| Param     | Type                                                    | Description  |
-| --------- | ------------------------------------------------------- | ------------ |
-| input     | <code>any</code>                                        | An input.    |
-| validator | <code>Validator</code> \| <code>ComplexValidator</code> | A validator. |
+| Param     | Type                   | Description  |
+| --------- | ---------------------- | ------------ |
+| input     | <code>any</code>       | An input.    |
+| validator | <code>Validator</code> | A validator. |
 
 <a name="Validator"></a>
 
 ## Validator
-Basic validator.
+A validator.
 
 **Kind**: global class  
 
-- [ComplexValidator](#complexvalidator)
-  - [new ComplexValidator(mode)](#new-complexvalidatormode)
-  - [complexValidator.description : string](#complexvalidatordescription--string)
-  - [complexValidator.throwWhenNotSupportedTypeError\_(value)](#complexvalidatorthrowwhennotsupportedtypeerror_value)
-  - [complexValidator.add(validator) ⇒ Validator](#complexvalidatoraddvalidator--validator)
-  - [complexValidator.validate(input) ⇒ boolean](#complexvalidatorvalidateinput--boolean)
-  - [complexValidator.toString() ⇒ string](#complexvalidatortostring--string)
-- [Mode](#mode)
-- [Functions](#functions)
-- [isTrue() ⇒ Validator](#istrue--validator)
-- [isFalse() ⇒ Validator](#isfalse--validator)
-- [isPositive() ⇒ Validator](#ispositive--validator)
-- [isNegative() ⇒ Validator](#isnegative--validator)
-- [isIn(fromConstraint, toConstraint) ⇒ Validator](#isinfromconstraint-toconstraint--validator)
-- [isNotEmptyString() ⇒ Validator](#isnotemptystring--validator)
-- [isVector2D() ⇒ Validator](#isvector2d--validator)
-- [isVector3D() ⇒ Validator](#isvector3d--validator)
-- [isRange() ⇒ Validator](#isrange--validator)
-- [isSteppedRange() ⇒ Validator](#issteppedrange--validator)
-- [isSize2D() ⇒ Validator](#issize2d--validator)
-- [isSize3D() ⇒ Validator](#issize3d--validator)
-- [isColor() ⇒ Validator](#iscolor--validator)
-- [Typedefs](#typedefs)
-- [Predicate ⇒ boolean](#predicate--boolean)
-- [WherePredicate ⇒ Array.\<boolean\>](#wherepredicate--arrayboolean)
-- [BaseType : "boolean" | "number" | "string" | "bigint" | "array" | "object"](#basetype--boolean--number--string--bigint--array--object)
-- [BaseComparableType : "boolean" | "number" | "string" | "bigint"](#basecomparabletype--boolean--number--string--bigint)
-- [Functions](#functions-1)
-- [isBoolean() ⇒ Validator](#isboolean--validator)
-- [isNumber() ⇒ Validator](#isnumber--validator)
-- [isString() ⇒ Validator](#isstring--validator)
-- [isBigint() ⇒ Validator](#isbigint--validator)
-- [isArray() ⇒ Validator](#isarray--validator)
-- [isObject() ⇒ Validator](#isobject--validator)
-- [isAnyOf() ⇒ Array.\<(Validator|ComplexValidator)\>](#isanyof--arrayvalidatorcomplexvalidator)
-- [isOneOf() ⇒ Array.\<(Validator|ComplexValidator)\>](#isoneof--arrayvalidatorcomplexvalidator)
-- [isAllOf() ⇒ Array.\<(Validator|ComplexValidator)\>](#isallof--arrayvalidatorcomplexvalidator)
-- [checkWhether(input, validator) ⇒ boolean](#checkwhetherinput-validator--boolean)
-- [throwOnFailure(input, validator)](#throwonfailureinput-validator)
-- [Validator](#validator)
-  - [new Validator(type)](#new-validatortype)
-  - [validator.expectedType : string](#validatorexpectedtype--string)
-  - [validator.expectedRequiredProperties : Array.\<string\>](#validatorexpectedrequiredproperties--arraystring)
-  - [validator.expectedOptionalProperties : Array.\<string\>](#validatorexpectedoptionalproperties--arraystring)
-  - [validator.description : string](#validatordescription--string)
-  - [validator.requireSomeTypeMessage\_(type)](#validatorrequiresometypemessage_type)
-  - [validator.throwWhenInputTypeIsNotCompatible\_(input)](#validatorthrowwheninputtypeisnotcompatible_input)
-  - [validator.requireCount\_(value)](#validatorrequirecount_value)
-  - [validator.requirePattern\_(value)](#validatorrequirepattern_value)
-  - [validator.requireTrue\_(value)](#validatorrequiretrue_value)
-  - [validator.requireRange\_(from, to)](#validatorrequirerange_from-to)
-  - [validator.requireValidator\_(value)](#validatorrequirevalidator_value)
-  - [validator.requireProperties\_(value)](#validatorrequireproperties_value)
-  - [validator.requirePredicate\_(value)](#validatorrequirepredicate_value)
-  - [validator.withAdditionalProperties\_(input, propertiesConstraint) ⇒ boolean](#validatorwithadditionalproperties_input-propertiesconstraint--boolean)
-  - [validator.lessThan(constant) ⇒ Validator](#validatorlessthanconstant--validator)
-  - [validator.greaterThan(constant) ⇒ Validator](#validatorgreaterthanconstant--validator)
-  - [validator.lessThanOrEqualTo(constant) ⇒ Validator](#validatorlessthanorequaltoconstant--validator)
-  - [validator.greaterThanOrEqualTo(constant) ⇒ Validator](#validatorgreaterthanorequaltoconstant--validator)
-  - [validator.equalTo(constant) ⇒ Validator](#validatorequaltoconstant--validator)
-  - [validator.notEqualTo(constant) ⇒ Validator](#validatornotequaltoconstant--validator)
-  - [validator.inRange(from, to) ⇒ Validator](#validatorinrangefrom-to--validator)
-  - [validator.notInRange(from, to) ⇒ Validator](#validatornotinrangefrom-to--validator)
-  - [validator.withLengthLessThan(count) ⇒ Validator](#validatorwithlengthlessthancount--validator)
-  - [validator.withLengthGreaterThan(count) ⇒ Validator](#validatorwithlengthgreaterthancount--validator)
-  - [validator.withLengthLessThanOrEqualTo(count) ⇒ Validator](#validatorwithlengthlessthanorequaltocount--validator)
-  - [validator.withLengthGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithlengthgreaterthanorequaltocount--validator)
-  - [validator.withLengthEqualTo(count) ⇒ Validator](#validatorwithlengthequaltocount--validator)
-  - [validator.withLengthNotEqualTo(count) ⇒ Validator](#validatorwithlengthnotequaltocount--validator)
-  - [validator.withLengthInRange(from, to) ⇒ Validator](#validatorwithlengthinrangefrom-to--validator)
-  - [validator.withLengthNotInRange(from, to) ⇒ Validator](#validatorwithlengthnotinrangefrom-to--validator)
-  - [validator.matching(regex) ⇒ Validator](#validatormatchingregex--validator)
-  - [validator.notMatching(regex) ⇒ Validator](#validatornotmatchingregex--validator)
-  - [validator.withItems(items) ⇒ Validator](#validatorwithitemsitems--validator)
-  - [validator.withItemCountLessThan(count) ⇒ Validator](#validatorwithitemcountlessthancount--validator)
-  - [validator.withItemCountGreaterThan(count) ⇒ Validator](#validatorwithitemcountgreaterthancount--validator)
-  - [validator.withItemCountLessThanOrEqualTo(count) ⇒ Validator](#validatorwithitemcountlessthanorequaltocount--validator)
-  - [validator.withItemCountGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithitemcountgreaterthanorequaltocount--validator)
-  - [validator.withItemCountEqualTo(count) ⇒ Validator](#validatorwithitemcountequaltocount--validator)
-  - [validator.withItemCountNotEqualTo(count) ⇒ Validator](#validatorwithitemcountnotequaltocount--validator)
-  - [validator.withItemCountInRange(from, to) ⇒ Validator](#validatorwithitemcountinrangefrom-to--validator)
-  - [validator.withItemCountNotInRange(from, to) ⇒ Validator](#validatorwithitemcountnotinrangefrom-to--validator)
-  - [validator.withRequiredProperties(properties) ⇒ Validator](#validatorwithrequiredpropertiesproperties--validator)
-  - [validator.withOptionalProperties(properties) ⇒ Validator](#validatorwithoptionalpropertiesproperties--validator)
-  - [validator.withAdditionalProperties(properties) ⇒ Validator](#validatorwithadditionalpropertiesproperties--validator)
-  - [validator.withNotAdditionalProperties() ⇒ Validator](#validatorwithnotadditionalproperties--validator)
-  - [validator.withPropertyCountLessThan(constant) ⇒ Validator](#validatorwithpropertycountlessthanconstant--validator)
-  - [validator.withPropertyCountGreaterThan(constant) ⇒ Validator](#validatorwithpropertycountgreaterthanconstant--validator)
-  - [validator.withPropertyCountLessThanOrEqualTo(constant) ⇒ Validator](#validatorwithpropertycountlessthanorequaltoconstant--validator)
-  - [validator.withPropertyCountGreaterThanOrEqualTo(constant) ⇒ Validator](#validatorwithpropertycountgreaterthanorequaltoconstant--validator)
-  - [validator.withPropertyCountEqualTo(constant) ⇒ Validator](#validatorwithpropertycountequaltoconstant--validator)
-  - [validator.notWithPropertyCountEqualTo(constant) ⇒ Validator](#validatornotwithpropertycountequaltoconstant--validator)
-  - [validator.withPropertyCountInRange(from, to) ⇒ Validator](#validatorwithpropertycountinrangefrom-to--validator)
-  - [validator.withPropertyCountNotInRange(from, to) ⇒ Validator](#validatorwithpropertycountnotinrangefrom-to--validator)
-  - [validator.where(predicate) ⇒ Validator](#validatorwherepredicate--validator)
-  - [validator.validate(input) ⇒ boolean](#validatorvalidateinput--boolean)
-  - [validator.toString() ⇒ string](#validatortostring--string)
+* [Validator](#Validator)
+    * [new Validator(type)](#new_Validator_new)
+    * [.lessThan(constant)](#Validator+lessThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.greaterThan(constant)](#Validator+greaterThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.lessThanOrEqualTo(constant)](#Validator+lessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.greaterThanOrEqualTo(constant)](#Validator+greaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.equalTo(constant)](#Validator+equalTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.notEqualTo(constant)](#Validator+notEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.inRange(from, to)](#Validator+inRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.notInRange(from, to)](#Validator+notInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthLessThan(count)](#Validator+withLengthLessThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthGreaterThan(count)](#Validator+withLengthGreaterThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthLessThanOrEqualTo(count)](#Validator+withLengthLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthGreaterThanOrEqualTo(count)](#Validator+withLengthGreaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthEqualTo(count)](#Validator+withLengthEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthNotEqualTo(count)](#Validator+withLengthNotEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthInRange(from, to)](#Validator+withLengthInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.withLengthNotInRange(from, to)](#Validator+withLengthNotInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.matching(regex)](#Validator+matching) ⇒ [<code>Validator</code>](#Validator)
+    * [.notMatching(regex)](#Validator+notMatching) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItems(items)](#Validator+withItems) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountLessThan(count)](#Validator+withItemCountLessThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountGreaterThan(count)](#Validator+withItemCountGreaterThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountLessThanOrEqualTo(count)](#Validator+withItemCountLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountGreaterThanOrEqualTo(count)](#Validator+withItemCountGreaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountEqualTo(count)](#Validator+withItemCountEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountNotEqualTo(count)](#Validator+withItemCountNotEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountInRange(from, to)](#Validator+withItemCountInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.withItemCountNotInRange(from, to)](#Validator+withItemCountNotInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.withRequiredProperties(properties)](#Validator+withRequiredProperties) ⇒ [<code>Validator</code>](#Validator)
+    * [.withOptionalProperties(properties)](#Validator+withOptionalProperties) ⇒ [<code>Validator</code>](#Validator)
+    * [.withAdditionalProperties(properties)](#Validator+withAdditionalProperties) ⇒ [<code>Validator</code>](#Validator)
+    * [.withNotAdditionalProperties()](#Validator+withNotAdditionalProperties) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountLessThan(count)](#Validator+withPropertyCountLessThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountGreaterThan(count)](#Validator+withPropertyCountGreaterThan) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountLessThanOrEqualTo(count)](#Validator+withPropertyCountLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountGreaterThanOrEqualTo(count)](#Validator+withPropertyCountGreaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountEqualTo(count)](#Validator+withPropertyCountEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountNotEqualTo(count)](#Validator+withPropertyCountNotEqualTo) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountInRange(from, to)](#Validator+withPropertyCountInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.withPropertyCountNotInRange(from, to)](#Validator+withPropertyCountNotInRange) ⇒ [<code>Validator</code>](#Validator)
+    * [.where(predicate)](#Validator+where) ⇒ [<code>Validator</code>](#Validator)
+    * [.andAnyOf(...validators)](#Validator+andAnyOf) ⇒ [<code>Validator</code>](#Validator)
+    * [.andOneOf(...validators)](#Validator+andOneOf) ⇒ [<code>Validator</code>](#Validator)
+    * [.andAllOf(...validators)](#Validator+andAllOf) ⇒ [<code>Validator</code>](#Validator)
+    * [.validate(input)](#Validator+validate) ⇒ <code>boolean</code>
+    * [.toJSONSchema()](#Validator+toJSONSchema) ⇒ <code>object</code>
 
 <a name="new_Validator_new"></a>
 
@@ -505,122 +971,6 @@ Basic validator.
 | Param | Type                  | Description |
 | ----- | --------------------- | ----------- |
 | type  | <code>BaseType</code> | A type.     |
-
-<a name="Validator+expectedType"></a>
-
-### validator.expectedType : <code>string</code>
-An expected type.
-
-**Kind**: instance property of [<code>Validator</code>](#Validator)  
-<a name="Validator+expectedRequiredProperties"></a>
-
-### validator.expectedRequiredProperties : <code>Array.&lt;string&gt;</code>
-Required properties.
-
-**Kind**: instance property of [<code>Validator</code>](#Validator)  
-<a name="Validator+expectedOptionalProperties"></a>
-
-### validator.expectedOptionalProperties : <code>Array.&lt;string&gt;</code>
-Optional properties.
-
-**Kind**: instance property of [<code>Validator</code>](#Validator)  
-<a name="Validator+description"></a>
-
-### validator.description : <code>string</code>
-A description.
-
-**Kind**: instance property of [<code>Validator</code>](#Validator)  
-<a name="Validator+requireSomeTypeMessage_"></a>
-
-### validator.requireSomeTypeMessage\_(type)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type                  |
-| ----- | --------------------- |
-| type  | <code>BaseType</code> |
-
-<a name="Validator+throwWhenInputTypeIsNotCompatible_"></a>
-
-### validator.throwWhenInputTypeIsNotCompatible\_(input)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type                |
-| ----- | ------------------- |
-| input | <code>string</code> |
-
-<a name="Validator+requireCount_"></a>
-
-### validator.requireCount\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type                |
-| ----- | ------------------- |
-| value | <code>string</code> |
-
-<a name="Validator+requirePattern_"></a>
-
-### validator.requirePattern\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type             |
-| ----- | ---------------- |
-| value | <code>any</code> |
-
-<a name="Validator+requireTrue_"></a>
-
-### validator.requireTrue\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type             |
-| ----- | ---------------- |
-| value | <code>any</code> |
-
-<a name="Validator+requireRange_"></a>
-
-### validator.requireRange\_(from, to)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type             |
-| ----- | ---------------- |
-| from  | <code>any</code> |
-| to    | <code>any</code> |
-
-<a name="Validator+requireValidator_"></a>
-
-### validator.requireValidator\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type             |
-| ----- | ---------------- |
-| value | <code>any</code> |
-
-<a name="Validator+requireProperties_"></a>
-
-### validator.requireProperties\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type             |
-| ----- | ---------------- |
-| value | <code>any</code> |
-
-<a name="Validator+requirePredicate_"></a>
-
-### validator.requirePredicate\_(value)
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param | Type                |
-| ----- | ------------------- |
-| value | <code>string</code> |
-
-<a name="Validator+withAdditionalProperties_"></a>
-
-### validator.withAdditionalProperties\_(input, propertiesConstraint) ⇒ <code>boolean</code>
-**Kind**: instance method of [<code>Validator</code>](#Validator)  
-
-| Param                | Type                                                                  |
-| -------------------- | --------------------------------------------------------------------- |
-| input                | <code>object</code>                                                   |
-| propertiesConstraint | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> |
 
 <a name="Validator+lessThan"></a>
 
@@ -850,9 +1200,9 @@ Require items to satisfy their constraints.
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param | Type                                                                  | Description  |
-| ----- | --------------------------------------------------------------------- | ------------ |
-| items | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> | Constraints. |
+| Param | Type                                 | Description  |
+| ----- | ------------------------------------ | ------------ |
+| items | [<code>Validator</code>](#Validator) | Constraints. |
 
 <a name="Validator+withItemCountLessThan"></a>
 
@@ -984,9 +1334,9 @@ Permit additional properties.
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param      | Type                                                                  | Description   |
-| ---------- | --------------------------------------------------------------------- | ------------- |
-| properties | [<code>Validator</code>](#Validator) \| <code>ComplexValidator</code> | A constraint. |
+| Param      | Type                                 | Description   |
+| ---------- | ------------------------------------ | ------------- |
+| properties | [<code>Validator</code>](#Validator) | A constraint. |
 
 <a name="Validator+withNotAdditionalProperties"></a>
 
@@ -997,75 +1347,75 @@ Require no additional properties.
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 <a name="Validator+withPropertyCountLessThan"></a>
 
-### validator.withPropertyCountLessThan(constant) ⇒ [<code>Validator</code>](#Validator)
+### validator.withPropertyCountLessThan(count) ⇒ [<code>Validator</code>](#Validator)
 Require property amount to be less than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param    | Type                            | Description |
-| -------- | ------------------------------- | ----------- |
-| constant | <code>BaseComparableType</code> | A constant. |
+| Param | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| count | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountGreaterThan"></a>
 
-### validator.withPropertyCountGreaterThan(constant) ⇒ [<code>Validator</code>](#Validator)
+### validator.withPropertyCountGreaterThan(count) ⇒ [<code>Validator</code>](#Validator)
 Require property amount to be greater than a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param    | Type                            | Description |
-| -------- | ------------------------------- | ----------- |
-| constant | <code>BaseComparableType</code> | A constant. |
+| Param | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| count | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountLessThanOrEqualTo"></a>
 
-### validator.withPropertyCountLessThanOrEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+### validator.withPropertyCountLessThanOrEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
 Require property amount to be less than or equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param    | Type                            | Description |
-| -------- | ------------------------------- | ----------- |
-| constant | <code>BaseComparableType</code> | A constant. |
+| Param | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| count | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountGreaterThanOrEqualTo"></a>
 
-### validator.withPropertyCountGreaterThanOrEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+### validator.withPropertyCountGreaterThanOrEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
 Require property amount to be greater than or equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param    | Type                            | Description |
-| -------- | ------------------------------- | ----------- |
-| constant | <code>BaseComparableType</code> | A constant. |
+| Param | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| count | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountEqualTo"></a>
 
-### validator.withPropertyCountEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+### validator.withPropertyCountEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
 Require property amount to be equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param    | Type                            | Description |
-| -------- | ------------------------------- | ----------- |
-| constant | <code>BaseComparableType</code> | A constant. |
+| Param | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| count | <code>BaseComparableType</code> | A constant. |
 
-<a name="Validator+notWithPropertyCountEqualTo"></a>
+<a name="Validator+withPropertyCountNotEqualTo"></a>
 
-### validator.notWithPropertyCountEqualTo(constant) ⇒ [<code>Validator</code>](#Validator)
+### validator.withPropertyCountNotEqualTo(count) ⇒ [<code>Validator</code>](#Validator)
 Require property amount not to be equal to a constant.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
 **Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
 
-| Param    | Type                            | Description |
-| -------- | ------------------------------- | ----------- |
-| constant | <code>BaseComparableType</code> | A constant. |
+| Param | Type                            | Description |
+| ----- | ------------------------------- | ----------- |
+| count | <code>BaseComparableType</code> | A constant. |
 
 <a name="Validator+withPropertyCountInRange"></a>
 
@@ -1105,6 +1455,42 @@ Require property relationships.
 | --------- | --------------------------- | ------------ |
 | predicate | <code>WherePredicate</code> | A predicate. |
 
+<a name="Validator+andAnyOf"></a>
+
+### validator.andAnyOf(...validators) ⇒ [<code>Validator</code>](#Validator)
+Require any of constraints to be satisfied.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param         | Type                                               | Description        |
+| ------------- | -------------------------------------------------- | ------------------ |
+| ...validators | [<code>Array.&lt;Validator&gt;</code>](#Validator) | Nested validators. |
+
+<a name="Validator+andOneOf"></a>
+
+### validator.andOneOf(...validators) ⇒ [<code>Validator</code>](#Validator)
+Require one of constraints to be satisfied.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param         | Type                                               | Description        |
+| ------------- | -------------------------------------------------- | ------------------ |
+| ...validators | [<code>Array.&lt;Validator&gt;</code>](#Validator) | Nested validators. |
+
+<a name="Validator+andAllOf"></a>
+
+### validator.andAllOf(...validators) ⇒ [<code>Validator</code>](#Validator)
+Require one of constraints to be satisfied.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param         | Type                                               | Description        |
+| ------------- | -------------------------------------------------- | ------------------ |
+| ...validators | [<code>Array.&lt;Validator&gt;</code>](#Validator) | Nested validators. |
+
 <a name="Validator+validate"></a>
 
 ### validator.validate(input) ⇒ <code>boolean</code>
@@ -1116,10 +1502,9 @@ Check whether an input value satisfies all conditions.
 | ----- | ---------------- | --------------------- |
 | input | <code>any</code> | An input to validate. |
 
-<a name="Validator+toString"></a>
+<a name="Validator+toJSONSchema"></a>
 
-### validator.toString() ⇒ <code>string</code>
-Converts object to string.
+### validator.toJSONSchema() ⇒ <code>object</code>
+Convert object to JSON schema (draft 04) representation.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
-**Returns**: <code>string</code> - - A string representation.  
