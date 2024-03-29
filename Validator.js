@@ -453,8 +453,8 @@ class Validator {
    * 
    * @returns {Validator} - The current validator.
    */
-  notWithPropertyCountEqualTo(count) {
-    this.simpleValidator_.notWithPropertyCountEqualTo(count)
+  withPropertyCountNotEqualTo(count) {
+    this.simpleValidator_.withPropertyCountNotEqualTo(count)
     return this
   }
 

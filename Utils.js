@@ -72,5 +72,5 @@ function checkWhether(input, validator) {
  */
 function throwOnFailure(input, validator) {
   if (!validator.validate(input))
-    throw new Error(`Expected object that: ${validator.description}`)
+    throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema())}`)
 }

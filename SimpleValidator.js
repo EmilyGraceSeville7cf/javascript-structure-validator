@@ -52,7 +52,9 @@ class SimpleValidator {
    * @param {string} value
    */
   requireCount_(value) {
-    if (typeof value !== "number" || value < 0)
+    Basic.requireNumber(value, "count")
+    
+    if (value < 0)
       throw new Error(`Count can't be ${typeof value} or negative number (actual value: ${value})`)
   }
 
@@ -82,22 +84,6 @@ class SimpleValidator {
 
     if (from > to)
       throw new Error(`Range [${to}..${from}] is expected, swap boundaries (actual range: [${from}..${to}])`)
-  }
-
-  /**
-   * @param {any} value
-   */
-  requireValidator_(value) {
-    if (![SimpleValidator, ComplexValidator].includes(value.constructor))
-      throw new Error(`Validator of Validator or ComplexValidator type is expected (actual constructor: ${value.constructor})`)
-  }
-
-  /**
-   * @param {any} value
-   */
-  requireProperties_(value) {
-    if (typeof value !== "object")
-      throw new Error(`Property definitions presented as object are expected (actual value: ${value})`)
   }
 
   /**
@@ -322,8 +308,7 @@ class SimpleValidator {
    * @param {BaseType} type - A type.
    */
   constructor(type) {
-    if (!["bigint", "boolean", "number", "object", "string", "array"].includes(type))
-      throw new TypeError(`Type ${type} is not supported by validator`)
+    Basic.requireSupported(type, "type")
 
     this.type_ = type
     this.isArray_ = false
@@ -715,7 +700,7 @@ class SimpleValidator {
    */
   withItems(items) {
     this.requireArrayType_()
-    this.requireValidator_(items)
+    Basic.requireValidator(items, "items")
 
     this.predicateDescriptions_.push(`with items: ${items.description}`)
     this.actions_.push(new ActionInfo_(ActionMode.BE,
@@ -903,7 +888,7 @@ class SimpleValidator {
    */
   withRequiredProperties(properties) {
     this.requireObjectType_()
-    this.requireProperties_(properties)
+    Basic.requireObject(properties, "properties")
 
     for (let requiredProperty in properties)
       this.requiredProperties_.push(requiredProperty)
@@ -925,7 +910,7 @@ class SimpleValidator {
           let validator = properties[requiredProperty]
 
           if (typeof validator !== "boolean") {
-            this.requireValidator_(validator)
+            Basic.requireValidator(validator, "validator")
 
             if (!validator.validate(input[requiredProperty]))
               return false
@@ -948,7 +933,7 @@ class SimpleValidator {
    */
   withOptionalProperties(properties) {
     this.requireObjectType_()
-    this.requireProperties_(properties)
+    Basic.requireObject(properties, "properties")
 
     for (let optionalProperty in properties)
       this.optionalProperties_.push(optionalProperty)
@@ -967,7 +952,7 @@ class SimpleValidator {
           let validator = properties[optionalProperty]
 
           if (typeof validator !== "boolean") {
-            this.requireValidator_(validator)
+            Basic.requireValidator(validator, "validator")
 
             if (input.hasOwnProperty(optionalProperty) && !validator.validate(input[optionalProperty]))
               return false
@@ -991,7 +976,7 @@ class SimpleValidator {
    */
   withAdditionalProperties(properties) {
     this.requireObjectType_()
-    this.requireValidator_(properties)
+    Basic.requireValidator(properties, "properties")
 
     this.predicateDescriptions_.push(`with additional properties: (${properties.description})`)
 
@@ -1144,7 +1129,7 @@ class SimpleValidator {
    * 
    * @returns {SimpleValidator} - The current validator.
    */
-  notWithPropertyCountEqualTo(count) {
+  withPropertyCountNotEqualTo(count) {
     this.requireObjectType_()
     this.requireCount_(count)
 

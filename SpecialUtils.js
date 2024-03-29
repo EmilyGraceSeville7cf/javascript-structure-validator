@@ -1,7 +1,7 @@
 /**
  * Check whether object is true.
  *  
- * @returns {SimpleValidator} - Check whether object is true.
+ * @returns {Validator} - Check whether object is true.
  */
 function isTrue() {
   return isBoolean().equalTo(true)
@@ -10,7 +10,7 @@ function isTrue() {
 /**
  * Check whether object is false.
  *  
- * @returns {SimpleValidator} - Check whether object is false.
+ * @returns {Validator} - Check whether object is false.
  */
 function isFalse() {
   return isBoolean().equalTo(false)
@@ -19,7 +19,7 @@ function isFalse() {
 /**
  * Check whether object is a positive number.
  *  
- * @returns {SimpleValidator} - Check whether object is a positive number.
+ * @returns {Validator} - Check whether object is a positive number.
  */
 function isPositive() {
   return isNumber().greaterThan(0)
@@ -28,7 +28,7 @@ function isPositive() {
 /**
  * Check whether object is a negative number.
  *  
- * @returns {SimpleValidator} - Check whether object is a negative number.
+ * @returns {Validator} - Check whether object is a negative number.
  */
 function isNegative() {
   return isNumber().lessThan(0)
@@ -37,19 +37,19 @@ function isNegative() {
 /**
  * Check whether object is a number in range.
  * 
- * @param {BaseComparableType} fromConstraint - A lowest constraint.
- * @param {BaseComparableType} toConstraint - A highest constraint.
+ * @param {BaseComparableType} from - A lowest constraint.
+ * @param {BaseComparableType} to - A highest constraint.
  * 
- * @returns {SimpleValidator} - Check whether object is a number in range.
+ * @returns {Validator} - Check whether object is a number in range.
  */
-function isIn(fromConstraint, toConstraint) {
-  return isNumber().inRange(fromConstraint, toConstraint)
+function isIn(from, to) {
+  return isNumber().inRange(from, to)
 }
 
 /**
  * Check whether object is not an empty string.
  *  
- * @returns {SimpleValidator} - Check whether object is not an empty string.
+ * @returns {Validator} - Check whether object is not an empty string.
  */
 function isNotEmptyString() {
   return isString().withLengthGreaterThan(0)
@@ -58,7 +58,7 @@ function isNotEmptyString() {
 /**
  * Check whether object is a 2D vector.
  * 
- * @returns {SimpleValidator} - Check whether object is a 2D vector.
+ * @returns {Validator} - Check whether object is a 2D vector.
  */
 function isVector2D() {
   return isObject().with({
@@ -70,75 +70,77 @@ function isVector2D() {
 /**
  * Check whether object is a 3D vector.
  * 
- * @returns {SimpleValidator} - Check whether object is a 3D vector.
+ * @returns {Validator} - Check whether object is a 3D vector.
  */
 function isVector3D() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     x: isNumber(),
     y: isNumber(),
     z: isNumber()
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }
 
 /**
  * Check whether object is a range.
  * 
- * @returns {SimpleValidator} - Check whether object is a range.
+ * @returns {Validator} - Check whether object is a range.
  */
 function isRange() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     from: isNumber(),
     to: isNumber(),
-  }).andNothingElse()
+  }).where(range => [range.from <= range.to])
+    .withNotAdditionalProperties()
 }
 
 /**
  * Check whether object is a stepped range.
  * 
- * @returns {SimpleValidator} - Check whether object is a stepped range.
+ * @returns {Validator} - Check whether object is a stepped range.
  */
 function isSteppedRange() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     from: isNumber(),
     to: isNumber(),
     step: isNumber().greaterThan(0)
-  }).andNothingElse()
+  }).where(range => [range.from <= range.to])
+    .withNotAdditionalProperties()
 }
 
 /**
  * Check whether object is a 2D size.
  * 
- * @returns {SimpleValidator} - Check whether object is a 2D size.
+ * @returns {Validator} - Check whether object is a 2D size.
  */
 function isSize2D() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     width: isNumber().greaterThan(0),
     height: isNumber().greaterThan(0)
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }
 
 /**
  * Check whether object is a 3D size.
  * 
- * @returns {SimpleValidator} - Check whether object is a 3D size.
+ * @returns {Validator} - Check whether object is a 3D size.
  */
 function isSize3D() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     width: isNumber().greaterThan(0),
     height: isNumber().greaterThan(0),
     depth: isNumber().greaterThan(0)
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }
 
 /**
  * Check whether object is a color.
  * 
- * @returns {SimpleValidator} - Check whether object is a color.
+ * @returns {Validator} - Check whether object is a color.
  */
 function isColor() {
-  return isObject().with({
+  return isObject().withRequiredProperties({
     red: isNumber().inRange(0, 255),
     green: isNumber().inRange(0, 255),
     blue: isNumber().inRange(0, 255)
-  }).andNothingElse()
+  }).withNotAdditionalProperties()
 }

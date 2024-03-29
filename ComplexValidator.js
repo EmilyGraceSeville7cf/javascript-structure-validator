@@ -7,8 +7,8 @@ class ComplexValidator {
    * @param {object} mode - A condition combination mode.
    */
   constructor(validators, mode) {
-    requireBasicArray(validators, "validators")
-    validators.forEach((validator, index) => requireBasicValidator(validator, "validators", index))
+    Basic.requireArray(validators, "validators")
+    validators.forEach((validator, index) => Basic.requireValidator(validator, "validators", index))
 
     this.validators = validators
     this.mode = mode
