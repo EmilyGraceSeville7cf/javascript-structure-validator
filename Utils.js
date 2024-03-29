@@ -53,6 +53,39 @@ function isObject() {
 }
 
 /**
+ * Require any of constraints to be satisfied.
+ * 
+ * @param {Array.<Validator>} validators - Validators.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isAnyOf(...validators) {
+  return new Validator().anyOf(...validators)
+}
+
+/**
+ * Require one of constraints to be satisfied.
+ * 
+ * @param {Array.<Validator>} validators - Validators.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isOneOf(...validators) {
+  return new Validator().oneOf(...validators)
+}
+
+/**
+ * Require all of constraints to be satisfied.
+ * 
+ * @param {Array.<Validator>} validators - Validators.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isAllOf(...validators) {
+  return new Validator().allOf(...validators)
+}
+
+/**
  * Check whether value satisfies all conditions.
  * 
  * @param {any} input - An input.

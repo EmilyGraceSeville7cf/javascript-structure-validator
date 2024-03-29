@@ -2,11 +2,18 @@
  * A validator.
  */
 class Validator {
+  requireSimpleValidator_() {
+    if (typeof this.simpleValidator_ === "undefined")
+      throw new Error("Type expected to be specified")
+  }
+
   /**
    * @param {BaseType} type - A type.
    */
   constructor(type) {
-    this.simpleValidator_ = new SimpleValidator(type)
+    if (typeof type !== "undefined")
+      this.simpleValidator_ = new SimpleValidator(type)
+
     this.complexValidators_ = []
   }
 
@@ -18,6 +25,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   lessThan(constant) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.lessThan(constant)
     return this
   }
@@ -30,6 +39,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   greaterThan(constant) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.greaterThan(constant)
     return this
   }
@@ -42,6 +53,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   lessThanOrEqualTo(constant) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.lessThanOrEqualTo(constant)
     return this
   }
@@ -54,6 +67,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   greaterThanOrEqualTo(constant) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.greaterThanOrEqualTo(constant)
     return this
   }
@@ -66,6 +81,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   equalTo(constant) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.equalTo(constant)
     return this
   }
@@ -78,6 +95,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   notEqualTo(constant) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.notEqualTo(constant)
     return this
   }
@@ -91,6 +110,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   inRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.inRange(from, to)
     return this
   }
@@ -104,6 +125,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   notInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.notInRange(from, to)
     return this
   }
@@ -116,6 +139,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthLessThan(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthLessThan(count)
     return this
   }
@@ -128,6 +153,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthGreaterThan(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthGreaterThan(count)
     return this
   }
@@ -140,6 +167,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthLessThanOrEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthLessThanOrEqualTo(count)
     return this
   }
@@ -152,6 +181,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthGreaterThanOrEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthGreaterThanOrEqualTo(count)
     return this
   }
@@ -164,6 +195,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthEqualTo(count)
     return this
   }
@@ -176,6 +209,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthNotEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthNotEqualTo(count)
     return this
   }
@@ -189,6 +224,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthInRange(from, to)
     return this
   }
@@ -202,6 +239,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withLengthNotInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withLengthNotInRange(from, to)
     return this
   }
@@ -214,6 +253,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   matching(regex) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.matching(regex)
     return this
   }
@@ -226,6 +267,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   notMatching(regex) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.notMatching(regex)
     return this
   }
@@ -238,6 +281,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItems(items) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItems(items)
     return this
   }
@@ -250,6 +295,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountLessThan(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountLessThan(count)
     return this
   }
@@ -262,6 +309,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountGreaterThan(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountGreaterThan(count)
     return this
   }
@@ -274,6 +323,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountLessThanOrEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountLessThanOrEqualTo(count)
     return this
   }
@@ -286,6 +337,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountGreaterThanOrEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountGreaterThanOrEqualTo(count)
     return this
   }
@@ -298,6 +351,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountEqualTo(count)
     return this
   }
@@ -310,6 +365,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountNotEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountNotEqualTo(count)
     return this
   }
@@ -323,6 +380,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountInRange(from, to)
     return this
   }
@@ -336,6 +395,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withItemCountNotInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withItemCountNotInRange(from, to)
     return this
   }
@@ -348,6 +409,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withRequiredProperties(properties) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withRequiredProperties(properties)
     return this
   }
@@ -360,6 +423,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withOptionalProperties(properties) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withOptionalProperties(properties)
     return this
   }
@@ -372,6 +437,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withAdditionalProperties(properties) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withAdditionalProperties(properties)
     return this
   }
@@ -382,6 +449,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withNotAdditionalProperties() {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withNotAdditionalProperties()
     return this
   }
@@ -394,6 +463,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountLessThan(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountLessThan(count)
     return this
   }
@@ -406,6 +477,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountGreaterThan(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountGreaterThan(count)
     return this
   }
@@ -418,6 +491,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountLessThanOrEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountLessThanOrEqualTo(count)
     return this
   }
@@ -430,6 +505,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountGreaterThanOrEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountGreaterThanOrEqualTo(count)
     return this
   }
@@ -442,6 +519,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountEqualTo(count)
     return this
   }
@@ -454,6 +533,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountNotEqualTo(count) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountNotEqualTo(count)
     return this
   }
@@ -467,6 +548,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountInRange(from, to)
     return this
   }
@@ -480,6 +563,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   withPropertyCountNotInRange(from, to) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.withPropertyCountNotInRange(from, to)
     return this
   }
@@ -492,6 +577,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   where(predicate) {
+    this.requireSimpleValidator_()
+
     this.simpleValidator_.where(predicate)
     return this
   }
@@ -504,6 +591,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   andAnyOf(...validators) {
+    this.requireSimpleValidator_()
+
     this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ANY_OF))
     return this
   }
@@ -516,6 +605,8 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   andOneOf(...validators) {
+    this.requireSimpleValidator_()
+
     this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ONE_OF))
     return this
   }
@@ -528,6 +619,44 @@ class Validator {
    * @returns {Validator} - The current validator.
    */
   andAllOf(...validators) {
+    this.requireSimpleValidator_()
+
+    this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ALL_OF))
+    return this
+  }
+
+  /**
+   * Require any of constraints to be satisfied.
+   * 
+   * @param {Array.<Validator>} validators - Nested validators.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  anyOf(...validators) {
+    this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ANY_OF))
+    return this
+  }
+
+  /**
+   * Require one of constraints to be satisfied.
+   * 
+   * @param {Array.<Validator>} validators - Nested validators.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  oneOf(...validators) {
+    this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ONE_OF))
+    return this
+  }
+
+  /**
+   * Require one of constraints to be satisfied.
+   * 
+   * @param {Array.<Validator>} validators - Nested validators.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  allOf(...validators) {
     this.complexValidators_.push(new ComplexValidator(validators, ComplexValidatorMode.ALL_OF))
     return this
   }
@@ -540,7 +669,11 @@ class Validator {
    * @returns {boolean}
    */
   validate(input) {
-    return this.simpleValidator_.validate(input) &&
+    var simpleConstraints = true
+    if (typeof this.simpleValidator_ !== "undefined")
+      simpleConstraints = this.simpleValidator_.validate(input)
+
+    return simpleConstraints &&
       this.complexValidators_.map(validator => validator.validate(input)).every(result => result === true)
   }
 
@@ -552,7 +685,8 @@ class Validator {
   toJSONSchema() {
     let schema = {}
 
-    Object.assign(schema, this.simpleValidator_.toJSONSchema())
+    if (typeof this.simpleValidator_ !== "undefined")
+      Object.assign(schema, this.simpleValidator_.toJSONSchema())
     this.complexValidators_.forEach(validator => Object.assign(schema, validator.toJSONSchema()))
 
     return schema
