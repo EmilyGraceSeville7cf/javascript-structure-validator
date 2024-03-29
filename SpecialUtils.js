@@ -1,3 +1,20 @@
+const urlRegex_ = new RegExp("^https?://")
+
+/**
+ * @param {string} url
+ * 
+ * @returns {boolean}
+ */
+function isExistingUrl_(url) {
+  try {
+    return UrlFetchApp.fetch(url, {
+      muteHttpExceptions: true
+    }).getResponseCode() === 200
+  } catch {
+    return false
+  }
+}
+
 /**
  * Check whether object is true.
  *  
@@ -47,12 +64,61 @@ function isIn(from, to) {
 }
 
 /**
+ * Check whether object is an empty string.
+ *  
+ * @returns {Validator} - Check whether object is an empty string.
+ */
+function isEmptyString() {
+  return isString().withLengthEqualTo(0)
+}
+
+/**
  * Check whether object is not an empty string.
  *  
  * @returns {Validator} - Check whether object is not an empty string.
  */
 function isNotEmptyString() {
   return isString().withLengthGreaterThan(0)
+}
+
+/**
+ * Check whether object is a string matching regular expression.
+ * 
+ * @param {RegExp} regex - A regular expression.
+ *  
+ * @returns {Validator} - Check whether object is a string matching regular expression.
+ */
+function isMatching(regex) {
+  return isString().matching(regex)
+}
+
+/**
+ * Check whether object is a string not matching regular expression.
+ * 
+ * @param {RegExp} regex - A regular expression.
+ *  
+ * @returns {Validator} - Check whether object is a string not matching regular expression.
+ */
+function isNotMatching(regex) {
+  return isString().notMatching(regex)
+}
+
+/**
+ * Check whether object is a URL string.
+ * 
+ * @returns {Validator} - Check whether object is a URL string.
+ */
+function isUrl() {
+  return isMatching(urlRegex_).where(url => [isExistingUrl_(url)])
+}
+
+/**
+ * Check whether object is not a URL string.
+ * 
+ * @returns {Validator} - Check whether object is not a URL string.
+ */
+function isNotUrl() {
+  return isNotMatching(urlRegex_)
 }
 
 /**
