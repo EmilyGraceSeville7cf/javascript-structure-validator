@@ -834,6 +834,15 @@ A basic comparable type.
 <dt><a href="#isObject">isObject()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be object.</p>
 </dd>
+<dt><a href="#isAnyOf">isAnyOf(...validators)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require any of constraints to be satisfied.</p>
+</dd>
+<dt><a href="#isOneOf">isOneOf(...validators)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require one of constraints to be satisfied.</p>
+</dd>
+<dt><a href="#isAllOf">isAllOf(...validators)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require all of constraints to be satisfied.</p>
+</dd>
 <dt><a href="#checkWhether">checkWhether(input, validator)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Check whether value satisfies all conditions.</p>
 </dd>
@@ -884,6 +893,42 @@ Require value to be object.
 
 **Kind**: global function  
 **Returns**: <code>Validator</code> - - The validator.  
+<a name="isAnyOf"></a>
+
+## isAnyOf(...validators) ⇒ <code>Validator</code>
+Require any of constraints to be satisfied.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - The validator.  
+
+| Param         | Type                                 | Description |
+| ------------- | ------------------------------------ | ----------- |
+| ...validators | <code>Array.&lt;Validator&gt;</code> | Validators. |
+
+<a name="isOneOf"></a>
+
+## isOneOf(...validators) ⇒ <code>Validator</code>
+Require one of constraints to be satisfied.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - The validator.  
+
+| Param         | Type                                 | Description |
+| ------------- | ------------------------------------ | ----------- |
+| ...validators | <code>Array.&lt;Validator&gt;</code> | Validators. |
+
+<a name="isAllOf"></a>
+
+## isAllOf(...validators) ⇒ <code>Validator</code>
+Require all of constraints to be satisfied.
+
+**Kind**: global function  
+**Returns**: <code>Validator</code> - - The validator.  
+
+| Param         | Type                                 | Description |
+| ------------- | ------------------------------------ | ----------- |
+| ...validators | <code>Array.&lt;Validator&gt;</code> | Validators. |
+
 <a name="checkWhether"></a>
 
 ## checkWhether(input, validator) ⇒ <code>boolean</code>
@@ -961,6 +1006,9 @@ A validator.
     * [.andAnyOf(...validators)](#Validator+andAnyOf) ⇒ [<code>Validator</code>](#Validator)
     * [.andOneOf(...validators)](#Validator+andOneOf) ⇒ [<code>Validator</code>](#Validator)
     * [.andAllOf(...validators)](#Validator+andAllOf) ⇒ [<code>Validator</code>](#Validator)
+    * [.anyOf(...validators)](#Validator+anyOf) ⇒ [<code>Validator</code>](#Validator)
+    * [.oneOf(...validators)](#Validator+oneOf) ⇒ [<code>Validator</code>](#Validator)
+    * [.allOf(...validators)](#Validator+allOf) ⇒ [<code>Validator</code>](#Validator)
     * [.validate(input)](#Validator+validate) ⇒ <code>boolean</code>
     * [.toJSONSchema()](#Validator+toJSONSchema) ⇒ <code>object</code>
 
@@ -1482,6 +1530,42 @@ Require one of constraints to be satisfied.
 <a name="Validator+andAllOf"></a>
 
 ### validator.andAllOf(...validators) ⇒ [<code>Validator</code>](#Validator)
+Require one of constraints to be satisfied.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param         | Type                                               | Description        |
+| ------------- | -------------------------------------------------- | ------------------ |
+| ...validators | [<code>Array.&lt;Validator&gt;</code>](#Validator) | Nested validators. |
+
+<a name="Validator+anyOf"></a>
+
+### validator.anyOf(...validators) ⇒ [<code>Validator</code>](#Validator)
+Require any of constraints to be satisfied.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param         | Type                                               | Description        |
+| ------------- | -------------------------------------------------- | ------------------ |
+| ...validators | [<code>Array.&lt;Validator&gt;</code>](#Validator) | Nested validators. |
+
+<a name="Validator+oneOf"></a>
+
+### validator.oneOf(...validators) ⇒ [<code>Validator</code>](#Validator)
+Require one of constraints to be satisfied.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)  
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.  
+
+| Param         | Type                                               | Description        |
+| ------------- | -------------------------------------------------- | ------------------ |
+| ...validators | [<code>Array.&lt;Validator&gt;</code>](#Validator) | Nested validators. |
+
+<a name="Validator+allOf"></a>
+
+### validator.allOf(...validators) ⇒ [<code>Validator</code>](#Validator)
 Require one of constraints to be satisfied.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)  
