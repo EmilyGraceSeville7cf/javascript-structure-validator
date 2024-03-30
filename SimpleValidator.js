@@ -1252,23 +1252,6 @@ class SimpleValidator {
   }
 
   /**
-   * A description.
-   * 
-   * @type {string}
-   */
-  get description() {
-    let prefix = ""
-    let suffix = ""
-
-    if (this.predicateDescriptions_.length > 1) {
-      prefix = "(",
-        suffix = ")"
-    }
-
-    return `${prefix}${this.predicateDescriptions_.join(", ")}${suffix}`
-  }
-
-  /**
    * Convert object to JSON schema (draft 07) representation.
    * 
    * @returns {object}
