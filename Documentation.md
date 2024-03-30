@@ -264,258 +264,6 @@ Check whether a value is a validator value and throw if not.
 | argumentName    | <code>string</code> | An argument name.  |
 | [argumentIndex] | <code>number</code> | An argument index. |
 
-## Functions
-
-<dl>
-<dt><a href="#isBasicBoolean">isBasicBoolean(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a boolean value.</p>
-</dd>
-<dt><a href="#isBasicNumber">isBasicNumber(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a number value.</p>
-</dd>
-<dt><a href="#isBasicString">isBasicString(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a string value.</p>
-</dd>
-<dt><a href="#isBasicBigint">isBasicBigint(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a bigint value.</p>
-</dd>
-<dt><a href="#isBasicArray">isBasicArray(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is an array value.</p>
-</dd>
-<dt><a href="#isBasicObject">isBasicObject(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is an object value.</p>
-</dd>
-<dt><a href="#isBasicSupported">isBasicSupported(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a supported validator type value.</p>
-</dd>
-<dt><a href="#isBasicComparableSupported">isBasicComparableSupported(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a supported comparable validator type value.</p>
-</dd>
-<dt><a href="#isBasicValidator">isBasicValidator(value)</a> ⇒ <code>boolean</code></dt>
-<dd><p>Check whether a value is a validator value.</p>
-</dd>
-<dt><a href="#requireBasicBoolean">requireBasicBoolean(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is a boolean value and throw if not.</p>
-</dd>
-<dt><a href="#requireBasicNumber">requireBasicNumber(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is a number value and throw if not.</p>
-</dd>
-<dt><a href="#requireBasicString">requireBasicString(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is a string value and throw if not.</p>
-</dd>
-<dt><a href="#requireBasicBigint">requireBasicBigint(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is a bigint value and throw if not.</p>
-</dd>
-<dt><a href="#requireBasicArray">requireBasicArray(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is an array value and throw if not.</p>
-</dd>
-<dt><a href="#requireBasicObject">requireBasicObject(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is an object value and throw if not.</p>
-</dd>
-<dt><a href="#requireBasicValidator">requireBasicValidator(value, argumentName, [argumentIndex])</a></dt>
-<dd><p>Check whether a value is a validator value and throw if not.</p>
-</dd>
-</dl>
-
-<a name="isBasicBoolean"></a>
-
-## isBasicBoolean(value) ⇒ <code>boolean</code>
-Check whether a value is a boolean value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a boolean value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicNumber"></a>
-
-## isBasicNumber(value) ⇒ <code>boolean</code>
-Check whether a value is a number value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a number value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicString"></a>
-
-## isBasicString(value) ⇒ <code>boolean</code>
-Check whether a value is a string value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a string value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicBigint"></a>
-
-## isBasicBigint(value) ⇒ <code>boolean</code>
-Check whether a value is a bigint value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a bigint value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicArray"></a>
-
-## isBasicArray(value) ⇒ <code>boolean</code>
-Check whether a value is an array value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is an array value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicObject"></a>
-
-## isBasicObject(value) ⇒ <code>boolean</code>
-Check whether a value is an object value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is an object value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicSupported"></a>
-
-## isBasicSupported(value) ⇒ <code>boolean</code>
-Check whether a value is a supported validator type value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a supported validator type value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicComparableSupported"></a>
-
-## isBasicComparableSupported(value) ⇒ <code>boolean</code>
-Check whether a value is a supported comparable validator type value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a supported comparable validator type value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="isBasicValidator"></a>
-
-## isBasicValidator(value) ⇒ <code>boolean</code>
-Check whether a value is a validator value.
-
-**Kind**: global function  
-**Returns**: <code>boolean</code> - - Whether a value is a validator value.  
-
-| Param | Type             | Description |
-| ----- | ---------------- | ----------- |
-| value | <code>any</code> | A value.    |
-
-<a name="requireBasicBoolean"></a>
-
-## requireBasicBoolean(value, argumentName, [argumentIndex])
-Check whether a value is a boolean value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
-<a name="requireBasicNumber"></a>
-
-## requireBasicNumber(value, argumentName, [argumentIndex])
-Check whether a value is a number value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
-<a name="requireBasicString"></a>
-
-## requireBasicString(value, argumentName, [argumentIndex])
-Check whether a value is a string value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
-<a name="requireBasicBigint"></a>
-
-## requireBasicBigint(value, argumentName, [argumentIndex])
-Check whether a value is a bigint value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
-<a name="requireBasicArray"></a>
-
-## requireBasicArray(value, argumentName, [argumentIndex])
-Check whether a value is an array value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
-<a name="requireBasicObject"></a>
-
-## requireBasicObject(value, argumentName, [argumentIndex])
-Check whether a value is an object value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
-<a name="requireBasicValidator"></a>
-
-## requireBasicValidator(value, argumentName, [argumentIndex])
-Check whether a value is a validator value and throw if not.
-
-**Kind**: global function  
-
-| Param           | Type                | Description        |
-| --------------- | ------------------- | ------------------ |
-| value           | <code>any</code>    | A value.           |
-| argumentName    | <code>string</code> | An argument name.  |
-| [argumentIndex] | <code>number</code> | An argument index. |
-
 ## Members
 
 <dl>
@@ -961,56 +709,117 @@ A validator.
 
 **Kind**: global class  
 
-* [Validator](#Validator)
-    * [new Validator(type)](#new_Validator_new)
-    * [.lessThan(constant)](#Validator+lessThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.greaterThan(constant)](#Validator+greaterThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.lessThanOrEqualTo(constant)](#Validator+lessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.greaterThanOrEqualTo(constant)](#Validator+greaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.equalTo(constant)](#Validator+equalTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.notEqualTo(constant)](#Validator+notEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.inRange(from, to)](#Validator+inRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.notInRange(from, to)](#Validator+notInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthLessThan(count)](#Validator+withLengthLessThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthGreaterThan(count)](#Validator+withLengthGreaterThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthLessThanOrEqualTo(count)](#Validator+withLengthLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthGreaterThanOrEqualTo(count)](#Validator+withLengthGreaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthEqualTo(count)](#Validator+withLengthEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthNotEqualTo(count)](#Validator+withLengthNotEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthInRange(from, to)](#Validator+withLengthInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.withLengthNotInRange(from, to)](#Validator+withLengthNotInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.matching(regex)](#Validator+matching) ⇒ [<code>Validator</code>](#Validator)
-    * [.notMatching(regex)](#Validator+notMatching) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItems(items)](#Validator+withItems) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountLessThan(count)](#Validator+withItemCountLessThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountGreaterThan(count)](#Validator+withItemCountGreaterThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountLessThanOrEqualTo(count)](#Validator+withItemCountLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountGreaterThanOrEqualTo(count)](#Validator+withItemCountGreaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountEqualTo(count)](#Validator+withItemCountEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountNotEqualTo(count)](#Validator+withItemCountNotEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountInRange(from, to)](#Validator+withItemCountInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.withItemCountNotInRange(from, to)](#Validator+withItemCountNotInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.withRequiredProperties(properties)](#Validator+withRequiredProperties) ⇒ [<code>Validator</code>](#Validator)
-    * [.withOptionalProperties(properties)](#Validator+withOptionalProperties) ⇒ [<code>Validator</code>](#Validator)
-    * [.withAdditionalProperties(properties)](#Validator+withAdditionalProperties) ⇒ [<code>Validator</code>](#Validator)
-    * [.withNotAdditionalProperties()](#Validator+withNotAdditionalProperties) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountLessThan(count)](#Validator+withPropertyCountLessThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountGreaterThan(count)](#Validator+withPropertyCountGreaterThan) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountLessThanOrEqualTo(count)](#Validator+withPropertyCountLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountGreaterThanOrEqualTo(count)](#Validator+withPropertyCountGreaterThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountEqualTo(count)](#Validator+withPropertyCountEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountNotEqualTo(count)](#Validator+withPropertyCountNotEqualTo) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountInRange(from, to)](#Validator+withPropertyCountInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.withPropertyCountNotInRange(from, to)](#Validator+withPropertyCountNotInRange) ⇒ [<code>Validator</code>](#Validator)
-    * [.where(predicate)](#Validator+where) ⇒ [<code>Validator</code>](#Validator)
-    * [.andAnyOf(...validators)](#Validator+andAnyOf) ⇒ [<code>Validator</code>](#Validator)
-    * [.andOneOf(...validators)](#Validator+andOneOf) ⇒ [<code>Validator</code>](#Validator)
-    * [.andAllOf(...validators)](#Validator+andAllOf) ⇒ [<code>Validator</code>](#Validator)
-    * [.anyOf(...validators)](#Validator+anyOf) ⇒ [<code>Validator</code>](#Validator)
-    * [.oneOf(...validators)](#Validator+oneOf) ⇒ [<code>Validator</code>](#Validator)
-    * [.allOf(...validators)](#Validator+allOf) ⇒ [<code>Validator</code>](#Validator)
-    * [.validate(input)](#Validator+validate) ⇒ <code>boolean</code>
-    * [.toJSONSchema()](#Validator+toJSONSchema) ⇒ <code>object</code>
+- [Basic](#basic)
+  - [Basic.isBoolean(value) ⇒ boolean](#basicisbooleanvalue--boolean)
+  - [Basic.isNumber(value) ⇒ boolean](#basicisnumbervalue--boolean)
+  - [Basic.isString(value) ⇒ boolean](#basicisstringvalue--boolean)
+  - [Basic.isBigint(value) ⇒ boolean](#basicisbigintvalue--boolean)
+  - [Basic.isArray(value) ⇒ boolean](#basicisarrayvalue--boolean)
+  - [Basic.isObject(value) ⇒ boolean](#basicisobjectvalue--boolean)
+  - [Basic.isSupported(value) ⇒ boolean](#basicissupportedvalue--boolean)
+  - [Basic.isComparableSupported(value) ⇒ boolean](#basiciscomparablesupportedvalue--boolean)
+  - [Basic.isValidator(value) ⇒ boolean](#basicisvalidatorvalue--boolean)
+  - [Basic.requireTypeByPredicate\_(predicate, value, argumentName, \[argumentIndex\])](#basicrequiretypebypredicate_predicate-value-argumentname-argumentindex)
+  - [Basic.requireBoolean(value, argumentName, \[argumentIndex\])](#basicrequirebooleanvalue-argumentname-argumentindex)
+  - [Basic.requireNumber(value, argumentName, \[argumentIndex\])](#basicrequirenumbervalue-argumentname-argumentindex)
+  - [Basic.requireString(value, argumentName, \[argumentIndex\])](#basicrequirestringvalue-argumentname-argumentindex)
+  - [Basic.requireBigint(value, argumentName, \[argumentIndex\])](#basicrequirebigintvalue-argumentname-argumentindex)
+  - [Basic.requireArray(value, argumentName, \[argumentIndex\])](#basicrequirearrayvalue-argumentname-argumentindex)
+  - [Basic.requireObject(value, argumentName, \[argumentIndex\])](#basicrequireobjectvalue-argumentname-argumentindex)
+  - [Basic.requireSupported(value, argumentName, \[argumentIndex\])](#basicrequiresupportedvalue-argumentname-argumentindex)
+  - [Basic.requireComparableSupported(value, argumentName, \[argumentIndex\])](#basicrequirecomparablesupportedvalue-argumentname-argumentindex)
+  - [Basic.requireValidator(value, argumentName, \[argumentIndex\])](#basicrequirevalidatorvalue-argumentname-argumentindex)
+- [Members](#members)
+- [ComplexValidatorMode](#complexvalidatormode)
+- [ActionMode](#actionmode)
+- [ActionTargetMode](#actiontargetmode)
+- [Functions](#functions)
+- [isExistingUrl\_(url) ⇒ boolean](#isexistingurl_url--boolean)
+- [isTrue() ⇒ Validator](#istrue--validator)
+- [isFalse() ⇒ Validator](#isfalse--validator)
+- [isPositive() ⇒ Validator](#ispositive--validator)
+- [isNegative() ⇒ Validator](#isnegative--validator)
+- [isIn(from, to) ⇒ Validator](#isinfrom-to--validator)
+- [isEmptyString() ⇒ Validator](#isemptystring--validator)
+- [isNotEmptyString() ⇒ Validator](#isnotemptystring--validator)
+- [isMatching(regex) ⇒ Validator](#ismatchingregex--validator)
+- [isNotMatching(regex) ⇒ Validator](#isnotmatchingregex--validator)
+- [isUrl() ⇒ Validator](#isurl--validator)
+- [isNotUrl() ⇒ Validator](#isnoturl--validator)
+- [isVector2D() ⇒ Validator](#isvector2d--validator)
+- [isVector3D() ⇒ Validator](#isvector3d--validator)
+- [isRange() ⇒ Validator](#isrange--validator)
+- [isSteppedRange() ⇒ Validator](#issteppedrange--validator)
+- [isSize2D() ⇒ Validator](#issize2d--validator)
+- [isSize3D() ⇒ Validator](#issize3d--validator)
+- [isColor() ⇒ Validator](#iscolor--validator)
+- [Typedefs](#typedefs)
+- [Predicate ⇒ boolean](#predicate--boolean)
+- [WherePredicate ⇒ Array.\<boolean\>](#wherepredicate--arrayboolean)
+- [BaseType : "boolean" | "number" | "string" | "bigint" | "array" | "object"](#basetype--boolean--number--string--bigint--array--object)
+- [BaseComparableType : "boolean" | "number" | "string" | "bigint"](#basecomparabletype--boolean--number--string--bigint)
+- [Functions](#functions-1)
+- [isBoolean() ⇒ Validator](#isboolean--validator)
+- [isNumber() ⇒ Validator](#isnumber--validator)
+- [isString() ⇒ Validator](#isstring--validator)
+- [isBigint() ⇒ Validator](#isbigint--validator)
+- [isArray() ⇒ Validator](#isarray--validator)
+- [isObject() ⇒ Validator](#isobject--validator)
+- [isAnyOf(...validators) ⇒ Validator](#isanyofvalidators--validator)
+- [isOneOf(...validators) ⇒ Validator](#isoneofvalidators--validator)
+- [isAllOf(...validators) ⇒ Validator](#isallofvalidators--validator)
+- [checkWhether(input, validator) ⇒ boolean](#checkwhetherinput-validator--boolean)
+- [throwOnFailure(input, validator)](#throwonfailureinput-validator)
+- [Validator](#validator)
+  - [new Validator(type)](#new-validatortype)
+  - [validator.lessThan(constant) ⇒ Validator](#validatorlessthanconstant--validator)
+  - [validator.greaterThan(constant) ⇒ Validator](#validatorgreaterthanconstant--validator)
+  - [validator.lessThanOrEqualTo(constant) ⇒ Validator](#validatorlessthanorequaltoconstant--validator)
+  - [validator.greaterThanOrEqualTo(constant) ⇒ Validator](#validatorgreaterthanorequaltoconstant--validator)
+  - [validator.equalTo(constant) ⇒ Validator](#validatorequaltoconstant--validator)
+  - [validator.notEqualTo(constant) ⇒ Validator](#validatornotequaltoconstant--validator)
+  - [validator.inRange(from, to) ⇒ Validator](#validatorinrangefrom-to--validator)
+  - [validator.notInRange(from, to) ⇒ Validator](#validatornotinrangefrom-to--validator)
+  - [validator.withLengthLessThan(count) ⇒ Validator](#validatorwithlengthlessthancount--validator)
+  - [validator.withLengthGreaterThan(count) ⇒ Validator](#validatorwithlengthgreaterthancount--validator)
+  - [validator.withLengthLessThanOrEqualTo(count) ⇒ Validator](#validatorwithlengthlessthanorequaltocount--validator)
+  - [validator.withLengthGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithlengthgreaterthanorequaltocount--validator)
+  - [validator.withLengthEqualTo(count) ⇒ Validator](#validatorwithlengthequaltocount--validator)
+  - [validator.withLengthNotEqualTo(count) ⇒ Validator](#validatorwithlengthnotequaltocount--validator)
+  - [validator.withLengthInRange(from, to) ⇒ Validator](#validatorwithlengthinrangefrom-to--validator)
+  - [validator.withLengthNotInRange(from, to) ⇒ Validator](#validatorwithlengthnotinrangefrom-to--validator)
+  - [validator.matching(regex) ⇒ Validator](#validatormatchingregex--validator)
+  - [validator.notMatching(regex) ⇒ Validator](#validatornotmatchingregex--validator)
+  - [validator.withItems(items) ⇒ Validator](#validatorwithitemsitems--validator)
+  - [validator.withItemCountLessThan(count) ⇒ Validator](#validatorwithitemcountlessthancount--validator)
+  - [validator.withItemCountGreaterThan(count) ⇒ Validator](#validatorwithitemcountgreaterthancount--validator)
+  - [validator.withItemCountLessThanOrEqualTo(count) ⇒ Validator](#validatorwithitemcountlessthanorequaltocount--validator)
+  - [validator.withItemCountGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithitemcountgreaterthanorequaltocount--validator)
+  - [validator.withItemCountEqualTo(count) ⇒ Validator](#validatorwithitemcountequaltocount--validator)
+  - [validator.withItemCountNotEqualTo(count) ⇒ Validator](#validatorwithitemcountnotequaltocount--validator)
+  - [validator.withItemCountInRange(from, to) ⇒ Validator](#validatorwithitemcountinrangefrom-to--validator)
+  - [validator.withItemCountNotInRange(from, to) ⇒ Validator](#validatorwithitemcountnotinrangefrom-to--validator)
+  - [validator.withRequiredProperties(properties) ⇒ Validator](#validatorwithrequiredpropertiesproperties--validator)
+  - [validator.withOptionalProperties(properties) ⇒ Validator](#validatorwithoptionalpropertiesproperties--validator)
+  - [validator.withAdditionalProperties(properties) ⇒ Validator](#validatorwithadditionalpropertiesproperties--validator)
+  - [validator.withNotAdditionalProperties() ⇒ Validator](#validatorwithnotadditionalproperties--validator)
+  - [validator.withPropertyCountLessThan(count) ⇒ Validator](#validatorwithpropertycountlessthancount--validator)
+  - [validator.withPropertyCountGreaterThan(count) ⇒ Validator](#validatorwithpropertycountgreaterthancount--validator)
+  - [validator.withPropertyCountLessThanOrEqualTo(count) ⇒ Validator](#validatorwithpropertycountlessthanorequaltocount--validator)
+  - [validator.withPropertyCountGreaterThanOrEqualTo(count) ⇒ Validator](#validatorwithpropertycountgreaterthanorequaltocount--validator)
+  - [validator.withPropertyCountEqualTo(count) ⇒ Validator](#validatorwithpropertycountequaltocount--validator)
+  - [validator.withPropertyCountNotEqualTo(count) ⇒ Validator](#validatorwithpropertycountnotequaltocount--validator)
+  - [validator.withPropertyCountInRange(from, to) ⇒ Validator](#validatorwithpropertycountinrangefrom-to--validator)
+  - [validator.withPropertyCountNotInRange(from, to) ⇒ Validator](#validatorwithpropertycountnotinrangefrom-to--validator)
+  - [validator.where(predicate) ⇒ Validator](#validatorwherepredicate--validator)
+  - [validator.andAnyOf(...validators) ⇒ Validator](#validatorandanyofvalidators--validator)
+  - [validator.andOneOf(...validators) ⇒ Validator](#validatorandoneofvalidators--validator)
+  - [validator.andAllOf(...validators) ⇒ Validator](#validatorandallofvalidators--validator)
+  - [validator.anyOf(...validators) ⇒ Validator](#validatoranyofvalidators--validator)
+  - [validator.oneOf(...validators) ⇒ Validator](#validatoroneofvalidators--validator)
+  - [validator.allOf(...validators) ⇒ Validator](#validatorallofvalidators--validator)
+  - [validator.validate(input) ⇒ boolean](#validatorvalidateinput--boolean)
+  - [validator.toJSONSchema() ⇒ object](#validatortojsonschema--object)
 
 <a name="new_Validator_new"></a>
 
