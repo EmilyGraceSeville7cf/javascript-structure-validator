@@ -771,6 +771,9 @@ A validator.
 
 - [Validator](#Validator)
   - [new Validator(type)](#new_Validator_new)
+  - [.clone()](#Validator+clone) ⇒ [<code>Validator</code>](#Validator)
+  - [.withDescription(description)](#Validator+withDescription) ⇒ [<code>Validator</code>](#Validator)
+  - [.withDefault(value)](#Validator+withDefault) ⇒ [<code>Validator</code>](#Validator)
   - [.lessThan(constant)](#Validator+lessThan) ⇒ [<code>Validator</code>](#Validator)
   - [.greaterThan(constant)](#Validator+greaterThan) ⇒ [<code>Validator</code>](#Validator)
   - [.lessThanOrEqualTo(constant)](#Validator+lessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
@@ -827,6 +830,40 @@ A validator.
 | Param | Type                  | Description |
 | ----- | --------------------- | ----------- |
 | type  | <code>BaseType</code> | A type.     |
+
+<a name="Validator+clone"></a>
+
+### validator.clone() ⇒ [<code>Validator</code>](#Validator)
+
+Clone the current validator.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)\
+**Returns**: [<code>Validator</code>](#Validator) - - A validator clone.\
+<a name="Validator+withDescription"></a>
+
+### validator.withDescription(description) ⇒ [<code>Validator</code>](#Validator)
+
+Add a description.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)\
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.
+
+| Param       | Type                | Description    |
+| ----------- | ------------------- | -------------- |
+| description | <code>string</code> | A description. |
+
+<a name="Validator+withDefault"></a>
+
+### validator.withDefault(value) ⇒ [<code>Validator</code>](#Validator)
+
+Add a default value.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)\
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.
+
+| Param | Type                | Description      |
+| ----- | ------------------- | ---------------- |
+| value | <code>string</code> | A default value. |
 
 <a name="Validator+lessThan"></a>
 
