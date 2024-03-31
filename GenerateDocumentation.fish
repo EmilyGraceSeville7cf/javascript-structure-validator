@@ -48,7 +48,7 @@ function require_dependency --argument-names executable_name package_name packag
 end
 
 require_dependency jsdoc2md jsdoc-to-markdown "generate documentation" npm install --global jsdoc-to-markdown
-require_dependency mdformgat mdformat-gfm "format documentation" pip3 install mdformat-gfm
+require_dependency mdformat mdformat-gfm "format documentation" pip3 install mdformat-gfm
 
 set output Documentation.md
 set ignored_files ActionInfo_.js SimpleValidator.js ComplexValidator.js
@@ -67,8 +67,7 @@ for file in *.js
         error "$file is ignored"
         continue
     end
-    info "Generating documentation for $file..."
-    jsdoc2md $file >>$output
+    spin "Generating documentation for $file..." fish ToMarkdown.fish $file $output
 end
 
 spin "Formatting the documentation..." mdformat Documentation.md
