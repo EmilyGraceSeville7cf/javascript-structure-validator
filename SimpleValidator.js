@@ -327,7 +327,6 @@ class SimpleValidator {
 
     this.type_ = type
     this.isArray_ = false
-    this.predicateDescriptions_ = [`is ${this.type_}`]
     this.actions_ = [new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.TYPE,
       this.type_,
@@ -336,7 +335,6 @@ class SimpleValidator {
     if (type === "array") {
       this.type_ = "object"
       this.isArray_ = true
-      this.predicateDescriptions_ = ["is array"]
       this.actions_ = [new ActionInfo_(ActionMode.EQUAL_TO,
         ActionTargetMode.TYPE,
         this.type_,
@@ -410,7 +408,6 @@ class SimpleValidator {
     this.tryInvoke_("lessThan")
     this.throwWhenInputTypeIsNotCompatible_(constant)
 
-    this.predicateDescriptions_.push(`less than ${constant}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.VALUE,
       constant,
@@ -432,7 +429,6 @@ class SimpleValidator {
     this.tryInvoke_("greaterThan")
     this.throwWhenInputTypeIsNotCompatible_(constant)
 
-    this.predicateDescriptions_.push(`greater than ${constant}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.VALUE,
       constant,
@@ -454,7 +450,6 @@ class SimpleValidator {
     this.tryInvoke_("lessThanOrEqualTo")
     this.throwWhenInputTypeIsNotCompatible_(constant)
 
-    this.predicateDescriptions_.push(`less than or equal to ${constant}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.VALUE,
       constant,
@@ -476,7 +471,6 @@ class SimpleValidator {
     this.tryInvoke_("greaterThanOrEqualTo")
     this.throwWhenInputTypeIsNotCompatible_(typeof constant)
 
-    this.predicateDescriptions_.push(`greater than or equal to ${constant}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.VALUE,
       constant,
@@ -498,7 +492,6 @@ class SimpleValidator {
     this.tryInvoke_("equalTo")
     this.throwWhenInputTypeIsNotCompatible_(constant)
 
-    this.predicateDescriptions_.push(`equal to ${constant}`)
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.VALUE,
       constant,
@@ -520,7 +513,6 @@ class SimpleValidator {
   notEqualTo(constant) {
     this.throwWhenInputTypeIsNotCompatible_(constant)
 
-    this.predicateDescriptions_.push(`not equal to ${constant}`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.VALUE,
       constant,
@@ -542,7 +534,6 @@ class SimpleValidator {
     this.throwWhenInputTypeIsNotCompatible_(from)
     this.throwWhenInputTypeIsNotCompatible_(to)
 
-    this.predicateDescriptions_.push(`in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.VALUE,
       [from, to],
@@ -566,7 +557,6 @@ class SimpleValidator {
     this.throwWhenInputTypeIsNotCompatible_(from)
     this.throwWhenInputTypeIsNotCompatible_(to)
 
-    this.predicateDescriptions_.push(`not in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.VALUE,
       [from, to],
@@ -587,7 +577,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`shorter than ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.LENGTH,
       count,
@@ -608,7 +597,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`longer than ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.LENGTH,
       count,
@@ -629,7 +617,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`shorter than or is ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.LENGTH,
       count,
@@ -650,7 +637,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`longer than or is ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.LENGTH,
       count,
@@ -671,7 +657,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with length equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.LENGTH,
       count,
@@ -692,7 +677,6 @@ class SimpleValidator {
     this.requireCount_(count)
 
     this.predicates_.push(input => input.length !== count)
-    this.predicateDescriptions_.push(`with length not equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.LENGTH,
       count,
@@ -714,7 +698,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireRange_(from, to)
 
-    this.predicateDescriptions_.push(`with length in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.LENGTH,
       [from, to],
@@ -735,7 +718,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requireRange_(from, to)
 
-    this.predicateDescriptions_.push(`with length not in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.LENGTH,
       [from, to],
@@ -756,7 +738,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requirePattern_(regex)
 
-    this.predicateDescriptions_.push(`matching ${regex} pattern`)
     this.actions_.push(new ActionInfo_(ActionMode.MATCH,
       ActionTargetMode.VALUE,
       regex,
@@ -776,7 +757,6 @@ class SimpleValidator {
     this.requireStringType_()
     this.requirePattern_(regex)
 
-    this.predicateDescriptions_.push(`not matching ${regex} pattern`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_MATCH,
       ActionTargetMode.VALUE,
       regex,
@@ -797,7 +777,6 @@ class SimpleValidator {
     this.requireArrayType_()
     Basic.requireValidator(items, "items")
 
-    this.predicateDescriptions_.push(`with items: ${items.description}`)
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.ITEMS,
       items,
@@ -824,7 +803,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with item count less than ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.ITEM_COUNT,
       count,
@@ -845,7 +823,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with item count less than ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.ITEM_COUNT,
       count,
@@ -866,7 +843,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with item count less than or equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
       count,
@@ -887,7 +863,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with item count greater than or equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
       count,
@@ -908,7 +883,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with item count not equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
       count,
@@ -928,7 +902,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with item count equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
       count,
@@ -950,7 +923,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireRange_(from, to)
 
-    this.predicateDescriptions_.push(`with item count in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.ITEM_COUNT,
       [from, to],
@@ -971,7 +943,6 @@ class SimpleValidator {
     this.requireArrayType_()
     this.requireRange_(from, to)
 
-    this.predicateDescriptions_.push(`with item count not in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.ITEM_COUNT,
       [from, to],
@@ -999,7 +970,6 @@ class SimpleValidator {
 
     const nestedDescriptions = []
     Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
-    this.predicateDescriptions_.push(`with required properties: (${nestedDescriptions.join(", ")})`)
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.REQUIRED_PROPERTIES,
@@ -1045,7 +1015,6 @@ class SimpleValidator {
 
     const nestedDescriptions = []
     Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
-    this.predicateDescriptions_.push(`with optional properties: (${nestedDescriptions.join(", ")})`)
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.OPTIONAL_PROPERTIES,
@@ -1082,7 +1051,6 @@ class SimpleValidator {
     this.requireObjectType_()
     Basic.requireValidator(properties, "properties")
 
-    this.predicateDescriptions_.push(`with additional properties: (${properties.description})`)
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.ADDITIONAL_PROPERTIES,
@@ -1139,7 +1107,6 @@ class SimpleValidator {
     this.requireObjectType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with property amount less than ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.PROPERTY_COUNT,
       count,
@@ -1160,7 +1127,6 @@ class SimpleValidator {
     this.requireObjectType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with property amount greater than ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.PROPERTY_COUNT,
       count,
@@ -1181,7 +1147,6 @@ class SimpleValidator {
     this.requireObjectType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with property amount less than or equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
       count,
@@ -1202,7 +1167,6 @@ class SimpleValidator {
     this.requireObjectType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with property amount greater than or equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
       count,
@@ -1223,7 +1187,6 @@ class SimpleValidator {
     this.requireObjectType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with property amount equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
       count,
@@ -1243,7 +1206,6 @@ class SimpleValidator {
     this.requireObjectType_()
     this.requireCount_(count)
 
-    this.predicateDescriptions_.push(`with property amount not equal to ${count}`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
       count,
@@ -1266,7 +1228,6 @@ class SimpleValidator {
     this.requireCount_(from)
     this.requireCount_(to)
 
-    this.predicateDescriptions_.push(`with property amount in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.PROPERTY_COUNT,
       [from, to],
@@ -1291,7 +1252,6 @@ class SimpleValidator {
     this.requireCount_(from)
     this.requireCount_(to)
 
-    this.predicateDescriptions_.push(`with property amount not in [${from}..${to}] range`)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.PROPERTY_COUNT,
       [from, to],
@@ -1340,7 +1300,7 @@ class SimpleValidator {
    * @type {string}
    */
   get expectedType() {
-    return this.type_
+    return this.isArray_ ? "array" : this.type_
   }
 
   /**
