@@ -17,6 +17,15 @@ function isNumber() {
 }
 
 /**
+ * Require value to be integer.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isInteger() {
+  return new Validator("number").andIsInteger()
+}
+
+/**
  * Require value to be string.
  * 
  * @returns {Validator} - The validator.

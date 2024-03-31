@@ -162,6 +162,9 @@ class SimpleValidator {
           }
         })
         break
+      case ActionMode.BE:
+        schema.type = "integer"
+        break
     }
   }
 
@@ -394,6 +397,22 @@ class SimpleValidator {
     this.throwWhenInputTypeIsNotCompatible_(value)
 
     this.default_ = value
+    return this
+  }
+
+  /**
+   * Require value to be an integer.
+   * 
+   * @returns {SimpleValidator} - The current validator.
+   */
+  andIsInteger() {
+        this.tryInvoke_("lessThan")
+
+    this.actions_.push(new ActionInfo_(ActionMode.BE,
+      ActionTargetMode.VALUE,
+      null,
+      input => Number.isInteger(input)))
+    
     return this
   }
 

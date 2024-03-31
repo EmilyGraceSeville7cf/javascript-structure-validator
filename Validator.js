@@ -27,7 +27,7 @@ class Validator {
 
     if (typeof this.simpleValidator_ !== "undefined")
       validator.simpleValidator_ = this.simpleValidator_.clone()
-    
+
     validator.complexValidators_ = this.complexValidators_.map(validator => validator.clone())
     return validator
   }
@@ -57,6 +57,18 @@ class Validator {
     this.requireSimpleValidator_()
 
     this.simpleValidator_.withDefault(value)
+    return this
+  }
+
+  /**
+   * Require value to be an integer.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  andIsInteger() {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.andIsInteger()
     return this
   }
 
