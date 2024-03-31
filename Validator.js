@@ -18,6 +18,49 @@ class Validator {
   }
 
   /**
+   * Clone the current validator.
+   * 
+   * @returns {Validator} - A validator clone.
+   */
+  clone() {
+    let validator = new Validator()
+
+    if (typeof this.simpleValidator_ !== "undefined")
+      validator.simpleValidator_ = this.simpleValidator_.clone()
+    
+    validator.complexValidators_ = this.complexValidators_.map(validator => validator.clone())
+    return validator
+  }
+
+  /**
+   * Add a description.
+   * 
+   * @param {string} description - A description.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withDescription(description) {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.withDescription(description)
+    return this
+  }
+
+  /**
+    * Add a default value.
+    * 
+    * @param {string} value - A default value.
+    * 
+    * @returns {Validator} - The current validator.
+    */
+  withDefault(value) {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.withDefault(value)
+    return this
+  }
+
+  /**
    * Require value to be less than a constant.
    * 
    * @param {BaseComparableType} constant - A constant.
