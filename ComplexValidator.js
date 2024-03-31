@@ -10,8 +10,17 @@ class ComplexValidator {
     Basic.requireArray(validators, "validators")
     validators.forEach((validator, index) => Basic.requireValidator(validator, "validators", index))
 
-    this.validators = validators
-    this.mode = mode
+    this.validators_ = validators
+    this.mode_ = mode
+  }
+
+  /**
+   * Clone the current validator.
+   * 
+   * @returns {ComplexValidator} - A validator clone.
+   */
+  clone() {
+    return new ComplexValidator(this.validators_.map(validator => validator.clone()), this.mode_)
   }
 
   /**
@@ -22,9 +31,9 @@ class ComplexValidator {
    * @returns {boolean}
    */
   validate(input) {
-    let results = this.validators.map(validator => validator.validate(input))
+    let results = this.validators_.map(validator => validator.validate(input))
 
-    switch (this.mode) {
+    switch (this.mode_) {
       case ComplexValidatorMode.ANY_OF:
         return results.some(result => result === true)
 
@@ -42,20 +51,20 @@ class ComplexValidator {
    * @returns {object}
    */
   toJSONSchema() {
-    switch (this.mode) {
+    switch (this.mode_) {
       case ComplexValidatorMode.ANY_OF:
         return {
-          anyOf: this.validators.map(validator => validator.toJSONSchema())
+          anyOf: this.validators_.map(validator => validator.toJSONSchema())
         }
 
       case ComplexValidatorMode.ONE_OF:
         return {
-          oneOf: this.validators.map(validator => validator.toJSONSchema())
+          oneOf: this.validators_.map(validator => validator.toJSONSchema())
         }
 
       case ComplexValidatorMode.ALL_OF:
         return {
-          allOf: this.validators.map(validator => validator.toJSONSchema())
+          allOf: this.validators_.map(validator => validator.toJSONSchema())
         }
     }
   }
