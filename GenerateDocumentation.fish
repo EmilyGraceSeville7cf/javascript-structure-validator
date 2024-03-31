@@ -67,7 +67,7 @@ for file in *.js
         error "$file is ignored"
         continue
     end
-    spin "Generating documentation for $file..." fish ToMarkdown.fish $file $output
+    spin "Generating documentation for $file..." fish --command "jsdoc2md $file >>$output"
 end
 
 spin "Formatting the documentation..." mdformat Documentation.md
