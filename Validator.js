@@ -175,6 +175,35 @@ class Validator {
   }
 
   /**
+   * Require value to be equal to one of constants.
+   * 
+   * @param {Array} constants - Constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withValueOneOf(...constants) {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.withValueOneOf(...constants)
+    return this
+  }
+
+ /**
+   * Require value to be not equal to one of constants.
+   * 
+   * @param {Array} constants - Constant.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  withValueNotOneOf(...constants) {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.withValueNotOneOf(...constants)
+    return this
+  }
+
+
+  /**
    * Require length to be shorter than a constant.
    * 
    * @param {number} count - A constant.

@@ -19,6 +19,8 @@ let ActionMode = Object.freeze({
   NOT_EQUAL_TO: Symbol("not equal to"),
   IN_RANGE: Symbol("in range"),
   NOT_IN_RANGE: Symbol("not in range"),
+  BE_ONE_OF: Symbol("be one of"),
+  NOT_BE_ONE_OF: Symbol("not be one of"),
   MATCH: Symbol("matching"),
   NOT_MATCH: Symbol("not matching"),
   BE: Symbol("be"),
