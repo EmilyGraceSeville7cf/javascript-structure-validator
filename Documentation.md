@@ -409,6 +409,8 @@ Action target mode.
 ## Functions
 
 <dl>
+<dt><a href="#toBaseType_">toBaseType_(value)</a></dt>
+<dd></dd>
 <dt><a href="#isExistingUrl_">isExistingUrl_(url)</a> ⇒ <code>boolean</code></dt>
 <dd></dd>
 <dt><a href="#isTrue">isTrue()</a> ⇒ <code>Validator</code></dt>
@@ -438,6 +440,12 @@ Action target mode.
 <dt><a href="#isNotMatching">isNotMatching(regex)</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is a string not matching regular expression.</p>
 </dd>
+<dt><a href="#isValueOneOf">isValueOneOf(...values)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be equal to one of constants.</p>
+</dd>
+<dt><a href="#isValueNotOneOf">isValueNotOneOf(...values)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be not equal to one of constants.</p>
+</dd>
 <dt><a href="#isUrl">isUrl()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is a URL string.</p>
 </dd>
@@ -466,6 +474,16 @@ Action target mode.
 <dd><p>Check whether object is a color.</p>
 </dd>
 </dl>
+
+<a name="toBaseType_"></a>
+
+## toBaseType\_(value)
+
+**Kind**: global function
+
+| Param | Type             |
+| ----- | ---------------- |
+| value | <code>any</code> |
 
 <a name="isExistingUrl_"></a>
 
@@ -564,6 +582,32 @@ Check whether object is a string not matching regular expression.
 | Param | Type                | Description           |
 | ----- | ------------------- | --------------------- |
 | regex | <code>RegExp</code> | A regular expression. |
+
+<a name="isValueOneOf"></a>
+
+## isValueOneOf(...values) ⇒ <code>Validator</code>
+
+Require value to be equal to one of constants.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The current validator.
+
+| Param     | Type               | Description |
+| --------- | ------------------ | ----------- |
+| ...values | <code>Array</code> | Constants.  |
+
+<a name="isValueNotOneOf"></a>
+
+## isValueNotOneOf(...values) ⇒ <code>Validator</code>
+
+Require value to be not equal to one of constants.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The current validator.
+
+| Param     | Type               | Description |
+| --------- | ------------------ | ----------- |
+| ...values | <code>Array</code> | Constants.  |
 
 <a name="isUrl"></a>
 
@@ -880,6 +924,8 @@ A validator.
   - [.notEqualTo(constant)](#Validator+notEqualTo) ⇒ [<code>Validator</code>](#Validator)
   - [.inRange(from, to)](#Validator+inRange) ⇒ [<code>Validator</code>](#Validator)
   - [.notInRange(from, to)](#Validator+notInRange) ⇒ [<code>Validator</code>](#Validator)
+  - [.withValueOneOf(...constants)](#Validator+withValueOneOf) ⇒ [<code>Validator</code>](#Validator)
+  - [.withValueNotOneOf(...constants)](#Validator+withValueNotOneOf) ⇒ [<code>Validator</code>](#Validator)
   - [.withLengthLessThan(count)](#Validator+withLengthLessThan) ⇒ [<code>Validator</code>](#Validator)
   - [.withLengthGreaterThan(count)](#Validator+withLengthGreaterThan) ⇒ [<code>Validator</code>](#Validator)
   - [.withLengthLessThanOrEqualTo(count)](#Validator+withLengthLessThanOrEqualTo) ⇒ [<code>Validator</code>](#Validator)
@@ -1069,6 +1115,32 @@ Require value to be outside of a range.
 | ----- | ------------------------------- | ------------------- |
 | from  | <code>BaseComparableType</code> | A lowest boundary.  |
 | to    | <code>BaseComparableType</code> | A highest boundary. |
+
+<a name="Validator+withValueOneOf"></a>
+
+### validator.withValueOneOf(...constants) ⇒ [<code>Validator</code>](#Validator)
+
+Require value to be equal to one of constants.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)\
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.
+
+| Param        | Type               | Description |
+| ------------ | ------------------ | ----------- |
+| ...constants | <code>Array</code> | Constants.  |
+
+<a name="Validator+withValueNotOneOf"></a>
+
+### validator.withValueNotOneOf(...constants) ⇒ [<code>Validator</code>](#Validator)
+
+Require value to be not equal to one of constants.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)\
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.
+
+| Param        | Type               | Description |
+| ------------ | ------------------ | ----------- |
+| ...constants | <code>Array</code> | Constants.  |
 
 <a name="Validator+withLengthLessThan"></a>
 

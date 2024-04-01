@@ -1,6 +1,19 @@
 const urlRegex_ = new RegExp("^https?://")
 
 /**
+ * @param {any} value
+ */
+function toBaseType_(value) {
+  let type = typeof value
+  if (Array.isArray(value))
+    type = "array"
+  else if (Number.isInteger(value))
+    type = "integer"
+  
+  return type
+}
+
+/**
  * @param {string} url
  * 
  * @returns {boolean}
@@ -101,6 +114,32 @@ function isMatching(regex) {
  */
 function isNotMatching(regex) {
   return isString().notMatching(regex)
+}
+
+/**
+ * Require value to be equal to one of constants.
+ * 
+ * @param {Array} values - Constants.
+ * 
+ * @returns {Validator} - The current validator.
+ */
+function isValueOneOf(...values) {
+  Basic.requireArray(values)
+
+  return new Validator(toBaseType_(values[0])).withValueOneOf(...values)
+}
+
+/**
+ * Require value to be not equal to one of constants.
+ * 
+ * @param {Array} values - Constants.
+ * 
+ * @returns {Validator} - The current validator.
+ */
+function isValueNotOneOf(...values) {
+  Basic.requireArray(values)
+  
+  return new Validator(toBaseType_(values[0])).withValueNotOneOf(...values)
 }
 
 /**

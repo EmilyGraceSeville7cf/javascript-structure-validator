@@ -147,6 +147,16 @@ class SimpleValidator {
           }
         })
         break
+      case ActionMode.BE_ONE_OF:
+        schema.enum = action.value
+        break
+      case ActionMode.NOT_BE_ONE_OF:
+        simpleSubschemas.push({
+          not: {
+            enum: action.value
+          }
+        })
+        break
     }
   }
 
@@ -553,6 +563,44 @@ class SimpleValidator {
       ActionTargetMode.VALUE,
       [from, to],
       input => input < from || input > to))
+
+    return this
+  }
+
+  /**
+   * Require value to be equal to one of constants.
+   * 
+   * @param {Array} constants - Constants.
+   * 
+   * @returns {SimpleValidator} - The current validator.
+   */
+  withValueOneOf(...constants) {
+    Basic.requireArray(constants, "constants")
+    constants.forEach(item => this.requireSameType_(item))
+
+    this.actions_.push(new ActionInfo_(ActionMode.BE_ONE_OF,
+      ActionTargetMode.VALUE,
+      constants,
+      input => constants.includes(input)))
+
+    return this
+  }
+
+  /**
+   * Require value to be not equal to one of constants.
+   * 
+   * @param {Array} constants - Constants.
+   * 
+   * @returns {SimpleValidator} - The current validator.
+   */
+  withValueNotOneOf(...constants) {
+    Basic.requireArray(constants, "constants")
+    constants.forEach(item => this.requireSameType_(item))
+
+    this.actions_.push(new ActionInfo_(ActionMode.NOT_BE_ONE_OF,
+      ActionTargetMode.VALUE,
+      constants,
+      input => !constants.includes(input)))
 
     return this
   }
