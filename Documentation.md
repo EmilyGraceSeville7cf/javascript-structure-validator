@@ -9,20 +9,26 @@ Basic validation tools.
 - [Basic](#Basic)
   - [.isBoolean(value)](#Basic.isBoolean) ⇒ <code>boolean</code>
   - [.isNumber(value)](#Basic.isNumber) ⇒ <code>boolean</code>
+  - [.isInteger(value)](#Basic.isInteger) ⇒ <code>boolean</code>
   - [.isString(value)](#Basic.isString) ⇒ <code>boolean</code>
   - [.isBigint(value)](#Basic.isBigint) ⇒ <code>boolean</code>
   - [.isArray(value)](#Basic.isArray) ⇒ <code>boolean</code>
   - [.isObject(value)](#Basic.isObject) ⇒ <code>boolean</code>
+  - [.isRegExp(value)](#Basic.isRegExp) ⇒ <code>boolean</code>
+  - [.isFunction(value)](#Basic.isFunction) ⇒ <code>boolean</code>
   - [.isSupported(value)](#Basic.isSupported) ⇒ <code>boolean</code>
   - [.isComparableSupported(value)](#Basic.isComparableSupported) ⇒ <code>boolean</code>
   - [.isValidator(value)](#Basic.isValidator) ⇒ <code>boolean</code>
   - [.requireTypeByPredicate\_(predicate, value, argumentName, \[argumentIndex\])](#Basic.requireTypeByPredicate_)
   - [.requireBoolean(value, argumentName, \[argumentIndex\])](#Basic.requireBoolean)
   - [.requireNumber(value, argumentName, \[argumentIndex\])](#Basic.requireNumber)
+  - [.requireInteger(value, argumentName, \[argumentIndex\])](#Basic.requireInteger)
   - [.requireString(value, argumentName, \[argumentIndex\])](#Basic.requireString)
   - [.requireBigint(value, argumentName, \[argumentIndex\])](#Basic.requireBigint)
   - [.requireArray(value, argumentName, \[argumentIndex\])](#Basic.requireArray)
   - [.requireObject(value, argumentName, \[argumentIndex\])](#Basic.requireObject)
+  - [.requireRegExp(value, argumentName, \[argumentIndex\])](#Basic.requireRegExp)
+  - [.requireFunction(value, argumentName, \[argumentIndex\])](#Basic.requireFunction)
   - [.requireSupported(value, argumentName, \[argumentIndex\])](#Basic.requireSupported)
   - [.requireComparableSupported(value, argumentName, \[argumentIndex\])](#Basic.requireComparableSupported)
   - [.requireValidator(value, argumentName, \[argumentIndex\])](#Basic.requireValidator)
@@ -48,6 +54,19 @@ Check whether a value is a number value.
 
 **Kind**: static method of [<code>Basic</code>](#Basic)\
 **Returns**: <code>boolean</code> - - Whether a value is a number value.
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isInteger"></a>
+
+### Basic.isInteger(value) ⇒ <code>boolean</code>
+
+Check whether a value is an integer value.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)\
+**Returns**: <code>boolean</code> - - Whether a value is an integer value.
 
 | Param | Type             | Description |
 | ----- | ---------------- | ----------- |
@@ -100,6 +119,32 @@ Check whether a value is an object value.
 
 **Kind**: static method of [<code>Basic</code>](#Basic)\
 **Returns**: <code>boolean</code> - - Whether a value is an object value.
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isRegExp"></a>
+
+### Basic.isRegExp(value) ⇒ <code>boolean</code>
+
+Check whether a value is a regular expression.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)\
+**Returns**: <code>boolean</code> - - Whether a value is a regular expression.
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isFunction"></a>
+
+### Basic.isFunction(value) ⇒ <code>boolean</code>
+
+Check whether a value is a function.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)\
+**Returns**: <code>boolean</code> - - Whether a value is a function.
 
 | Param | Type             | Description |
 | ----- | ---------------- | ----------- |
@@ -185,6 +230,20 @@ Check whether a value is a number value and throw if not.
 | argumentName      | <code>string</code> | An argument name.  |
 | \[argumentIndex\] | <code>number</code> | An argument index. |
 
+<a name="Basic.requireInteger"></a>
+
+### Basic.requireInteger(value, argumentName, \[argumentIndex\])
+
+Check whether a value is an integer value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)
+
+| Param             | Type                | Description        |
+| ----------------- | ------------------- | ------------------ |
+| value             | <code>any</code>    | A value.           |
+| argumentName      | <code>string</code> | An argument name.  |
+| \[argumentIndex\] | <code>number</code> | An argument index. |
+
 <a name="Basic.requireString"></a>
 
 ### Basic.requireString(value, argumentName, \[argumentIndex\])
@@ -232,6 +291,34 @@ Check whether a value is an array value and throw if not.
 ### Basic.requireObject(value, argumentName, \[argumentIndex\])
 
 Check whether a value is an object value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)
+
+| Param             | Type                | Description        |
+| ----------------- | ------------------- | ------------------ |
+| value             | <code>any</code>    | A value.           |
+| argumentName      | <code>string</code> | An argument name.  |
+| \[argumentIndex\] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireRegExp"></a>
+
+### Basic.requireRegExp(value, argumentName, \[argumentIndex\])
+
+Check whether a value is a regular expression value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)
+
+| Param             | Type                | Description        |
+| ----------------- | ------------------- | ------------------ |
+| value             | <code>any</code>    | A value.           |
+| argumentName      | <code>string</code> | An argument name.  |
+| \[argumentIndex\] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireFunction"></a>
+
+### Basic.requireFunction(value, argumentName, \[argumentIndex\])
+
+Check whether a value is a function value and throw if not.
 
 **Kind**: static method of [<code>Basic</code>](#Basic)
 
@@ -560,10 +647,10 @@ Check whether object is a color.
 <dt><a href="#WherePredicate">WherePredicate</a> ⇒ <code>Array.&lt;boolean&gt;</code></dt>
 <dd><p>A where predicate.</p>
 </dd>
-<dt><a href="#BaseType">BaseType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;array&quot;</code> | <code>&quot;object&quot;</code></dt>
+<dt><a href="#BaseType">BaseType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;integer&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;array&quot;</code> | <code>&quot;object&quot;</code></dt>
 <dd><p>A basic type.</p>
 </dd>
-<dt><a href="#BaseComparableType">BaseComparableType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code></dt>
+<dt><a href="#BaseComparableType">BaseComparableType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;integer&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code></dt>
 <dd><p>A basic comparable type.</p>
 </dd>
 </dl>
@@ -596,14 +683,14 @@ A where predicate.
 
 <a name="BaseType"></a>
 
-## BaseType : <code>"boolean"</code> | <code>"number"</code> | <code>"string"</code> | <code>"bigint"</code> | <code>"array"</code> | <code>"object"</code>
+## BaseType : <code>"boolean"</code> | <code>"number"</code> | <code>"integer"</code> | <code>"string"</code> | <code>"bigint"</code> | <code>"array"</code> | <code>"object"</code>
 
 A basic type.
 
 **Kind**: global typedef\
 <a name="BaseComparableType"></a>
 
-## BaseComparableType : <code>"boolean"</code> | <code>"number"</code> | <code>"string"</code> | <code>"bigint"</code>
+## BaseComparableType : <code>"boolean"</code> | <code>"number"</code> | <code>"integer"</code> | <code>"string"</code> | <code>"bigint"</code>
 
 A basic comparable type.
 
@@ -617,6 +704,9 @@ A basic comparable type.
 </dd>
 <dt><a href="#isNumber">isNumber()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be number.</p>
+</dd>
+<dt><a href="#isInteger">isInteger()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be integer.</p>
 </dd>
 <dt><a href="#isString">isString()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be string.</p>
@@ -660,6 +750,14 @@ Require value to be boolean.
 ## isNumber() ⇒ <code>Validator</code>
 
 Require value to be number.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isInteger"></a>
+
+## isInteger() ⇒ <code>Validator</code>
+
+Require value to be integer.
 
 **Kind**: global function\
 **Returns**: <code>Validator</code> - - The validator.\
@@ -814,6 +912,7 @@ A validator.
   - [.withPropertyCountInRange(from, to)](#Validator+withPropertyCountInRange) ⇒ [<code>Validator</code>](#Validator)
   - [.withPropertyCountNotInRange(from, to)](#Validator+withPropertyCountNotInRange) ⇒ [<code>Validator</code>](#Validator)
   - [.where(predicate)](#Validator+where) ⇒ [<code>Validator</code>](#Validator)
+  - [.whereValue(predicate)](#Validator+whereValue) ⇒ [<code>Validator</code>](#Validator)
   - [.andAnyOf(...validators)](#Validator+andAnyOf) ⇒ [<code>Validator</code>](#Validator)
   - [.andOneOf(...validators)](#Validator+andOneOf) ⇒ [<code>Validator</code>](#Validator)
   - [.andAllOf(...validators)](#Validator+andAllOf) ⇒ [<code>Validator</code>](#Validator)
@@ -1387,6 +1486,19 @@ Require property relationships.
 | Param     | Type                        | Description  |
 | --------- | --------------------------- | ------------ |
 | predicate | <code>WherePredicate</code> | A predicate. |
+
+<a name="Validator+whereValue"></a>
+
+### validator.whereValue(predicate) ⇒ [<code>Validator</code>](#Validator)
+
+Require value constraints.
+
+**Kind**: instance method of [<code>Validator</code>](#Validator)\
+**Returns**: [<code>Validator</code>](#Validator) - - The current validator.
+
+| Param     | Type                   | Description  |
+| --------- | ---------------------- | ------------ |
+| predicate | <code>Predicate</code> | A predicate. |
 
 <a name="Validator+andAnyOf"></a>
 

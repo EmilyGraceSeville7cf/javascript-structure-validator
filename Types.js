@@ -19,11 +19,11 @@
 /**
  * A basic type.
  * 
- * @typedef {"boolean" | "number" | "string" | "bigint" | "array" | "object"} BaseType
+ * @typedef {"boolean" | "number" | "integer" | "string" | "bigint" | "array" | "object"} BaseType
  */
 
 /**
  * A basic comparable type.
  * 
- * @typedef {"boolean" | "number" | "string" | "bigint"} BaseComparableType
+ * @typedef {"boolean" | "number" | "integer" | "string" | "bigint"} BaseComparableType
  */

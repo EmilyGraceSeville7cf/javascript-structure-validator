@@ -27,7 +27,7 @@ class Validator {
 
     if (typeof this.simpleValidator_ !== "undefined")
       validator.simpleValidator_ = this.simpleValidator_.clone()
-    
+
     validator.complexValidators_ = this.complexValidators_.map(validator => validator.clone())
     return validator
   }
@@ -623,6 +623,20 @@ class Validator {
     this.requireSimpleValidator_()
 
     this.simpleValidator_.where(predicate)
+    return this
+  }
+
+  /**
+   * Require value constraints.
+   * 
+   * @param {Predicate} predicate - A predicate.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  whereValue(predicate) {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.whereValue(predicate)
     return this
   }
 

@@ -51,7 +51,7 @@ require_dependency jsdoc2md jsdoc-to-markdown "generate documentation" npm insta
 require_dependency mdformat mdformat-gfm "format documentation" pip3 install mdformat-gfm
 
 set output Documentation.md
-set ignored_files ActionInfo_.js SimpleValidator.js ComplexValidator.js
+set ignored_files ActionInfo_.js SupportedTypeMapping_.js SimpleValidator.js ComplexValidator.js
 set other_files
 
 for file in *.js
