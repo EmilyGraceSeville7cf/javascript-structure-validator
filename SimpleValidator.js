@@ -570,7 +570,7 @@ class SimpleValidator {
   /**
    * Require value to be equal to one of constants.
    * 
-   * @param {Array} constants - Constant.
+   * @param {Array} constants - Constants.
    * 
    * @returns {SimpleValidator} - The current validator.
    */
@@ -589,7 +589,7 @@ class SimpleValidator {
   /**
    * Require value to be not equal to one of constants.
    * 
-   * @param {Array} constants - Constant.
+   * @param {Array} constants - Constants.
    * 
    * @returns {SimpleValidator} - The current validator.
    */

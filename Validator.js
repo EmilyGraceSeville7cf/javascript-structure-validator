@@ -177,7 +177,7 @@ class Validator {
   /**
    * Require value to be equal to one of constants.
    * 
-   * @param {Array} constants - Constant.
+   * @param {Array} constants - Constants.
    * 
    * @returns {Validator} - The current validator.
    */
@@ -191,7 +191,7 @@ class Validator {
  /**
    * Require value to be not equal to one of constants.
    * 
-   * @param {Array} constants - Constant.
+   * @param {Array} constants - Constants.
    * 
    * @returns {Validator} - The current validator.
    */
