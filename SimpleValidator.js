@@ -310,13 +310,13 @@ class SimpleValidator {
     this.alreadyInvoked_ = new Set()
 
     let supportedTypes = {
-      boolean: new SupportedTypeMapping("boolean", Basic.isBoolean),
-      number: new SupportedTypeMapping("number", Basic.isNumber),
-      integer: new SupportedTypeMapping("integer", Basic.isInteger),
-      string: new SupportedTypeMapping("string", Basic.isString),
-      bigint: new SupportedTypeMapping("number", Basic.isBigint),
-      array: new SupportedTypeMapping("array", Basic.isArray),
-      object: new SupportedTypeMapping("object", Basic.isObject)
+      boolean: new SupportedTypeMapping_("boolean", Basic.isBoolean),
+      number: new SupportedTypeMapping_("number", Basic.isNumber),
+      integer: new SupportedTypeMapping_("integer", Basic.isInteger),
+      string: new SupportedTypeMapping_("string", Basic.isString),
+      bigint: new SupportedTypeMapping_("number", Basic.isBigint),
+      array: new SupportedTypeMapping_("array", Basic.isArray),
+      object: new SupportedTypeMapping_("object", Basic.isObject)
     }
 
     this.validatorType_ = type

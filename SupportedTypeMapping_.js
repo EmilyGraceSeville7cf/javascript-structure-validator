@@ -1,7 +1,7 @@
 /**
  * Mapping from BaseType
  */
-class SupportedTypeMapping {
+class SupportedTypeMapping_ {
   /**
    * @param {string} jsonType
    * @param {Predicate} jsPredicate
