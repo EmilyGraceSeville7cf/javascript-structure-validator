@@ -22,7 +22,7 @@ function isNumber() {
  * @returns {Validator} - The validator.
  */
 function isInteger() {
-  return new Validator("number").andIsInteger()
+  return new Validator("integer")
 }
 
 /**
@@ -103,6 +103,8 @@ function isAllOf(...validators) {
  * @returns {boolean} - Whether value satisfies all conditions.
  */
 function checkWhether(input, validator) {
+  Basic.requireValidator(validator, "validator")
+  
   return validator.validate(input)
 }
 
@@ -113,6 +115,8 @@ function checkWhether(input, validator) {
  * @param {Validator} validator - A validator.
  */
 function throwOnFailure(input, validator) {
+  Basic.requireValidator(validator, "validator")
+
   if (!validator.validate(input))
     throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema())}`)
 }

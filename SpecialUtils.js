@@ -109,7 +109,7 @@ function isNotMatching(regex) {
  * @returns {Validator} - Check whether object is a URL string.
  */
 function isUrl() {
-  return isMatching(urlRegex_).where(url => [isExistingUrl_(url)])
+  return isMatching(urlRegex_).whereValue(isExistingUrl_)
 }
 
 /**

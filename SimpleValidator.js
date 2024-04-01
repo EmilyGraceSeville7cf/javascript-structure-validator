@@ -2,68 +2,50 @@
  * Basic validator.
  */
 class SimpleValidator {
-  /**
-   * @param {BaseType} type
-   */
-  requireSomeTypeMessage_(type) {
-    const validationType = this.isArray_ ? "array" : this.type_
-    return `Constraint for ${validationType} is expected, but constraint for ${type} is met, use another is* function at the beginning to set it`
+  requireSomeTypeMessage_() {
+    return `Constraint, getter or input for ${this.jsonType_} is expected (constraint can't be set, getter can't be invoked, or input is not compatible with ${this.jsonType_} type)`
   }
 
   requireStringType_() {
-    if (this.type_ !== "string")
-      throw new Error(this.requireSomeTypeMessage_("string"))
+    if (this.jsTypePredicate_ !== Basic.isString)
+      throw new Error(this.requireSomeTypeMessage_())
   }
 
   requireObjectType_() {
-    if (this.type_ !== "object")
-      throw new Error(this.requireSomeTypeMessage_("object"))
+    if (this.jsTypePredicate_ !== Basic.isObject)
+      throw new Error(this.requireSomeTypeMessage_())
   }
 
   requireArrayType_() {
-    if (!this.isArray_)
-      throw new Error(this.requireSomeTypeMessage_("array"))
+    if (this.jsTypePredicate_ !== Basic.isArray)
+      throw new Error(this.requireSomeTypeMessage_())
+  }
+
+  /**
+   * @param {any} input
+   */
+  requireSameType_(input) {
+    if (!this.jsTypePredicate_(input))
+      throw new Error(this.requireSomeTypeMessage_())
   }
 
   requirePropertiesSet_() {
-    if (this.type_ === "object" && this.requiredProperties_.length === 0 && this.optionalProperties_.length === 0)
-      throw new Error("Required or optional properties are expected to be defined")
-  }
+    this.requireObjectType_()
 
-  requireObjectTypeForGetter_() {
-    if (this.type_ !== "object")
-      throw new Error(`Getter can't be accessed when ${this.type_} type is set`)
+    if (this.requiredProperties_.length === 0 && this.optionalProperties_.length === 0)
+      throw new Error("Required or optional properties are expected to be defined (actual value: <no required and optional properties>)")
   }
 
   requireRequiredPropertiesAndOptionalNotIntersect_() {
-    if (this.requiredProperties_.filter(property => this.optionalProperties_.includes(property)).length !== 0)
-      throw new Error("Required and optional properties can't intersect")
-  }
+    const intersection = this.requiredProperties_.filter(property => this.optionalProperties_.includes(property))
 
-  /**
-   * @param {string} input
-   */
-  throwWhenInputTypeIsNotCompatible_(input) {
-    if (typeof input !== this.type_)
-      throw new Error(`Types ${typeof input} and ${this.type_} are not compatible, value of ${this.type_} is expected (actual value: ${input})`)
-  }
+    const properties = JSON.stringify({
+      required: this.requiredProperties_,
+      optional: this.optionalProperties_
+    })
 
-  /**
-   * @param {string} value
-   */
-  requireCount_(value) {
-    Basic.requireNumber(value, "count")
-
-    if (value < 0)
-      throw new Error(`Count can't be ${typeof value} or negative number (actual value: ${value})`)
-  }
-
-  /**
-   * @param {any} value
-   */
-  requirePattern_(value) {
-    if (value.constructor !== RegExp)
-      throw new Error(`Pattern of RegExp type is expected (actual constructor: ${value.constructor})`)
+    if (intersection.length !== 0)
+      throw new Error(`Required and optional properties are expected not to intersect (actual value: ${properties})`)
   }
 
   /**
@@ -71,7 +53,18 @@ class SimpleValidator {
    */
   requireTrue_(value) {
     if (value !== true)
-      throw new Error(`true value is expected for property without any constraint (actual value: ${value})`)
+      throw new Error(`Required or optional property constraint expected to be true value (actual value: ${value})`)
+  }
+
+  /**
+   * @param {string} value
+   * @param {string} argumentName
+   */
+  requireCount_(value, argumentName) {
+    Basic.requireNumber(value, argumentName)
+
+    if (value < 0)
+      throw new Error(`Count expected to be a not negative number (actual value: ${value})`)
   }
 
   /**
@@ -79,11 +72,11 @@ class SimpleValidator {
    * @param {any} to
    */
   requireRange_(from, to) {
-    this.requireCount_(from)
-    this.requireCount_(to)
+    this.requireCount_(from, "from")
+    this.requireCount_(to, "to")
 
     if (from > to)
-      throw new Error(`Range [${to}..${from}] is expected, swap boundaries (actual range: [${from}..${to}])`)
+      throw new Error(`Range expected to have correct boundaries (actual range: [${from}..${to}])`)
   }
 
   /**
@@ -94,14 +87,6 @@ class SimpleValidator {
       throw new Error(`Method ${name} is already invoked, remove any futher calls`)
 
     this.alreadyInvoked_.add(name)
-  }
-
-  /**
-   * @param {string} value
-   */
-  requirePredicate_(value) {
-    if (typeof value !== "function")
-      throw new Error(`Object can't be of ${typeof value} type`)
   }
 
   /**
@@ -161,9 +146,6 @@ class SimpleValidator {
             pattern: `${this.regexToPlainString_(action.value)}`
           }
         })
-        break
-      case ActionMode.BE:
-        schema.type = "integer"
         break
     }
   }
@@ -314,7 +296,6 @@ class SimpleValidator {
     let propertySchemas = {}
     Object.keys(action.value).forEach(property => propertySchemas[property] = action.value[property].toJSONSchema())
     schema.properties = propertySchemas
-
   }
 
   /**
@@ -328,21 +309,24 @@ class SimpleValidator {
      */
     this.alreadyInvoked_ = new Set()
 
-    this.type_ = type
-    this.isArray_ = false
+    let supportedTypes = {
+      boolean: new SupportedTypeMapping("boolean", Basic.isBoolean),
+      number: new SupportedTypeMapping("number", Basic.isNumber),
+      integer: new SupportedTypeMapping("integer", Basic.isInteger),
+      string: new SupportedTypeMapping("string", Basic.isString),
+      bigint: new SupportedTypeMapping("number", Basic.isBigint),
+      array: new SupportedTypeMapping("array", Basic.isArray),
+      object: new SupportedTypeMapping("object", Basic.isObject)
+    }
+
+    this.validatorType_ = type
+    this.jsonType_ = supportedTypes[type].jsonType
+    this.jsTypePredicate_ = supportedTypes[type].jsPredicate
+
     this.actions_ = [new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.TYPE,
-      this.type_,
-      input => typeof input === this.type_)]
-
-    if (type === "array") {
-      this.type_ = "object"
-      this.isArray_ = true
-      this.actions_ = [new ActionInfo_(ActionMode.EQUAL_TO,
-        ActionTargetMode.TYPE,
-        this.type_,
-        input => Array.isArray(input))]
-    }
+      null,
+      this.jsTypePredicate_)]
 
     this.requiredProperties_ = []
     this.optionalProperties_ = []
@@ -358,11 +342,13 @@ class SimpleValidator {
    * @returns {SimpleValidator} - A validator clone.
    */
   clone() {
-    let validator = new SimpleValidator(this.isArray_ ? "array" : this.type_)
+    let validator = new SimpleValidator(this.validatorType_)
     validator.alreadyInvoked_ = new Set(this.alreadyInvoked_)
     validator.actions_ = Array.from(this.actions_)
     validator.requiredProperties_ = Array.from(this.requiredProperties_)
     validator.optionalProperties_ = Array.from(this.optionalProperties_)
+    validator.minimumExample_ = this.minimumExample_
+    validator.maximumExample_ = this.maximumExample_
     validator.description_ = this.description_
     validator.default_ = this.default_
 
@@ -394,25 +380,9 @@ class SimpleValidator {
    */
   withDefault(value) {
     this.tryInvoke_("withDefault")
-    this.throwWhenInputTypeIsNotCompatible_(value)
+    this.requireSameType_(value)
 
     this.default_ = value
-    return this
-  }
-
-  /**
-   * Require value to be an integer.
-   * 
-   * @returns {SimpleValidator} - The current validator.
-   */
-  andIsInteger() {
-        this.tryInvoke_("lessThan")
-
-    this.actions_.push(new ActionInfo_(ActionMode.BE,
-      ActionTargetMode.VALUE,
-      null,
-      input => Number.isInteger(input)))
-    
     return this
   }
 
@@ -425,7 +395,7 @@ class SimpleValidator {
    */
   lessThan(constant) {
     this.tryInvoke_("lessThan")
-    this.throwWhenInputTypeIsNotCompatible_(constant)
+    this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.VALUE,
@@ -446,7 +416,7 @@ class SimpleValidator {
    */
   greaterThan(constant) {
     this.tryInvoke_("greaterThan")
-    this.throwWhenInputTypeIsNotCompatible_(constant)
+    this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.VALUE,
@@ -467,7 +437,7 @@ class SimpleValidator {
    */
   lessThanOrEqualTo(constant) {
     this.tryInvoke_("lessThanOrEqualTo")
-    this.throwWhenInputTypeIsNotCompatible_(constant)
+    this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.VALUE,
@@ -488,7 +458,7 @@ class SimpleValidator {
    */
   greaterThanOrEqualTo(constant) {
     this.tryInvoke_("greaterThanOrEqualTo")
-    this.throwWhenInputTypeIsNotCompatible_(typeof constant)
+    this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.VALUE,
@@ -509,13 +479,13 @@ class SimpleValidator {
    */
   equalTo(constant) {
     this.tryInvoke_("equalTo")
-    this.throwWhenInputTypeIsNotCompatible_(constant)
+    this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.VALUE,
       constant,
       input => input === constant))
-    
+
     this.minimumExample_ = constant
     this.maximumExample_ = constant
 
@@ -530,7 +500,7 @@ class SimpleValidator {
    * @returns {SimpleValidator} - The current validator.
    */
   notEqualTo(constant) {
-    this.throwWhenInputTypeIsNotCompatible_(constant)
+    this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.VALUE,
@@ -550,8 +520,11 @@ class SimpleValidator {
    */
   inRange(from, to) {
     this.tryInvoke_("inRange")
-    this.throwWhenInputTypeIsNotCompatible_(from)
-    this.throwWhenInputTypeIsNotCompatible_(to)
+    this.requireSameType_(from)
+    this.requireSameType_(to)
+
+    if (from > to)
+      throw new Error(`Range expected to have correct boundaries (actual range: [${from}..${to}])`)
 
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.VALUE,
@@ -573,8 +546,8 @@ class SimpleValidator {
    * @returns {SimpleValidator} - The current validator.
    */
   notInRange(from, to) {
-    this.throwWhenInputTypeIsNotCompatible_(from)
-    this.throwWhenInputTypeIsNotCompatible_(to)
+    this.requireSameType_(from)
+    this.requireSameType_(to)
 
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.VALUE,
@@ -594,7 +567,7 @@ class SimpleValidator {
   withLengthLessThan(count) {
     this.tryInvoke_("withLengthLessThan")
     this.requireStringType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.LENGTH,
@@ -614,7 +587,7 @@ class SimpleValidator {
   withLengthGreaterThan(count) {
     this.tryInvoke_("withLengthGreaterThan")
     this.requireStringType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.LENGTH,
@@ -634,7 +607,7 @@ class SimpleValidator {
   withLengthLessThanOrEqualTo(count) {
     this.tryInvoke_("withLengthLessThanOrEqualTo")
     this.requireStringType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.LENGTH,
@@ -654,7 +627,7 @@ class SimpleValidator {
   withLengthGreaterThanOrEqualTo(count) {
     this.tryInvoke_("withLengthGreaterThanOrEqualTo")
     this.requireStringType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.LENGTH,
@@ -674,7 +647,7 @@ class SimpleValidator {
   withLengthEqualTo(count) {
     this.tryInvoke_("withLengthEqualTo")
     this.requireStringType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.LENGTH,
@@ -693,7 +666,7 @@ class SimpleValidator {
    */
   withLengthNotEqualTo(count) {
     this.requireStringType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.predicates_.push(input => input.length !== count)
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
@@ -755,7 +728,7 @@ class SimpleValidator {
   matching(regex) {
     this.tryInvoke_("matching")
     this.requireStringType_()
-    this.requirePattern_(regex)
+    Basic.requireRegExp(regex, "regex")
 
     this.actions_.push(new ActionInfo_(ActionMode.MATCH,
       ActionTargetMode.VALUE,
@@ -774,7 +747,7 @@ class SimpleValidator {
    */
   notMatching(regex) {
     this.requireStringType_()
-    this.requirePattern_(regex)
+    Basic.requireRegExp(regex, "regex")
 
     this.actions_.push(new ActionInfo_(ActionMode.NOT_MATCH,
       ActionTargetMode.VALUE,
@@ -820,7 +793,7 @@ class SimpleValidator {
   withItemCountLessThan(count) {
     this.tryInvoke_("withItemCountLessThan")
     this.requireArrayType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.ITEM_COUNT,
@@ -840,7 +813,7 @@ class SimpleValidator {
   withItemCountGreaterThan(count) {
     this.tryInvoke_("withItemCountGreaterThan")
     this.requireArrayType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.ITEM_COUNT,
@@ -860,7 +833,7 @@ class SimpleValidator {
   withItemCountLessThanOrEqualTo(count) {
     this.tryInvoke_("withItemCountLessThanOrEqualTo")
     this.requireArrayType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
@@ -880,7 +853,7 @@ class SimpleValidator {
   withItemCountGreaterThanOrEqualTo(count) {
     this.tryInvoke_("withItemCountGreaterThanOrEqualTo")
     this.requireArrayType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
@@ -900,7 +873,7 @@ class SimpleValidator {
   withItemCountEqualTo(count) {
     this.tryInvoke_("withItemCountEqualTo")
     this.requireArrayType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
@@ -919,7 +892,7 @@ class SimpleValidator {
    */
   withItemCountNotEqualTo(count) {
     this.requireArrayType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.ITEM_COUNT,
@@ -1124,7 +1097,7 @@ class SimpleValidator {
   withPropertyCountLessThan(count) {
     this.tryInvoke_("withPropertyCountLessThan")
     this.requireObjectType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1144,7 +1117,7 @@ class SimpleValidator {
   withPropertyCountGreaterThan(count) {
     this.tryInvoke_("withPropertyCountGreaterThan")
     this.requireObjectType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1164,7 +1137,7 @@ class SimpleValidator {
   withPropertyCountLessThanOrEqualTo(count) {
     this.tryInvoke_("withPropertyCountLessThanOrEqualTo")
     this.requireObjectType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1184,7 +1157,7 @@ class SimpleValidator {
   withPropertyCountGreaterThanOrEqualTo(count) {
     this.tryInvoke_("withPropertyCountGreaterThanOrEqualTo")
     this.requireObjectType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1204,7 +1177,7 @@ class SimpleValidator {
   withPropertyCountEqualTo(count) {
     this.tryInvoke_("withPropertyCountEqualTo")
     this.requireObjectType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1223,7 +1196,7 @@ class SimpleValidator {
    */
   withPropertyCountNotEqualTo(count) {
     this.requireObjectType_()
-    this.requireCount_(count)
+    this.requireCount_(count, "count")
 
     this.actions_.push(new ActionInfo_(ActionMode.NOT_EQUAL_TO,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1244,8 +1217,7 @@ class SimpleValidator {
   withPropertyCountInRange(from, to) {
     this.tryInvoke_("withPropertyCountInRange")
     this.requireObjectType_()
-    this.requireCount_(from)
-    this.requireCount_(to)
+    this.requireRange_(from, to)
 
     this.actions_.push(new ActionInfo_(ActionMode.IN_RANGE,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1268,8 +1240,7 @@ class SimpleValidator {
    */
   withPropertyCountNotInRange(from, to) {
     this.requireObjectType_()
-    this.requireCount_(from)
-    this.requireCount_(to)
+    this.requireRange_(from, to)
 
     this.actions_.push(new ActionInfo_(ActionMode.NOT_IN_RANGE,
       ActionTargetMode.PROPERTY_COUNT,
@@ -1291,13 +1262,32 @@ class SimpleValidator {
    */
   where(predicate) {
     this.tryInvoke_("where")
-    this.requirePredicate_(predicate)
+    Basic.requireFunction(predicate, "predicate")
     this.requirePropertiesSet_()
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.PROPERTIES,
       predicate,
       input => Object.values(predicate(input)).every(condition => condition === true)))
+
+    return this
+  }
+
+  /**
+   * Require value constraints.
+   * 
+   * @param {Predicate} predicate - A predicate.
+   * 
+   * @returns {SimpleValidator} - The current validator.
+   */
+  whereValue(predicate) {
+    this.tryInvoke_("whereValue")
+    Basic.requireFunction(predicate, "predicate")
+
+    this.actions_.push(new ActionInfo_(ActionMode.BE,
+      ActionTargetMode.VALUE,
+      predicate,
+      predicate))
 
     return this
   }
@@ -1319,7 +1309,7 @@ class SimpleValidator {
    * @type {string}
    */
   get expectedType() {
-    return this.isArray_ ? "array" : this.type_
+    return this.validatorType_
   }
 
   /**
@@ -1328,7 +1318,7 @@ class SimpleValidator {
    * @type {Array.<string>}
    */
   get expectedRequiredProperties() {
-    this.requireObjectTypeForGetter_()
+    this.requireObjectType_()
     return [...this.requiredProperties_]
   }
 
@@ -1338,7 +1328,7 @@ class SimpleValidator {
    * @type {Array.<string>}
    */
   get expectedOptionalProperties() {
-    this.requireObjectTypeForGetter_()
+    this.requireObjectType_()
     return [...this.optionalProperties_]
   }
 
@@ -1355,20 +1345,20 @@ class SimpleValidator {
       schema.description = this.description_
     if (typeof this.default_ !== "undefined")
       schema.default = this.default_
-    
+
     let examples = []
     if (typeof this.minimumExample_ !== "undefined")
       examples.push(this.minimumExample_)
     if (typeof this.maximumExample_ !== "undefined")
       examples.push(this.maximumExample_)
-    
+
     if (examples.length > 0)
       schema.examples = examples
 
     this.actions_.forEach(action => {
       switch (action.target) {
         case ActionTargetMode.TYPE:
-          schema.type = this.isArray_ ? "array" : this.type_
+          schema.type = this.jsonType_
           break
 
         case ActionTargetMode.VALUE:

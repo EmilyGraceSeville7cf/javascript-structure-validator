@@ -61,18 +61,6 @@ class Validator {
   }
 
   /**
-   * Require value to be an integer.
-   * 
-   * @returns {Validator} - The current validator.
-   */
-  andIsInteger() {
-    this.requireSimpleValidator_()
-
-    this.simpleValidator_.andIsInteger()
-    return this
-  }
-
-  /**
    * Require value to be less than a constant.
    * 
    * @param {BaseComparableType} constant - A constant.
@@ -635,6 +623,20 @@ class Validator {
     this.requireSimpleValidator_()
 
     this.simpleValidator_.where(predicate)
+    return this
+  }
+
+  /**
+   * Require value constraints.
+   * 
+   * @param {Predicate} predicate - A predicate.
+   * 
+   * @returns {Validator} - The current validator.
+   */
+  whereValue(predicate) {
+    this.requireSimpleValidator_()
+
+    this.simpleValidator_.whereValue(predicate)
     return this
   }
 

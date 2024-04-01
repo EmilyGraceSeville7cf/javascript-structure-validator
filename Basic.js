@@ -25,6 +25,17 @@ class Basic {
   }
 
   /**
+   * Check whether a value is an integer value.
+   * 
+   * @param {any} value - A value.
+   * 
+   * @returns {boolean} - Whether a value is an integer value.
+   */
+  static isInteger(value) {
+    return Number.isInteger(value)
+  }
+
+  /**
    * Check whether a value is a string value.
    * 
    * @param {any} value - A value.
@@ -69,6 +80,28 @@ class Basic {
   }
 
   /**
+   * Check whether a value is a regular expression.
+   * 
+   * @param {any} value - A value.
+   * 
+   * @returns {boolean} - Whether a value is a regular expression.
+   */
+  static isRegExp(value) {
+    return value?.constructor === RegExp
+  }
+
+  /**
+   * Check whether a value is a function.
+   * 
+   * @param {any} value - A value.
+   * 
+   * @returns {boolean} - Whether a value is a function.
+   */
+  static isFunction(value) {
+    return typeof value === "function"
+  }
+
+  /**
    * Check whether a value is a supported validator type value.
    * 
    * @param {any} value - A value.
@@ -109,7 +142,7 @@ class Basic {
    * @returns {boolean} - Whether a value is a validator value.
    */
   static isValidator(value) {
-    return [Validator, SimpleValidator, ComplexValidator].includes(value.constructor)
+    return [Validator, SimpleValidator, ComplexValidator].includes(value?.constructor)
   }
 
   /**
@@ -123,7 +156,7 @@ class Basic {
       argumentName = `${argumentName}[${argumentIndex}]`
 
     if (!predicate(value))
-      throw TypeError(`Value ${argumentName} expected to be a ${expectedTypeName} value (actual value: ${value.toString()})`)
+      throw TypeError(`Value ${argumentName} expected to be a ${expectedTypeName} value (actual value: ${value?.toString()})`)
   }
 
   /**
@@ -146,6 +179,17 @@ class Basic {
    */
   static requireNumber(value, argumentName, argumentIndex) {
     this.requireTypeByPredicate_(this.isNumber, "number", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a value is an integer value and throw if not.
+   * 
+   * @param {any} value - A value.
+   * @param {string} argumentName - An argument name.
+   * @param {number} [argumentIndex] - An argument index.
+   */
+  static requireInteger(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isInteger, "integer", value, argumentName, argumentIndex)
   }
 
   /**
@@ -193,6 +237,28 @@ class Basic {
   }
 
   /**
+   * Check whether a value is a regular expression value and throw if not.
+   * 
+   * @param {any} value - A value.
+   * @param {string} argumentName - An argument name.
+   * @param {number} [argumentIndex] - An argument index.
+   */
+  static requireRegExp(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isRegExp, "regular expression", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a value is a function value and throw if not.
+   * 
+   * @param {any} value - A value.
+   * @param {string} argumentName - An argument name.
+   * @param {number} [argumentIndex] - An argument index.
+   */
+  static requireFunction(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isFunction, "function", value, argumentName, argumentIndex)
+  }
+
+  /**
    * Check whether a value is a basic supported validator type value and throw if not.
    * 
    * @param {any} value - A value.
@@ -230,7 +296,7 @@ class Basic {
    * @param {number} [argumentIndex] - An argument index.
    */
   static requireValidator(value, argumentName, argumentIndex) {
-    const types = [Validator, SimpleValidator, ComplexValidator].map(constructor => constructor.name)
+    const types = [Validator, SimpleValidator, ComplexValidator].map(constructor => constructor?.name)
     this.requireTypeByPredicate_(this.isValidator, types.join(" | "), value, argumentName, argumentIndex)
   }
 }
