@@ -95,6 +95,75 @@ function isAllOf(...validators) {
 }
 
 /**
+ * Require value to be boolean array.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isBooleanArray() {
+  return isArray().withItems(isBoolean())
+}
+
+/**
+ * Require value to be number array.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isNumberArray() {
+  return isArray().withItems(isNumber())
+}
+
+/**
+ * Require value to be integer array.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isIntegerArray() {
+  return isArray().withItems(isInteger())
+}
+
+/**
+ * Require value to be string array.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isStringArray() {
+  return isArray().withItems(isString())
+}
+
+/**
+ * Require value to be bigint array.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isBigintArray() {
+  return isArray().withItems(isBigint())
+}
+
+/**
+ * Creates object with required, optional, and additional properties.
+ * 
+ * @param {object} requiredProperties - Required properties.
+ * @param {object} optionalProperties - Optional properties.
+ * @param {object} additionalProperties - Additional properties.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isObjectWith(requiredProperties, optionalProperties, additionalProperties) {
+  const validator = isObject()
+
+  if (typeof requiredProperties !== "undefined")
+    validator.withRequiredProperties(requiredProperties)
+  if (typeof optionalProperties !== "undefined")
+    validator.withOptionalProperties(optionalProperties)
+  if (additionalProperties === false)
+    validator.withNotAdditionalProperties()
+  else if (typeof additionalProperties !== "undefined")
+    validator.withAdditionalProperties(additionalProperties)
+
+  return validator
+}
+
+/**
  * Check whether value satisfies all conditions.
  * 
  * @param {any} input - An input.
@@ -104,7 +173,7 @@ function isAllOf(...validators) {
  */
 function checkWhether(input, validator) {
   Basic.requireValidator(validator, "validator")
-  
+
   return validator.validate(input)
 }
 
