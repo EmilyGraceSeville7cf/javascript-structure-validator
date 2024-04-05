@@ -773,6 +773,24 @@ A basic comparable type.
 <dt><a href="#isAllOf">isAllOf(...validators)</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require all of constraints to be satisfied.</p>
 </dd>
+<dt><a href="#isBooleanArray">isBooleanArray()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be boolean array.</p>
+</dd>
+<dt><a href="#isNumberArray">isNumberArray()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be number array.</p>
+</dd>
+<dt><a href="#isIntegerArray">isIntegerArray()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be integer array.</p>
+</dd>
+<dt><a href="#isStringArray">isStringArray()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be string array.</p>
+</dd>
+<dt><a href="#isBigintArray">isBigintArray()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be bigint array.</p>
+</dd>
+<dt><a href="#isObjectWith">isObjectWith(requiredProperties, optionalProperties, additionalProperties)</a> ⇒ <code>Validator</code></dt>
+<dd><p>Creates object with required, optional, and additional properties.</p>
+</dd>
 <dt><a href="#checkWhether">checkWhether(input, validator)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Check whether value satisfies all conditions.</p>
 </dd>
@@ -875,6 +893,61 @@ Require all of constraints to be satisfied.
 | Param         | Type                            | Description |
 | ------------- | ------------------------------- | ----------- |
 | ...validators | <code>Array.\<Validator></code> | Validators. |
+
+<a name="isBooleanArray"></a>
+
+## isBooleanArray() ⇒ <code>Validator</code>
+
+Require value to be boolean array.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isNumberArray"></a>
+
+## isNumberArray() ⇒ <code>Validator</code>
+
+Require value to be number array.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isIntegerArray"></a>
+
+## isIntegerArray() ⇒ <code>Validator</code>
+
+Require value to be integer array.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isStringArray"></a>
+
+## isStringArray() ⇒ <code>Validator</code>
+
+Require value to be string array.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isBigintArray"></a>
+
+## isBigintArray() ⇒ <code>Validator</code>
+
+Require value to be bigint array.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isObjectWith"></a>
+
+## isObjectWith(requiredProperties, optionalProperties, additionalProperties) ⇒ <code>Validator</code>
+
+Creates object with required, optional, and additional properties.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.
+
+| Param                | Type                | Description            |
+| -------------------- | ------------------- | ---------------------- |
+| requiredProperties   | <code>object</code> | Required properties.   |
+| optionalProperties   | <code>object</code> | Optional properties.   |
+| additionalProperties | <code>object</code> | Additional properties. |
 
 <a name="checkWhether"></a>
 
@@ -1669,3 +1742,29 @@ Check whether an input value satisfies all conditions.
 Convert object to JSON schema (draft 04) representation.
 
 **Kind**: instance method of [<code>Validator</code>](#Validator)
+
+## Functions
+
+<dl>
+<dt><a href="#getBasic">getBasic()</a> ⇒ <code>Basic</code></dt>
+<dd><p>Return Basic class.</p>
+</dd>
+<dt><a href="#getValidator">getValidator()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Return Validator class.</p>
+</dd>
+</dl>
+
+<a name="getBasic"></a>
+
+## getBasic() ⇒ <code>Basic</code>
+
+Return Basic class.
+
+**Kind**: global function\
+<a name="getValidator"></a>
+
+## getValidator() ⇒ <code>Validator</code>
+
+Return Validator class.
+
+**Kind**: global function
