@@ -794,7 +794,7 @@ A basic comparable type.
 <dt><a href="#checkWhether">checkWhether(input, validator)</a> ⇒ <code>boolean</code></dt>
 <dd><p>Check whether value satisfies all conditions.</p>
 </dd>
-<dt><a href="#throwOnFailure">throwOnFailure(input, validator)</a></dt>
+<dt><a href="#throwOnFailure">throwOnFailure(input, validator, [message])</a></dt>
 <dd><p>Check whether value satisfies all conditions and print error in case.</p>
 </dd>
 </dl>
@@ -965,16 +965,17 @@ Check whether value satisfies all conditions.
 
 <a name="throwOnFailure"></a>
 
-## throwOnFailure(input, validator)
+## throwOnFailure(input, validator, \[message\])
 
 Check whether value satisfies all conditions and print error in case.
 
 **Kind**: global function
 
-| Param     | Type                   | Description  |
-| --------- | ---------------------- | ------------ |
-| input     | <code>any</code>       | An input.    |
-| validator | <code>Validator</code> | A validator. |
+| Param       | Type                   | Description  |
+| ----------- | ---------------------- | ------------ |
+| input       | <code>any</code>       | An input.    |
+| validator   | <code>Validator</code> | A validator. |
+| \[message\] | <code>string</code>    | A message.   |
 
 <a name="Validator"></a>
 
