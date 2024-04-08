@@ -182,10 +182,14 @@ function checkWhether(input, validator) {
  * 
  * @param {any} input - An input.
  * @param {Validator} validator - A validator.
+ * @param {string} [message] - A message.
  */
-function throwOnFailure(input, validator) {
+function throwOnFailure(input, validator, message) {
   Basic.requireValidator(validator, "validator")
 
   if (!validator.validate(input))
-    throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema())}`)
+    if (typeof message === "undefined")
+      throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema())}`)
+    else
+      throw new Error(`Expected ${message}`)
 }
