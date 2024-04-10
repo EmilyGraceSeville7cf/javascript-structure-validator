@@ -2,6 +2,13 @@
  * Basic validator.
  */
 class SimpleValidator {
+  /**
+   * @param {string} property
+   */
+  isPrivateProperty_(property) {
+    return property.endsWith("_")
+  }
+
   requireSomeTypeMessage_() {
     return `Constraint, getter or input for ${this.jsonType_} is expected (constraint can't be set, getter can't be invoked, or input is not compatible with ${this.jsonType_} type)`
   }
@@ -46,6 +53,15 @@ class SimpleValidator {
 
     if (intersection.length !== 0)
       throw new Error(`Required and optional properties are expected not to intersect (actual value: ${properties})`)
+  }
+
+  /**
+   * @param {object} properties
+   */
+  requirePublicProperties_(properties) {
+    for (let property in properties)
+      if (this.isPrivateProperty_(property))
+        throw new Error(`Public properties without leading dash are expected (actual value: ${property})`)
   }
 
   /**
@@ -1002,6 +1018,7 @@ class SimpleValidator {
     this.tryInvoke_("withRequiredProperties")
     this.requireObjectType_()
     Basic.requireObject(properties, "properties")
+    this.requirePublicProperties_(properties)
 
     for (let requiredProperty in properties)
       this.requiredProperties_.push(requiredProperty)
@@ -1047,6 +1064,7 @@ class SimpleValidator {
     this.tryInvoke_("withOptionalProperties")
     this.requireObjectType_()
     Basic.requireObject(properties, "properties")
+    this.requirePublicProperties_(properties)
 
     for (let optionalProperty in properties)
       this.optionalProperties_.push(optionalProperty)
@@ -1091,7 +1109,6 @@ class SimpleValidator {
     this.requireObjectType_()
     Basic.requireValidator(properties, "properties")
 
-
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.ADDITIONAL_PROPERTIES,
       properties,
@@ -1124,9 +1141,13 @@ class SimpleValidator {
       ActionTargetMode.ADDITIONAL_PROPERTIES,
       null,
       input => {
-        for (let inputProperty in input)
+        for (let inputProperty in input) {
+          if (this.isPrivateProperty_(inputProperty))
+            continue
+
           if (!this.requiredProperties_.includes(inputProperty) && !this.optionalProperties_.includes(inputProperty))
             return false
+        }
 
         return true
       }
