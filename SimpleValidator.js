@@ -28,6 +28,11 @@ class SimpleValidator {
       throw new Error(this.requireSomeTypeMessage_())
   }
 
+  requireNotSymbolType_() {
+    if (this.jsTypePredicate_ === Basic.isSymbol)
+      throw new Error(`Constraint, getter or input for any type except symbol is expected (constraint can't be set, getter can't be invoked, or input is not compatible with symbol type)`)
+  }
+
   /**
    * @param {any} input
    */
@@ -341,6 +346,7 @@ class SimpleValidator {
       integer: new SupportedTypeMapping_("integer", Basic.isInteger),
       string: new SupportedTypeMapping_("string", Basic.isString),
       bigint: new SupportedTypeMapping_("number", Basic.isBigint),
+      symbol: new SupportedTypeMapping_(undefined, Basic.isSymbol), // Symbols are not mappable to JSON schema
       array: new SupportedTypeMapping_("array", Basic.isArray),
       object: new SupportedTypeMapping_("object", Basic.isObject)
     }
@@ -406,6 +412,7 @@ class SimpleValidator {
    */
   withDefault(value) {
     this.tryInvoke_("withDefault")
+    this.requireNotSymbolType_()
     this.requireSameType_(value)
 
     this.default_ = value
@@ -421,6 +428,7 @@ class SimpleValidator {
    */
   lessThan(constant) {
     this.tryInvoke_("lessThan")
+    this.requireNotSymbolType_()
     this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN,
@@ -442,6 +450,7 @@ class SimpleValidator {
    */
   greaterThan(constant) {
     this.tryInvoke_("greaterThan")
+    this.requireNotSymbolType_()
     this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN,
@@ -463,6 +472,7 @@ class SimpleValidator {
    */
   lessThanOrEqualTo(constant) {
     this.tryInvoke_("lessThanOrEqualTo")
+    this.requireNotSymbolType_()
     this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.LESS_THAN_OR_EQUAL_TO,
@@ -484,6 +494,7 @@ class SimpleValidator {
    */
   greaterThanOrEqualTo(constant) {
     this.tryInvoke_("greaterThanOrEqualTo")
+    this.requireNotSymbolType_()
     this.requireSameType_(constant)
 
     this.actions_.push(new ActionInfo_(ActionMode.GREATER_THAN_OR_EQUAL_TO,
@@ -546,6 +557,7 @@ class SimpleValidator {
    */
   inRange(from, to) {
     this.tryInvoke_("inRange")
+    this.requireNotSymbolType_()
     this.requireSameType_(from)
     this.requireSameType_(to)
 
@@ -572,6 +584,7 @@ class SimpleValidator {
    * @returns {SimpleValidator} - The current validator.
    */
   notInRange(from, to) {
+    this.requireNotSymbolType_()
     this.requireSameType_(from)
     this.requireSameType_(to)
 
@@ -1407,6 +1420,8 @@ class SimpleValidator {
    * @returns {object}
    */
   toJSONSchema() {
+    this.requireNotSymbolType_()
+    
     let schema = {}
     let simpleSubschemas = []
 

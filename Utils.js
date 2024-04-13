@@ -44,6 +44,15 @@ function isBigint() {
 }
 
 /**
+ * Require value to be symbol.
+ * 
+ * @returns {Validator} - The validator.
+ */
+function isSymbol() {
+  return new Validator("symbol")
+}
+
+/**
  * Require value to be array.
  * 
  * @returns {Validator} - The validator.
