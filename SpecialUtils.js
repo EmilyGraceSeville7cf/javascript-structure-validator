@@ -9,7 +9,7 @@ function toBaseType_(value) {
     type = "array"
   else if (Number.isInteger(value))
     type = "integer"
-  
+
   return type
 }
 
@@ -138,7 +138,7 @@ function isValueOneOf(...values) {
  */
 function isValueNotOneOf(...values) {
   Basic.requireArray(values)
-  
+
   return new Validator(toBaseType_(values[0])).withValueNotOneOf(...values)
 }
 
@@ -248,4 +248,14 @@ function isColor() {
     green: isNumber().inRange(0, 255),
     blue: isNumber().inRange(0, 255)
   }).withNotAdditionalProperties()
+}
+
+/**
+ * Check whether object is a Symbol-based enumeration.
+ * 
+ * @returns {Validator} - Check whether object is a Symbol-based enumeration.
+ */
+function isEnum() {
+  return isObject().withPropertyCountGreaterThan(0)
+    .withAdditionalProperties(isSymbol())
 }

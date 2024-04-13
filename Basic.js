@@ -58,6 +58,17 @@ class Basic {
   }
 
   /**
+   * Check whether a value is a symbol value.
+   * 
+   * @param {any} value - A value.
+   * 
+   * @returns {boolean} - Whether a value is a symbol value.
+   */
+  static isSymbol(value) {
+    return typeof value === "symbol"
+  }
+
+  /**
    * Check whether a value is an array value.
    * 
    * @param {any} value - A value.
@@ -114,6 +125,7 @@ class Basic {
       typeof value === "number",
       typeof value === "string",
       typeof value === "bigint",
+      typeof value === "symbol",
       typeof value === "object",
     ].some(result => result === true)
   }
@@ -131,6 +143,7 @@ class Basic {
       typeof value === "number",
       typeof value === "string",
       typeof value === "bigint",
+      typeof value === "symbol"
     ].some(result => result === true)
   }
 
@@ -211,7 +224,18 @@ class Basic {
    * @param {number} [argumentIndex] - An argument index.
    */
   static requireBigint(value, argumentName, argumentIndex) {
-    this.requireTypeByPredicate_(this.Bigint, "bigint", value, argumentName, argumentIndex)
+    this.requireTypeByPredicate_(this.isBigint, "bigint", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a value is a symbol value and throw if not.
+   * 
+   * @param {any} value - A value.
+   * @param {string} argumentName - An argument name.
+   * @param {number} [argumentIndex] - An argument index.
+   */
+  static requireSymbol(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isSymbol, "symbol", value, argumentName, argumentIndex)
   }
 
   /**
@@ -269,7 +293,7 @@ class Basic {
     /**
      * @type {Array.<BaseType>}
      */
-    const types = ["boolean", "number", "string", "bigint", "array", "object"]
+    const types = ["boolean", "number", "string", "bigint", "symbol", "array", "object"]
     this.requireTypeByPredicate_(this.isSupported, types.join(" | "), value, argumentName, argumentIndex)
   }
 
@@ -284,7 +308,7 @@ class Basic {
     /**
      * @type {Array.<BaseComparableType>}
      */
-    const types = ["boolean", "number", "string", "bigint"]
+    const types = ["boolean", "number", "string", "bigint", "symbol"]
     this.requireTypeByPredicate_(this.isComparableSupported, types.join(" | "), value, argumentName, argumentIndex)
   }
 
