@@ -1,7 +1,7 @@
 /**
  * Require value to be boolean.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isBoolean() {
   return new Validator("boolean")
@@ -10,7 +10,7 @@ function isBoolean() {
 /**
  * Require value to be number.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isNumber() {
   return new Validator("number")
@@ -19,7 +19,7 @@ function isNumber() {
 /**
  * Require value to be integer.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isInteger() {
   return new Validator("integer")
@@ -28,7 +28,7 @@ function isInteger() {
 /**
  * Require value to be string.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isString() {
   return new Validator("string")
@@ -37,7 +37,7 @@ function isString() {
 /**
  * Require value to be bigint.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isBigint() {
   return new Validator("bigint")
@@ -46,7 +46,7 @@ function isBigint() {
 /**
  * Require value to be symbol.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isSymbol() {
   return new Validator("symbol")
@@ -55,7 +55,7 @@ function isSymbol() {
 /**
  * Require value to be array.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isArray() {
   return new Validator("array")
@@ -64,7 +64,7 @@ function isArray() {
 /**
  * Require value to be object.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isObject() {
   return new Validator("object")
@@ -73,9 +73,9 @@ function isObject() {
 /**
  * Require any of constraints to be satisfied.
  * 
- * @param {Array.<Validator>} validators - Validators.
+ * @param {Array.<Validator>} validators Validators.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isAnyOf(...validators) {
   return new Validator().anyOf(...validators)
@@ -84,9 +84,9 @@ function isAnyOf(...validators) {
 /**
  * Require one of constraints to be satisfied.
  * 
- * @param {Array.<Validator>} validators - Validators.
+ * @param {Array.<Validator>} validators Validators.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isOneOf(...validators) {
   return new Validator().oneOf(...validators)
@@ -95,9 +95,9 @@ function isOneOf(...validators) {
 /**
  * Require all of constraints to be satisfied.
  * 
- * @param {Array.<Validator>} validators - Validators.
+ * @param {Array.<Validator>} validators Validators.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isAllOf(...validators) {
   return new Validator().allOf(...validators)
@@ -106,7 +106,7 @@ function isAllOf(...validators) {
 /**
  * Require value to be boolean array.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isBooleanArray() {
   return isArray().withItems(isBoolean())
@@ -115,7 +115,7 @@ function isBooleanArray() {
 /**
  * Require value to be number array.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isNumberArray() {
   return isArray().withItems(isNumber())
@@ -124,7 +124,7 @@ function isNumberArray() {
 /**
  * Require value to be integer array.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isIntegerArray() {
   return isArray().withItems(isInteger())
@@ -133,7 +133,7 @@ function isIntegerArray() {
 /**
  * Require value to be string array.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isStringArray() {
   return isArray().withItems(isString())
@@ -142,7 +142,7 @@ function isStringArray() {
 /**
  * Require value to be bigint array.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isBigintArray() {
   return isArray().withItems(isBigint())
@@ -151,11 +151,11 @@ function isBigintArray() {
 /**
  * Creates object with required, optional, and additional properties.
  * 
- * @param {object} requiredProperties - Required properties.
- * @param {object} optionalProperties - Optional properties.
- * @param {object} additionalProperties - Additional properties.
+ * @param {object} requiredProperties Required properties.
+ * @param {object} optionalProperties Optional properties.
+ * @param {object} additionalProperties Additional properties.
  * 
- * @returns {Validator} - The validator.
+ * @returns {Validator} The validator.
  */
 function isObjectWith(requiredProperties, optionalProperties, additionalProperties) {
   const validator = isObject()
@@ -175,10 +175,10 @@ function isObjectWith(requiredProperties, optionalProperties, additionalProperti
 /**
  * Check whether value satisfies all conditions.
  * 
- * @param {any} input - An input.
- * @param {Validator} validator - A validator.
+ * @param {any} input An input.
+ * @param {Validator} validator A validator.
  * 
- * @returns {boolean} - Whether value satisfies all conditions.
+ * @returns {boolean} Whether value satisfies all conditions.
  */
 function checkWhether(input, validator) {
   Basic.requireValidator(validator, "validator")
@@ -189,16 +189,16 @@ function checkWhether(input, validator) {
 /**
  * Check whether value satisfies all conditions and print error in case.
  * 
- * @param {any} input - An input.
- * @param {Validator} validator - A validator.
- * @param {string} [message] - A message.
+ * @param {any} input An input.
+ * @param {Validator} validator A validator.
+ * @param {string} message A message.
  */
 function throwOnFailure(input, validator, message) {
   Basic.requireValidator(validator, "validator")
 
   if (!validator.validate(input))
     if (typeof message === "undefined")
-      throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema())}`)
+      throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema_())}`)
     else
       throw new Error(`Expected ${message}`)
 }

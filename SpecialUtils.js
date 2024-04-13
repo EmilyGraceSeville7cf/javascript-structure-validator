@@ -31,7 +31,7 @@ function isExistingUrl_(url) {
 /**
  * Check whether object is true.
  *  
- * @returns {Validator} - Check whether object is true.
+ * @returns {Validator} Check whether object is true.
  */
 function isTrue() {
   return isBoolean().equalTo(true)
@@ -40,7 +40,7 @@ function isTrue() {
 /**
  * Check whether object is false.
  *  
- * @returns {Validator} - Check whether object is false.
+ * @returns {Validator} Check whether object is false.
  */
 function isFalse() {
   return isBoolean().equalTo(false)
@@ -49,7 +49,7 @@ function isFalse() {
 /**
  * Check whether object is a positive number.
  *  
- * @returns {Validator} - Check whether object is a positive number.
+ * @returns {Validator} Check whether object is a positive number.
  */
 function isPositive() {
   return isNumber().greaterThan(0)
@@ -58,7 +58,7 @@ function isPositive() {
 /**
  * Check whether object is a negative number.
  *  
- * @returns {Validator} - Check whether object is a negative number.
+ * @returns {Validator} Check whether object is a negative number.
  */
 function isNegative() {
   return isNumber().lessThan(0)
@@ -67,10 +67,10 @@ function isNegative() {
 /**
  * Check whether object is a number in range.
  * 
- * @param {BaseComparableType} from - A lowest constraint.
- * @param {BaseComparableType} to - A highest constraint.
+ * @param {BaseComparableType} from A lowest constraint.
+ * @param {BaseComparableType} to A highest constraint.
  * 
- * @returns {Validator} - Check whether object is a number in range.
+ * @returns {Validator} Check whether object is a number in range.
  */
 function isIn(from, to) {
   return isNumber().inRange(from, to)
@@ -79,7 +79,7 @@ function isIn(from, to) {
 /**
  * Check whether object is an empty string.
  *  
- * @returns {Validator} - Check whether object is an empty string.
+ * @returns {Validator} Check whether object is an empty string.
  */
 function isEmptyString() {
   return isString().withLengthEqualTo(0)
@@ -88,7 +88,7 @@ function isEmptyString() {
 /**
  * Check whether object is not an empty string.
  *  
- * @returns {Validator} - Check whether object is not an empty string.
+ * @returns {Validator} Check whether object is not an empty string.
  */
 function isNotEmptyString() {
   return isString().withLengthGreaterThan(0)
@@ -97,9 +97,9 @@ function isNotEmptyString() {
 /**
  * Check whether object is a string matching regular expression.
  * 
- * @param {RegExp} regex - A regular expression.
+ * @param {RegExp} regex A regular expression.
  *  
- * @returns {Validator} - Check whether object is a string matching regular expression.
+ * @returns {Validator} Check whether object is a string matching regular expression.
  */
 function isMatching(regex) {
   return isString().matching(regex)
@@ -108,9 +108,9 @@ function isMatching(regex) {
 /**
  * Check whether object is a string not matching regular expression.
  * 
- * @param {RegExp} regex - A regular expression.
+ * @param {RegExp} regex A regular expression.
  *  
- * @returns {Validator} - Check whether object is a string not matching regular expression.
+ * @returns {Validator} Check whether object is a string not matching regular expression.
  */
 function isNotMatching(regex) {
   return isString().notMatching(regex)
@@ -119,9 +119,9 @@ function isNotMatching(regex) {
 /**
  * Require value to be equal to one of constants.
  * 
- * @param {Array} values - Constants.
+ * @param {Array} values Constants.
  * 
- * @returns {Validator} - The current validator.
+ * @returns {Validator} The current validator.
  */
 function isValueOneOf(...values) {
   Basic.requireArray(values)
@@ -132,9 +132,9 @@ function isValueOneOf(...values) {
 /**
  * Require value to be not equal to one of constants.
  * 
- * @param {Array} values - Constants.
+ * @param {Array} values Constants.
  * 
- * @returns {Validator} - The current validator.
+ * @returns {Validator} The current validator.
  */
 function isValueNotOneOf(...values) {
   Basic.requireArray(values)
@@ -145,7 +145,7 @@ function isValueNotOneOf(...values) {
 /**
  * Check whether object is a URL string.
  * 
- * @returns {Validator} - Check whether object is a URL string.
+ * @returns {Validator} Check whether object is a URL string.
  */
 function isUrl() {
   return isMatching(urlRegex_).whereValue(isExistingUrl_)
@@ -154,7 +154,7 @@ function isUrl() {
 /**
  * Check whether object is not a URL string.
  * 
- * @returns {Validator} - Check whether object is not a URL string.
+ * @returns {Validator} Check whether object is not a URL string.
  */
 function isNotUrl() {
   return isNotMatching(urlRegex_)
@@ -163,7 +163,7 @@ function isNotUrl() {
 /**
  * Check whether object is a 2D vector.
  * 
- * @returns {Validator} - Check whether object is a 2D vector.
+ * @returns {Validator} Check whether object is a 2D vector.
  */
 function isVector2D() {
   return isObject().with({
@@ -175,7 +175,7 @@ function isVector2D() {
 /**
  * Check whether object is a 3D vector.
  * 
- * @returns {Validator} - Check whether object is a 3D vector.
+ * @returns {Validator} Check whether object is a 3D vector.
  */
 function isVector3D() {
   return isObject().withRequiredProperties({
@@ -188,7 +188,7 @@ function isVector3D() {
 /**
  * Check whether object is a range.
  * 
- * @returns {Validator} - Check whether object is a range.
+ * @returns {Validator} Check whether object is a range.
  */
 function isRange() {
   return isObject().withRequiredProperties({
@@ -201,7 +201,7 @@ function isRange() {
 /**
  * Check whether object is a stepped range.
  * 
- * @returns {Validator} - Check whether object is a stepped range.
+ * @returns {Validator} Check whether object is a stepped range.
  */
 function isSteppedRange() {
   return isObject().withRequiredProperties({
@@ -215,7 +215,7 @@ function isSteppedRange() {
 /**
  * Check whether object is a 2D size.
  * 
- * @returns {Validator} - Check whether object is a 2D size.
+ * @returns {Validator} Check whether object is a 2D size.
  */
 function isSize2D() {
   return isObject().withRequiredProperties({
@@ -227,7 +227,7 @@ function isSize2D() {
 /**
  * Check whether object is a 3D size.
  * 
- * @returns {Validator} - Check whether object is a 3D size.
+ * @returns {Validator} Check whether object is a 3D size.
  */
 function isSize3D() {
   return isObject().withRequiredProperties({
@@ -240,7 +240,7 @@ function isSize3D() {
 /**
  * Check whether object is a color.
  * 
- * @returns {Validator} - Check whether object is a color.
+ * @returns {Validator} Check whether object is a color.
  */
 function isColor() {
   return isObject().withRequiredProperties({
@@ -253,7 +253,7 @@ function isColor() {
 /**
  * Check whether object is a Symbol-based enumeration.
  * 
- * @returns {Validator} - Check whether object is a Symbol-based enumeration.
+ * @returns {Validator} Check whether object is a Symbol-based enumeration.
  */
 function isEnum() {
   return isObject().withPropertyCountGreaterThan(0)
