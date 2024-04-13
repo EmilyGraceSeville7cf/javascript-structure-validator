@@ -12,6 +12,7 @@ Basic validation tools.
   - [.isInteger(value)](#Basic.isInteger) ⇒ <code>boolean</code>
   - [.isString(value)](#Basic.isString) ⇒ <code>boolean</code>
   - [.isBigint(value)](#Basic.isBigint) ⇒ <code>boolean</code>
+  - [.isSymbol(value)](#Basic.isSymbol) ⇒ <code>boolean</code>
   - [.isArray(value)](#Basic.isArray) ⇒ <code>boolean</code>
   - [.isObject(value)](#Basic.isObject) ⇒ <code>boolean</code>
   - [.isRegExp(value)](#Basic.isRegExp) ⇒ <code>boolean</code>
@@ -25,6 +26,7 @@ Basic validation tools.
   - [.requireInteger(value, argumentName, \[argumentIndex\])](#Basic.requireInteger)
   - [.requireString(value, argumentName, \[argumentIndex\])](#Basic.requireString)
   - [.requireBigint(value, argumentName, \[argumentIndex\])](#Basic.requireBigint)
+  - [.requireSymbol(value, argumentName, \[argumentIndex\])](#Basic.requireSymbol)
   - [.requireArray(value, argumentName, \[argumentIndex\])](#Basic.requireArray)
   - [.requireObject(value, argumentName, \[argumentIndex\])](#Basic.requireObject)
   - [.requireRegExp(value, argumentName, \[argumentIndex\])](#Basic.requireRegExp)
@@ -93,6 +95,19 @@ Check whether a value is a bigint value.
 
 **Kind**: static method of [<code>Basic</code>](#Basic)\
 **Returns**: <code>boolean</code> - - Whether a value is a bigint value.
+
+| Param | Type             | Description |
+| ----- | ---------------- | ----------- |
+| value | <code>any</code> | A value.    |
+
+<a name="Basic.isSymbol"></a>
+
+### Basic.isSymbol(value) ⇒ <code>boolean</code>
+
+Check whether a value is a symbol value.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)\
+**Returns**: <code>boolean</code> - - Whether a value is a symbol value.
 
 | Param | Type             | Description |
 | ----- | ---------------- | ----------- |
@@ -263,6 +278,20 @@ Check whether a value is a string value and throw if not.
 ### Basic.requireBigint(value, argumentName, \[argumentIndex\])
 
 Check whether a value is a bigint value and throw if not.
+
+**Kind**: static method of [<code>Basic</code>](#Basic)
+
+| Param             | Type                | Description        |
+| ----------------- | ------------------- | ------------------ |
+| value             | <code>any</code>    | A value.           |
+| argumentName      | <code>string</code> | An argument name.  |
+| \[argumentIndex\] | <code>number</code> | An argument index. |
+
+<a name="Basic.requireSymbol"></a>
+
+### Basic.requireSymbol(value, argumentName, \[argumentIndex\])
+
+Check whether a value is a symbol value and throw if not.
 
 **Kind**: static method of [<code>Basic</code>](#Basic)
 
@@ -473,6 +502,9 @@ Action target mode.
 <dt><a href="#isColor">isColor()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Check whether object is a color.</p>
 </dd>
+<dt><a href="#isEnum">isEnum()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Check whether object is a Symbol-based enumeration.</p>
+</dd>
 </dl>
 
 <a name="toBaseType_"></a>
@@ -680,7 +712,15 @@ Check whether object is a 3D size.
 Check whether object is a color.
 
 **Kind**: global function\
-**Returns**: <code>Validator</code> - - Check whether object is a color.
+**Returns**: <code>Validator</code> - - Check whether object is a color.\
+<a name="isEnum"></a>
+
+## isEnum() ⇒ <code>Validator</code>
+
+Check whether object is a Symbol-based enumeration.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - Check whether object is a Symbol-based enumeration.
 
 ## Typedefs
 
@@ -691,10 +731,10 @@ Check whether object is a color.
 <dt><a href="#WherePredicate">WherePredicate</a> ⇒ <code>Array.&lt;boolean&gt;</code></dt>
 <dd><p>A where predicate.</p>
 </dd>
-<dt><a href="#BaseType">BaseType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;integer&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;array&quot;</code> | <code>&quot;object&quot;</code></dt>
+<dt><a href="#BaseType">BaseType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;integer&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;symbol&quot;</code> | <code>&quot;array&quot;</code> | <code>&quot;object&quot;</code></dt>
 <dd><p>A basic type.</p>
 </dd>
-<dt><a href="#BaseComparableType">BaseComparableType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;integer&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code></dt>
+<dt><a href="#BaseComparableType">BaseComparableType</a> : <code>&quot;boolean&quot;</code> | <code>&quot;number&quot;</code> | <code>&quot;integer&quot;</code> | <code>&quot;string&quot;</code> | <code>&quot;bigint&quot;</code> | <code>&quot;symbol&quot;</code></dt>
 <dd><p>A basic comparable type.</p>
 </dd>
 </dl>
@@ -727,14 +767,14 @@ A where predicate.
 
 <a name="BaseType"></a>
 
-## BaseType : <code>"boolean"</code> | <code>"number"</code> | <code>"integer"</code> | <code>"string"</code> | <code>"bigint"</code> | <code>"array"</code> | <code>"object"</code>
+## BaseType : <code>"boolean"</code> | <code>"number"</code> | <code>"integer"</code> | <code>"string"</code> | <code>"bigint"</code> | <code>"symbol"</code> | <code>"array"</code> | <code>"object"</code>
 
 A basic type.
 
 **Kind**: global typedef\
 <a name="BaseComparableType"></a>
 
-## BaseComparableType : <code>"boolean"</code> | <code>"number"</code> | <code>"integer"</code> | <code>"string"</code> | <code>"bigint"</code>
+## BaseComparableType : <code>"boolean"</code> | <code>"number"</code> | <code>"integer"</code> | <code>"string"</code> | <code>"bigint"</code> | <code>"symbol"</code>
 
 A basic comparable type.
 
@@ -757,6 +797,9 @@ A basic comparable type.
 </dd>
 <dt><a href="#isBigint">isBigint()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be bigint.</p>
+</dd>
+<dt><a href="#isSymbol">isSymbol()</a> ⇒ <code>Validator</code></dt>
+<dd><p>Require value to be symbol.</p>
 </dd>
 <dt><a href="#isArray">isArray()</a> ⇒ <code>Validator</code></dt>
 <dd><p>Require value to be array.</p>
@@ -836,6 +879,14 @@ Require value to be string.
 ## isBigint() ⇒ <code>Validator</code>
 
 Require value to be bigint.
+
+**Kind**: global function\
+**Returns**: <code>Validator</code> - - The validator.\
+<a name="isSymbol"></a>
+
+## isSymbol() ⇒ <code>Validator</code>
+
+Require value to be symbol.
 
 **Kind**: global function\
 **Returns**: <code>Validator</code> - - The validator.\
