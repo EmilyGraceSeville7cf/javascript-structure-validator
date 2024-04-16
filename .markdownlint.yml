@@ -70,6 +70,7 @@ required-headings:
     - "## Pros and cons" # Comparison with other tools
     - "## FAQ" # Small introduction examples
     - "## Workflow"
+    - "## Wrapper libraries" # Additional small libraries built on top of the current one
   match_case: true
 proper-names:
   code_blocks: false

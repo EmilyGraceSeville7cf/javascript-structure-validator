@@ -35,3 +35,13 @@ For installation steps consult [this][libraries] article.
 
 All code development goes inside Web Apps Script editor. Git is used to capture
 code versions pulled with the help of `clasp` CLI tool.
+
+## Wrapper libraries
+
+Wrapper libraries are small additions to this library.
+
+| Name                               | Description                                          | Identifier                                                  |
+| ---------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------- |
+| [short functions][short_functions] | One-letter functions for a quick validator creation. | `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO` |
+
+[short_functions]: https://script.google.com/d/1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO/edit?usp=sharing
