@@ -15,6 +15,46 @@ class ComplexValidator_ {
   }
 
   /**
+   * An expected type.
+   * 
+   * @type {string}
+   */
+  get expectedJSType() {
+    const types = [...new Set(this.validators_.map(validator => validator.expectedJSType))]
+    
+    if (types.length !== 1)
+      return "any"
+    
+    return types[0]
+  }
+
+  /**
+   * A required properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedRequiredPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    return this.validators_.map(validator => validator.expectedRequiredPropertiesTree)
+      .reduce((previous, current) => deepMerge_(previous, current), {})
+  }
+
+  /**
+   * An optional properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedOptionalPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    return this.validators_.map(validator => validator.expectedOptionalPropertiesTree)
+      .reduce((previous, current) => deepMerge_(previous, current), {})
+  }
+
+  /**
    * Clone the current validator.
    * 
    * @returns {ComplexValidator_} A validator clone.
@@ -46,6 +86,15 @@ class ComplexValidator_ {
   }
 
   /**
+   * Converts object to string.
+   * 
+   * @returns {string} A string representation.
+   */
+  toString() {
+    return this.toJSONSchema_()
+  }
+
+  /**
    * Convert object to JSON schema (draft 07) representation.
    * 
    * @returns {object} JSON schema (draft 07) representation.
@@ -67,14 +116,5 @@ class ComplexValidator_ {
           allOf: this.validators_.map(validator => validator.toJSONSchema_())
         }
     }
-  }
-
-  /**
-   * Converts object to string.
-   * 
-   * @returns {string} A string representation.
-   */
-  toString() {
-    return this.toJSONSchema_()
   }
 }

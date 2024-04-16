@@ -362,10 +362,64 @@ class SimpleValidator_ {
 
     this.requiredProperties_ = []
     this.optionalProperties_ = []
+    this.requiredPropertiesTree_ = {}
+    this.optionalPropertiesTree_ = {}
     this.minimumExample_ = undefined
     this.maximumExample_ = undefined
     this.description_ = undefined
     this.default_ = undefined
+  }
+
+  /**
+   * An expected type.
+   * 
+   * @type {string}
+   */
+  get expectedJSType() {
+    const supportedTypes = {
+      boolean: "boolean",
+      number: "number",
+      integer: "number",
+      string: "string",
+      bigint: "bigint",
+      symbol: "symbol",
+      array: "array",
+      object: "object"
+    }
+
+    return supportedTypes[this.validatorType_]
+  }
+
+  /**
+   * A required properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedRequiredPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    let tree = {}
+    for (let property in this.requiredPropertiesTree_)
+      tree[property] = this.requiredPropertiesTree_[property].expectedRequiredPropertiesTree
+
+    return tree
+  }
+
+  /**
+   * An optional properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedOptionalPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    let tree = {}
+    for (let property in this.optionalPropertiesTree_)
+      tree[property] = this.optionalPropertiesTree_[property].expectedOptionalPropertiesTree
+
+    return tree
   }
 
   /**
@@ -1033,13 +1087,12 @@ class SimpleValidator_ {
     Basic.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
 
+    this.requiredPropertiesTree_ = properties
+
     for (let requiredProperty in properties)
       this.requiredProperties_.push(requiredProperty)
 
     this.requireRequiredPropertiesAndOptionalNotIntersect_()
-
-    const nestedDescriptions = []
-    Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.REQUIRED_PROPERTIES,
@@ -1079,13 +1132,12 @@ class SimpleValidator_ {
     Basic.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
 
+    this.optionalPropertiesTree_ = properties
+
     for (let optionalProperty in properties)
       this.optionalProperties_.push(optionalProperty)
 
     this.requireRequiredPropertiesAndOptionalNotIntersect_()
-
-    const nestedDescriptions = []
-    Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.OPTIONAL_PROPERTIES,
@@ -1386,32 +1438,12 @@ class SimpleValidator_ {
   }
 
   /**
-   * An expected type.
+   * Converts object to string.
    * 
-   * @type {string}
+   * @returns {string} A string representation.
    */
-  get expectedType() {
-    return this.validatorType_
-  }
-
-  /**
-   * Required properties.
-   * 
-   * @type {Array.<string>}
-   */
-  get expectedRequiredProperties() {
-    this.requireObjectType_()
-    return [...this.requiredProperties_]
-  }
-
-  /**
-   * Optional properties.
-   * 
-   * @type {Array.<string>}
-   */
-  get expectedOptionalProperties() {
-    this.requireObjectType_()
-    return [...this.optionalProperties_]
+  toString() {
+    return this.toJSONSchema_()
   }
 
   /**
@@ -1421,7 +1453,7 @@ class SimpleValidator_ {
    */
   toJSONSchema_() {
     this.requireNotSymbolType_()
-    
+
     let schema = {}
     let simpleSubschemas = []
 
@@ -1496,14 +1528,5 @@ class SimpleValidator_ {
       schema.allOf = simpleSubschemas
 
     return schema
-  }
-
-  /**
-   * Converts object to string.
-   * 
-   * @returns {string} A string representation.
-   */
-  toString() {
-    return this.toJSONSchema_()
   }
 }

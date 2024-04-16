@@ -113,6 +113,17 @@ class Basic {
   }
 
   /**
+   * Check whether a value is not null or undefined value.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a value is a not null or undefined value.
+   */
+  static isExisting(value) {
+    return typeof value !== "undefined" && value !== null
+  }
+
+  /**
    * Check whether a value is a supported validator type value.
    * 
    * @param {any} value A value.
@@ -280,6 +291,17 @@ class Basic {
    */
   static requireFunction(value, argumentName, argumentIndex) {
     this.requireTypeByPredicate_(this.isFunction, "function", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a value is not an undefined or null value and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireExisting(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isExisting, "not undefined or null", value, argumentName, argumentIndex)
   }
 
   /**

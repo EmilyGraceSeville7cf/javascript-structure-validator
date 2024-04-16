@@ -18,6 +18,64 @@ class Validator {
   }
 
   /**
+   * An expected type.
+   * 
+   * @type {string}
+   */
+  get expectedJSType() {
+    if (this.complexValidators_.length === 0)
+      return this.simpleValidator_.expectedJSType
+    
+    let validators = [...this.complexValidators_]
+
+    if (typeof this.simpleValidator_ !== "undefined")
+      validators.push(this.simpleValidator_)
+
+    const types = [...new Set(validators.map(validator => validator.expectedJSType))]
+    
+    if (types.length !== 1)
+      return "any"
+    
+    return types[0]
+  }
+
+  /**
+   * A required properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedRequiredPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    let validators = [...this.complexValidators_]
+
+    if (typeof this.simpleValidator_ !== "undefined")
+      validators.push(this.simpleValidator_)
+
+    return validators.map(validator => validator.expectedRequiredPropertiesTree)
+      .reduce((previous, current) => deepMerge_(previous, current), {})
+  }
+
+  /**
+   * An optional properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedOptionalPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    let validators = [...this.complexValidators_]
+
+    if (typeof this.simpleValidator_ !== "undefined")
+      validators.push(this.simpleValidator_)
+
+    return validators.map(validator => validator.expectedOptionalPropertiesTree)
+      .reduce((previous, current) => deepMerge_(previous, current), {})
+  }
+
+  /**
    * Clone the current validator.
    * 
    * @returns {Validator} A validator clone.
@@ -768,21 +826,6 @@ class Validator {
    * 
    * @returns {object} JSON schema (draft 07) representation.
    */
-  toJSONSchema_() {
-    let schema = {}
-
-    if (typeof this.simpleValidator_ !== "undefined")
-      Object.assign(schema, this.simpleValidator_.toJSONSchema_())
-    this.complexValidators_.forEach(validator => Object.assign(schema, validator.toJSONSchema_()))
-
-    return schema
-  }
-
-  /**
-   * Convert object to JSON schema (draft 07) representation.
-   * 
-   * @returns {object} JSON schema (draft 07) representation.
-   */
   toJSONSchema() {
     return {
       $schema: "http://json-schema.org/draft-07/schema#",
@@ -798,5 +841,20 @@ class Validator {
    */
   toJSONSchemaString() {
     return JSON.stringify(this.toJSONSchema())
+  }
+
+  /**
+   * Convert object to JSON schema (draft 07) representation.
+   * 
+   * @returns {object} JSON schema (draft 07) representation.
+   */
+  toJSONSchema_() {
+    let schema = {}
+
+    if (typeof this.simpleValidator_ !== "undefined")
+      Object.assign(schema, this.simpleValidator_.toJSONSchema_())
+    this.complexValidators_.forEach(validator => Object.assign(schema, validator.toJSONSchema_()))
+
+    return schema
   }
 }
