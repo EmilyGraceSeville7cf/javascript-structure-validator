@@ -39,7 +39,7 @@ code versions pulled with the help of `clasp` CLI tool.
 ## Wrapper libraries
 
 Wrapper libraries are small additions to this library. They usually are not
-published to Git and have very stable and small API. There is no separate README
+published to GitHub and have very stable and small API. There is no separate README
 page documentation available for them, their possibilities are discoverable via
 IntelliSence.
 
