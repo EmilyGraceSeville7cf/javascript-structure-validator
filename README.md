@@ -44,8 +44,10 @@ page documentation available for them, their possibilities are discoverable via
 IntelliSence. For code examples consult their code comments in `Sample.gs` file
 (click library name to open its source code and find this file).
 
-| Name                               | Description                                          | Identifier                                                  |
-| ---------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------- |
-| [short functions][short_functions] | One-letter functions for a quick validator creation. | `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO` |
+| Name                                                        | Description                                          | Identifier                                                  |
+| ----------------------------------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------- |
+| [short functions][short_functions]                          | One-letter functions for a quick validator creation. | `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO` |
+| [PropertiesService validator][properties_service_validator] | Functions to validate PropertiesService properties.  | `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8` |
 
 [short_functions]: https://script.google.com/d/1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO/edit?usp=sharing
+[properties_service_validator]: https://script.google.com/d/1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8/edit?usp=sharing
