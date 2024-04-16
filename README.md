@@ -19,113 +19,17 @@ For installation steps consult [this][libraries] article.
 - :green_circle: Simple and readable configuration format
 - :green_circle: Fluent-style validation
 
-## Introduction example
-
-Let's say you want write a library to programmatically generate presentations
-from JS object-based config. You want user to specify the following details
-about presentation:
-
-- its name
-- text and background colors
-
-Name should not be omitted, while colors can. But, when at least one color
-component is put, all remaining ones must always be specified.
-
-The following code shows how to implement config validation with
-the requirements above:
-
-```javascript
-// This is a sample file can be run to show what library can do.
-function main() {
-  // Some imaginary config
-  const objectToValidate = {
-    general: {
-      /*
-        Presentation name
-
-        Is:
-        - string longer than 0 characters
-        - has at least one not space character
-      */
-      name: "English quiz"
-    },
-    styles: {
-      /*
-        Text color
-
-        Is:
-        - object with all properties required
-        - no additional properties are allowed
-        - different from 'background' property
-      */
-      foreground: {
-        red: 11,
-        green: 2,
-        blue: 3
-      },
-      /*
-        Background color
-
-        Is:
-        - either:
-          - object with all properties required
-          - no additional properties are allowed
-          - different from 'background' property
-          or:
-          - string longer than 0 characters
-          - starts with 'https://'
-          - leads to existing resource
-      */
-      background: { // Slide background
-        red: 255,
-        green: 255,
-        blue: 255
-      }
-    }
-  }
-
-  const schema = isObject().withRequiredProperties({
-    general: isObject().withRequiredProperties({
-      name: isNotEmptyString().matching(/[^ ]/)
-    }).withNotAdditionalProperties()
-  }).withOptionalProperties({
-    styles: isObject().withOptionalProperties({
-      foreground: isObject().withRequiredProperties({
-        red: isIn(0, 255),
-        green: isIn(0, 255),
-        blue: isIn(0, 255)
-      }).withNotAdditionalProperties(),
-      background: isOneOf(
-        isObject().withRequiredProperties({
-          red: isIn(0, 255),
-          green: isIn(0, 255),
-          blue: isIn(0, 255)
-        }).withNotAdditionalProperties(),
-        isNotEmptyString().matching(/^https:\/\/./).where(url => [
-          (() => {
-            try {
-              return UrlFetchApp.fetch(url, {
-                muteHttpExceptions: true
-              }).getResponseCode() === 200
-            } catch {
-              return false
-            }
-          })()
-        ])
-      )
-    }).where(properties => [
-      (() => {
-        let background = properties.background
-        let foreground = properties.foreground
-
-        return background.red ? background.red !== foreground.red || background.green !== foreground.green || background.blue !== foreground.blue : true
-      })()
-    ]).withNotAdditionalProperties()
-  }).withNotAdditionalProperties()
-
-  throwOnFailure(objectToValidate, schema) // Throw error on validation failure
-}
-```
+## FAQ
+  
+| Code                                                                           | Description                                                            |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------- |
+| `checkWhether(0, is.number)`                                                   | Check whether something is a number                                    |
+| `checkWhether(1, is.number.greaterThan(0))`                                    | Check whether something is a number greater than zero                  |
+| `checkWhether(0, is.number.inRange(0, 10))`                                    | Check whether something is a number in range `[0..10]`                 |
+| `checkWhether([1], is.array.withItems(is.number))`                             | Check whether something is an array with numbers                       |
+| `checkWhether([1], is.array.withItems(is.number))`                             | Check whether something is an array with numbers                       |
+| `checkWhether([1], is.array.withItems(is.number).withItemCountGreaterThan(0))` | Check whether something is not empty array array with numbers          |
+| `checkWhether({ x: 1 }, is.object.withRequiredProperties({ x: is.number }))`   | Check whether something is an object with existing number property `x` |
 
 ## Workflow
 

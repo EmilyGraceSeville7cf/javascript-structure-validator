@@ -75,7 +75,7 @@ required-headings:
     - + # Heading is expected to be here
     - "## Installation" # Installation steps
     - "## Pros and cons" # Comparison with other tools
-    - "## Introduction example" # Quick Introduction example to quickly show main features
+    - "## FAQ" # Small introduction examples
     - "## Workflow"
   match_case: true
 proper-names:
