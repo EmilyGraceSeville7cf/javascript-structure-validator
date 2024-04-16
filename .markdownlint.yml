@@ -20,14 +20,7 @@ no-hard-tabs:
 no-reversed-links: true
 no-multiple-blanks:
   maximum: 1
-line-length:
-  code_block_line_length: 80
-  code_blocks: false
-  heading_line_length: 80
-  headings: true
-  line_length: 80
-  stern: false
-  strict: false
+line-length: false
 commands-show-output: true
 no-missing-space-atx: true
 no-multiple-space-atx: true
