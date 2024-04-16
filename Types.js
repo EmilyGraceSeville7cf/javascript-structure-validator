@@ -2,18 +2,18 @@
  * A predicate.
  * 
  * @callback Predicate
- * @param {any} input - An input.
+ * @param {any} input An input.
  * 
- * @returns {boolean} - Whether condition is true.
+ * @returns {boolean} Whether condition is true.
  */
 
 /**
  * A where predicate.
  * 
  * @callback WherePredicate
- * @param {object} input - An input.
+ * @param {object} input An input.
  * 
- * @returns {Array.<boolean>} - Whether conditions are true.
+ * @returns {Array.<boolean>} Whether conditions are true.
  */
 
 /**

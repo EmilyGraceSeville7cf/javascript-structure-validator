@@ -1,7 +1,7 @@
 /**
  * Basic validator.
  */
-class SimpleValidator {
+class SimpleValidator_ {
   /**
    * @param {string} property
    */
@@ -325,12 +325,12 @@ class SimpleValidator {
    */
   addProperties_(schema, action) {
     let propertySchemas = {}
-    Object.keys(action.value).forEach(property => propertySchemas[property] = action.value[property].toJSONSchema())
+    Object.keys(action.value).forEach(property => propertySchemas[property] = action.value[property].toJSONSchema_())
     schema.properties = propertySchemas
   }
 
   /**
-   * @param {BaseType} type - A type.
+   * @param {BaseType} type A type.
    */
   constructor(type) {
     Basic.requireSupported(type, "type")
@@ -362,6 +362,8 @@ class SimpleValidator {
 
     this.requiredProperties_ = []
     this.optionalProperties_ = []
+    this.requiredPropertiesTree_ = {}
+    this.optionalPropertiesTree_ = {}
     this.minimumExample_ = undefined
     this.maximumExample_ = undefined
     this.description_ = undefined
@@ -369,12 +371,64 @@ class SimpleValidator {
   }
 
   /**
+   * An expected type.
+   * 
+   * @type {string}
+   */
+  get expectedJSType() {
+    const supportedTypes = {
+      boolean: "boolean",
+      number: "number",
+      integer: "number",
+      string: "string",
+      bigint: "bigint",
+      symbol: "symbol",
+      array: "array",
+      object: "object"
+    }
+
+    return supportedTypes[this.validatorType_]
+  }
+
+  /**
+   * A required properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedRequiredPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    let tree = {}
+    for (let property in this.requiredPropertiesTree_)
+      tree[property] = this.requiredPropertiesTree_[property].expectedRequiredPropertiesTree
+
+    return tree
+  }
+
+  /**
+   * An optional properties tree.
+   * 
+   * @type {object}
+   */
+  get expectedOptionalPropertiesTree() {
+    if (this.expectedJSType !== "object")
+      return null
+
+    let tree = {}
+    for (let property in this.optionalPropertiesTree_)
+      tree[property] = this.optionalPropertiesTree_[property].expectedOptionalPropertiesTree
+
+    return tree
+  }
+
+  /**
    * Clone the current validator.
    * 
-   * @returns {SimpleValidator} - A validator clone.
+   * @returns {SimpleValidator_} A validator clone.
    */
   clone() {
-    let validator = new SimpleValidator(this.validatorType_)
+    let validator = new SimpleValidator_(this.validatorType_)
     validator.alreadyInvoked_ = new Set(this.alreadyInvoked_)
     validator.actions_ = Array.from(this.actions_)
     validator.requiredProperties_ = Array.from(this.requiredProperties_)
@@ -390,9 +444,9 @@ class SimpleValidator {
   /**
    * Add a description.
    * 
-   * @param {string} description - A description.
+   * @param {string} description A description.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withDescription(description) {
     this.tryInvoke_("withDescription")
@@ -406,9 +460,9 @@ class SimpleValidator {
   /**
    * Add a default value.
    * 
-   * @param {string} value - A default value.
+   * @param {string} value A default value.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withDefault(value) {
     this.tryInvoke_("withDefault")
@@ -422,9 +476,9 @@ class SimpleValidator {
   /**
    * Require value to be less than a constant.
    * 
-   * @param {BaseComparableType} constant - A constant.
+   * @param {BaseComparableType} constant A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   lessThan(constant) {
     this.tryInvoke_("lessThan")
@@ -444,9 +498,9 @@ class SimpleValidator {
   /**
    * Require value to be greater than a constant.
    * 
-   * @param {BaseComparableType} constant - A constant.
+   * @param {BaseComparableType} constant A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   greaterThan(constant) {
     this.tryInvoke_("greaterThan")
@@ -466,9 +520,9 @@ class SimpleValidator {
   /**
    * Require value to be less than or equal to a constant.
    * 
-   * @param {BaseComparableType} constant - A constant.
+   * @param {BaseComparableType} constant A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   lessThanOrEqualTo(constant) {
     this.tryInvoke_("lessThanOrEqualTo")
@@ -488,9 +542,9 @@ class SimpleValidator {
   /**
    * Require value to be greater than or equal to a constant.
    * 
-   * @param {BaseComparableType} constant - A constant.
+   * @param {BaseComparableType} constant A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   greaterThanOrEqualTo(constant) {
     this.tryInvoke_("greaterThanOrEqualTo")
@@ -510,9 +564,9 @@ class SimpleValidator {
   /**
    * Require value to be equal to a constant.
    * 
-   * @param {BaseComparableType} constant - A constant.
+   * @param {BaseComparableType} constant A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   equalTo(constant) {
     this.tryInvoke_("equalTo")
@@ -532,9 +586,9 @@ class SimpleValidator {
   /**
    * Require value to be not equal to a constant.
    * 
-   * @param {BaseComparableType} constant - A constant.
+   * @param {BaseComparableType} constant A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   notEqualTo(constant) {
     this.requireSameType_(constant)
@@ -550,10 +604,10 @@ class SimpleValidator {
   /**
    * Require value to be within a range.
    * 
-   * @param {BaseComparableType} from - A lowest boundary.
-   * @param {BaseComparableType} to - A highest boundary.
+   * @param {BaseComparableType} from A lowest boundary.
+   * @param {BaseComparableType} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   inRange(from, to) {
     this.tryInvoke_("inRange")
@@ -578,10 +632,10 @@ class SimpleValidator {
   /**
    * Require value to be outside of a range.
    * 
-   * @param {BaseComparableType} from - A lowest boundary.
-   * @param {BaseComparableType} to - A highest boundary.
+   * @param {BaseComparableType} from A lowest boundary.
+   * @param {BaseComparableType} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   notInRange(from, to) {
     this.requireNotSymbolType_()
@@ -599,9 +653,9 @@ class SimpleValidator {
   /**
    * Require value to be equal to one of constants.
    * 
-   * @param {Array} constants - Constants.
+   * @param {Array} constants Constants.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withValueOneOf(...constants) {
     Basic.requireArray(constants, "constants")
@@ -618,9 +672,9 @@ class SimpleValidator {
   /**
    * Require value to be not equal to one of constants.
    * 
-   * @param {Array} constants - Constants.
+   * @param {Array} constants Constants.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withValueNotOneOf(...constants) {
     Basic.requireArray(constants, "constants")
@@ -637,9 +691,9 @@ class SimpleValidator {
   /**
    * Require length to be shorter than a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthLessThan(count) {
     this.tryInvoke_("withLengthLessThan")
@@ -657,9 +711,9 @@ class SimpleValidator {
   /**
    * Require length to be longer than a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthGreaterThan(count) {
     this.tryInvoke_("withLengthGreaterThan")
@@ -677,9 +731,9 @@ class SimpleValidator {
   /**
    * Require length to be shorter than or is a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthLessThanOrEqualTo(count) {
     this.tryInvoke_("withLengthLessThanOrEqualTo")
@@ -697,9 +751,9 @@ class SimpleValidator {
   /**
    * Require length to be longer than or is a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthGreaterThanOrEqualTo(count) {
     this.tryInvoke_("withLengthGreaterThanOrEqualTo")
@@ -717,9 +771,9 @@ class SimpleValidator {
   /**
    * Require length to be equal to a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthEqualTo(count) {
     this.tryInvoke_("withLengthEqualTo")
@@ -737,9 +791,9 @@ class SimpleValidator {
   /**
    * Require length not to be equal to a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthNotEqualTo(count) {
     this.requireStringType_()
@@ -757,10 +811,10 @@ class SimpleValidator {
   /**
    * Require length to be within a range.
    * 
-   * @param {number} from - A lowest boundary.
-   * @param {number} to - A highest boundary.
+   * @param {number} from A lowest boundary.
+   * @param {number} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthInRange(from, to) {
     this.tryInvoke_("withLengthInRange")
@@ -778,10 +832,10 @@ class SimpleValidator {
   /**
    * Require length to be outside of a range.
    * 
-   * @param {number} from - A lowest boundary.
-   * @param {number} to - A highest boundary.
+   * @param {number} from A lowest boundary.
+   * @param {number} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withLengthNotInRange(from, to) {
     this.requireStringType_()
@@ -798,9 +852,9 @@ class SimpleValidator {
   /**
    * Require value to match a regular expression.
    * 
-   * @param {RegExp} regex - A regular expression.
+   * @param {RegExp} regex A regular expression.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   matching(regex) {
     this.tryInvoke_("matching")
@@ -818,9 +872,9 @@ class SimpleValidator {
   /**
    * Require value not to match a regular expression.
    * 
-   * @param {RegExp} regex - A regular expression.
+   * @param {RegExp} regex A regular expression.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   notMatching(regex) {
     this.requireStringType_()
@@ -837,9 +891,9 @@ class SimpleValidator {
   /**
    * Require items to satisfy their constraints.
    * 
-   * @param {SimpleValidator | ComplexValidator} items - Constraints.
+   * @param {SimpleValidator_ | ComplexValidator_} items Constraints.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItems(items) {
     this.tryInvoke_("withItems")
@@ -863,9 +917,9 @@ class SimpleValidator {
   /**
    * Require item count to be less than a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountLessThan(count) {
     this.tryInvoke_("withItemCountLessThan")
@@ -883,9 +937,9 @@ class SimpleValidator {
   /**
    * Require item count to be greater than a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountGreaterThan(count) {
     this.tryInvoke_("withItemCountGreaterThan")
@@ -903,9 +957,9 @@ class SimpleValidator {
   /**
    * Require item count to be less than or equal to a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountLessThanOrEqualTo(count) {
     this.tryInvoke_("withItemCountLessThanOrEqualTo")
@@ -923,9 +977,9 @@ class SimpleValidator {
   /**
    * Require item count to be greater than or equal to a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountGreaterThanOrEqualTo(count) {
     this.tryInvoke_("withItemCountGreaterThanOrEqualTo")
@@ -943,9 +997,9 @@ class SimpleValidator {
   /**
    * Require item count to be equal to a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountEqualTo(count) {
     this.tryInvoke_("withItemCountEqualTo")
@@ -963,9 +1017,9 @@ class SimpleValidator {
   /**
    * Require item count not to be equal to a constant.
    * 
-   * @param {number} count - A constant.
+   * @param {number} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountNotEqualTo(count) {
     this.requireArrayType_()
@@ -982,10 +1036,10 @@ class SimpleValidator {
   /**
    * Require length to be within a range.
    * 
-   * @param {number} from - A lowest boundary.
-   * @param {number} to - A highest boundary.
+   * @param {number} from A lowest boundary.
+   * @param {number} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountInRange(from, to) {
     this.tryInvoke_("withItemCountInRange")
@@ -1003,10 +1057,10 @@ class SimpleValidator {
   /**
    * Require length to be outside of a range.
    * 
-   * @param {number} from - A lowest boundary.
-   * @param {number} to - A highest boundary.
+   * @param {number} from A lowest boundary.
+   * @param {number} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withItemCountNotInRange(from, to) {
     this.requireArrayType_()
@@ -1023,9 +1077,9 @@ class SimpleValidator {
   /**
    * Require specified properties.
    * 
-   * @param {Object.<string, SimpleValidator>} properties - A constraint.
+   * @param {Object.<string, Validator | SimpleValidator_ | ComplexValidator_>} properties A constraint.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withRequiredProperties(properties) {
     this.tryInvoke_("withRequiredProperties")
@@ -1033,13 +1087,12 @@ class SimpleValidator {
     Basic.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
 
+    this.requiredPropertiesTree_ = properties
+
     for (let requiredProperty in properties)
       this.requiredProperties_.push(requiredProperty)
 
     this.requireRequiredPropertiesAndOptionalNotIntersect_()
-
-    const nestedDescriptions = []
-    Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.REQUIRED_PROPERTIES,
@@ -1069,9 +1122,9 @@ class SimpleValidator {
   /**
    * Permit specified optional properties.
    * 
-   * @param {Object.<string, SimpleValidator>} properties - A constraint.
+   * @param {Object.<string, Validator | SimpleValidator_ | ComplexValidator_>} properties A constraint.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withOptionalProperties(properties) {
     this.tryInvoke_("withOptionalProperties")
@@ -1079,13 +1132,12 @@ class SimpleValidator {
     Basic.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
 
+    this.optionalPropertiesTree_ = properties
+
     for (let optionalProperty in properties)
       this.optionalProperties_.push(optionalProperty)
 
     this.requireRequiredPropertiesAndOptionalNotIntersect_()
-
-    const nestedDescriptions = []
-    Object.keys(properties).forEach(property => nestedDescriptions.push(`${property}: ${properties[property].description}`))
 
     this.actions_.push(new ActionInfo_(ActionMode.BE,
       ActionTargetMode.OPTIONAL_PROPERTIES,
@@ -1113,9 +1165,9 @@ class SimpleValidator {
   /**
    * Permit additional properties.
    * 
-   * @param {SimpleValidator | ComplexValidator} properties - A constraint.
+   * @param {Validator | SimpleValidator_ | ComplexValidator_} properties A constraint.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withAdditionalProperties(properties) {
     this.tryInvoke_("withAdditionalProperties")
@@ -1144,7 +1196,7 @@ class SimpleValidator {
   /**
    * Require no additional properties.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withNotAdditionalProperties() {
     this.tryInvoke_("withNotAdditionalProperties")
@@ -1172,9 +1224,9 @@ class SimpleValidator {
   /**
    * Require property amount to be less than a constant.
    * 
-   * @param {BaseComparableType} count - A constant.
+   * @param {BaseComparableType} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountLessThan(count) {
     this.tryInvoke_("withPropertyCountLessThan")
@@ -1192,9 +1244,9 @@ class SimpleValidator {
   /**
    * Require property amount to be greater than a constant.
    * 
-   * @param {BaseComparableType} count - A constant.
+   * @param {BaseComparableType} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountGreaterThan(count) {
     this.tryInvoke_("withPropertyCountGreaterThan")
@@ -1212,9 +1264,9 @@ class SimpleValidator {
   /**
    * Require property amount to be less than or equal to a constant.
    * 
-   * @param {BaseComparableType} count - A constant.
+   * @param {BaseComparableType} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountLessThanOrEqualTo(count) {
     this.tryInvoke_("withPropertyCountLessThanOrEqualTo")
@@ -1232,9 +1284,9 @@ class SimpleValidator {
   /**
    * Require property amount to be greater than or equal to a constant.
    * 
-   * @param {BaseComparableType} count - A constant.
+   * @param {BaseComparableType} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountGreaterThanOrEqualTo(count) {
     this.tryInvoke_("withPropertyCountGreaterThanOrEqualTo")
@@ -1252,9 +1304,9 @@ class SimpleValidator {
   /**
    * Require property amount to be equal to a constant.
    * 
-   * @param {BaseComparableType} count - A constant.
+   * @param {BaseComparableType} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountEqualTo(count) {
     this.tryInvoke_("withPropertyCountEqualTo")
@@ -1272,9 +1324,9 @@ class SimpleValidator {
   /**
    * Require property amount not to be equal to a constant.
    * 
-   * @param {BaseComparableType} count - A constant.
+   * @param {BaseComparableType} count A constant.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountNotEqualTo(count) {
     this.requireObjectType_()
@@ -1291,10 +1343,10 @@ class SimpleValidator {
   /**
    * Require property amount to be within a range.
    * 
-   * @param {number} from - A lowest boundary.
-   * @param {number} to - A highest boundary.
+   * @param {number} from A lowest boundary.
+   * @param {number} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountInRange(from, to) {
     this.tryInvoke_("withPropertyCountInRange")
@@ -1315,10 +1367,10 @@ class SimpleValidator {
   /**
    * Require property amount to be outside of a range.
    * 
-   * @param {number} from - A lowest boundary.
-   * @param {number} to - A highest boundary.
+   * @param {number} from A lowest boundary.
+   * @param {number} to A highest boundary.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   withPropertyCountNotInRange(from, to) {
     this.requireObjectType_()
@@ -1338,9 +1390,9 @@ class SimpleValidator {
   /**
    * Require property relationships.
    * 
-   * @param {WherePredicate} predicate - A predicate.
+   * @param {WherePredicate} predicate A predicate.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   where(predicate) {
     this.tryInvoke_("where")
@@ -1358,9 +1410,9 @@ class SimpleValidator {
   /**
    * Require value constraints.
    * 
-   * @param {Predicate} predicate - A predicate.
+   * @param {Predicate} predicate A predicate.
    * 
-   * @returns {SimpleValidator} - The current validator.
+   * @returns {SimpleValidator_} The current validator.
    */
   whereValue(predicate) {
     this.tryInvoke_("whereValue")
@@ -1377,51 +1429,31 @@ class SimpleValidator {
   /**
    * Check whether an input value satisfies all conditions.
    * 
-   * @param {any} input - An input to validate.
+   * @param {any} input An input to validate.
    * 
-   * @returns {boolean}
+   * @returns {boolean} Whether an input value satisfies all conditions.
    */
   validate(input) {
     return this.actions_.map(action => action.validation(input)).every(result => result === true)
   }
 
   /**
-   * An expected type.
+   * Converts object to string.
    * 
-   * @type {string}
+   * @returns {string} A string representation.
    */
-  get expectedType() {
-    return this.validatorType_
-  }
-
-  /**
-   * Required properties.
-   * 
-   * @type {Array.<string>}
-   */
-  get expectedRequiredProperties() {
-    this.requireObjectType_()
-    return [...this.requiredProperties_]
-  }
-
-  /**
-   * Optional properties.
-   * 
-   * @type {Array.<string>}
-   */
-  get expectedOptionalProperties() {
-    this.requireObjectType_()
-    return [...this.optionalProperties_]
+  toString() {
+    return this.toJSONSchema_()
   }
 
   /**
    * Convert object to JSON schema (draft 07) representation.
    * 
-   * @returns {object}
+   * @returns {object} JSON schema (draft 07) representation.
    */
-  toJSONSchema() {
+  toJSONSchema_() {
     this.requireNotSymbolType_()
-    
+
     let schema = {}
     let simpleSubschemas = []
 
@@ -1463,7 +1495,7 @@ class SimpleValidator {
 
         case ActionTargetMode.ITEMS:
           schema.type = "array"
-          schema.items = action.value.toJSONSchema()
+          schema.items = action.value.toJSONSchema_()
           break
 
         case ActionTargetMode.REQUIRED_PROPERTIES:
@@ -1478,7 +1510,7 @@ class SimpleValidator {
         case ActionTargetMode.ADDITIONAL_PROPERTIES:
           switch (action.kind) {
             case ActionMode.BE:
-              schema.additionalProperties = action.value.toJSONSchema()
+              schema.additionalProperties = action.value.toJSONSchema_()
               break
             case ActionMode.NOT_HAVE:
               schema.additionalProperties = false
@@ -1496,14 +1528,5 @@ class SimpleValidator {
       schema.allOf = simpleSubschemas
 
     return schema
-  }
-
-  /**
-   * Converts object to string.
-   * 
-   * @returns {string} - A string representation.
-   */
-  toString() {
-    return this.toJSONSchema()
   }
 }
