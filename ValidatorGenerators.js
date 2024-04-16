@@ -102,3 +102,35 @@ function isOneOf(...validators) {
 function isAllOf(...validators) {
   return new Validator().allOf(...validators)
 }
+
+/**
+ * Get is* functions.
+ * 
+ * @enum
+ */
+let is = Object.freeze({
+  get boolean() {
+    return isBoolean()
+  },
+  get number() {
+    return isNumber()
+  },
+  get integer() {
+    return isInteger()
+  },
+  get string() {
+    return isString()
+  },
+  get bigint() {
+    return isBigint()
+  },
+  get symbol() {
+    return isSymbol()
+  },
+  get array() {
+    return isArray()
+  },
+  get object() {
+    return isObject()
+  }
+})
