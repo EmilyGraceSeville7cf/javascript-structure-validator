@@ -25,17 +25,17 @@ class Validator {
   get expectedJSType() {
     if (this.complexValidators_.length === 0)
       return this.simpleValidator_.expectedJSType
-    
+
     let validators = [...this.complexValidators_]
 
     if (typeof this.simpleValidator_ !== "undefined")
       validators.push(this.simpleValidator_)
 
     const types = [...new Set(validators.map(validator => validator.expectedJSType))]
-    
+
     if (types.length !== 1)
       return "any"
-    
+
     return types[0]
   }
 
@@ -833,7 +833,6 @@ class Validator {
     }
   }
 
-
   /**
    * Convert object to JSON schema (draft 07) representation.
    * 
@@ -841,6 +840,24 @@ class Validator {
    */
   toJSONSchemaString() {
     return JSON.stringify(this.toJSONSchema())
+  }
+
+  /**
+   * Convert object to JSDoc representation.
+   * 
+   * @returns {string} JSDoc representation.
+   */
+  toJSDocString() {
+    if (this.expectedJSType !== "object")
+      return ""
+    
+    let propertiesTree = deepMerge_(this.expectedRequiredPropertiesTree, this.expectedOptionalPropertiesTree)
+    let propertyNames = propertyNames_(propertiesTree).map(property => ` * @property {any} ${property}`)
+      .join("\n")
+    
+    return `/**
+${propertyNames}
+ */`
   }
 
   /**
