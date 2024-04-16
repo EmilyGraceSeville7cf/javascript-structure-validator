@@ -41,7 +41,8 @@ code versions pulled with the help of `clasp` CLI tool.
 Wrapper libraries are small additions to this library. They usually are not
 published to GitHub and have very stable and small API. There is no separate README
 page documentation available for them, their possibilities are discoverable via
-IntelliSence.
+IntelliSence. For code examples consult their code comments in `Sample.gs` file
+(click library name to open its source code and find this file).
 
 | Name                               | Description                                          | Identifier                                                  |
 | ---------------------------------- | ---------------------------------------------------- | ----------------------------------------------------------- |
