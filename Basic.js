@@ -3,6 +3,18 @@
  */
 class BasicUtils {
   /**
+   * @param {any} value
+   */
+  static safeToString_(value) {
+    if (typeof value === "symbol")
+      return value.description
+    if (typeof value === "object")
+      return JSON.stringify(value)
+    
+    return value.toString()
+  }
+
+  /**
    * Check whether a `value` is a boolean value.
    * 
    * @param {any} value A value.
@@ -205,7 +217,7 @@ class BasicUtils {
       argumentName = `${argumentName}[${argumentIndex}]`
 
     if (!predicate(value))
-      throw TypeError(`Value ${argumentName} expected to be a ${expectedTypeName} value (actual value: ${value?.toString()})`)
+      throw TypeError(`Value ${argumentName} expected to be a ${expectedTypeName} value (actual value: ${this.safeToString_(value)})`)
   }
 
   /**
@@ -222,7 +234,7 @@ class BasicUtils {
       argumentName = `${argumentName}[${argumentIndex}]`
 
     if (!predicate(identifier))
-      throw TypeError(`Identifier ${argumentName} expected to be a ${expectedTypeName} identifier (actual value: ${identifier?.toString()})`)
+      throw TypeError(`Identifier ${argumentName} expected to be a ${expectedTypeName} identifier (actual value: ${this.safeToString_(value)})`)
   }
 
   /**
