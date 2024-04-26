@@ -1,17 +1,18 @@
 /**
- * Return Basic class.
+ * Return BasicUtils class.
  * 
- * @returns {Basic}
+ * @returns {BasicUtils}
  */
-function getBasic() {
-  return Basic
+function getBasicUtils() {
+  return BasicUtils
 }
 
 /**
- * Return Validator class.
+ * Return ObjectUtils class.
  * 
- * @returns {Validator}
+ * @returns {ObjectUtils}
  */
-function getValidator() {
-  return Validator
+function getObjectUtils() {
+  return ObjectUtils
 }
+
