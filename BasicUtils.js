@@ -110,7 +110,7 @@ class BasicUtils {
    * @returns {boolean} Whether a `value` is a regular expression.
    */
   static isRegExp(value) {
-    return value instanceof RegExp
+    return value?.constructor.toString() == "function RegExp() { [native code] }"
   }
 
   /**
