@@ -132,5 +132,14 @@ var is = Object.freeze({
   },
   get object() {
     return isObject()
+  },
+  get anyOf() {
+    return isAnyOf
+  },
+  get oneOf() {
+    return isOneOf
+  },
+  get allOf() {
+    return isAllOf
   }
 })
