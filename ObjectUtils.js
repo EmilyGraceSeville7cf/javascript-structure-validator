@@ -1,69 +1,121 @@
 /**
- * Copy an object deeply.
- * 
- * @param {object} value An object.
- * 
- * @returns {Array.<string>} A deep copy.
-*/
-function deepCopy_(value) {
-  return JSON.parse(JSON.stringify(value))
-}
+ * Object utilities.
+ */
+class ObjectUtils {
+  /**
+   * Clone an object deeply.
+   * 
+   * @param {object} value An object.
+   * 
+   * @returns {object} A deep copy.
+  */
+  static clone(value) {
+    BasicUtils.requireObject(value, "value")
 
-/**
- * Merge several objects deeply together.
- * 
- * @param {object} first A first object.
- * @param {object} second A second object.
- * 
- * @returns {object} A deep merge.
-*/
-function deepMerge_(first, second) {
-  Basic.requireObject(first, "first")
-  Basic.requireObject(second, "second")
+    if (value === null)
+      return null
 
-  if (!Basic.isExisting(first) || Object.getOwnPropertyNames(first).length === 0)
-    return deepCopy_(second)
-  if (!Basic.isExisting(second) || Object.getOwnPropertyNames(second).length === 0)
-    return deepCopy_(first)
+    let result = {}
 
-  const result = {}
+    Object.keys(value).forEach(property => {
+      if (typeof value[property] !== "object")
+        result[property] = value[property]
+      else
+        result[property] = this.clone(value[property])
+    })
 
-  for (let property in first)
-    if (typeof first[property] !== "object" || first[property] === null)
-      result[property] = first[property]
-
-  for (let property in second) {
-    if (Basic.isObject(first[property]) && Basic.isObject(second[property]))
-      result[property] = deepMerge_(first[property], second[property])
-    else
-      result[property] = second[property]
+    return result
   }
 
-  return result
-}
-
-/**
- * Get object's property names.
- * 
- * @param {object} value A first object.
- * @param {string} prefix A prefix.
- * 
- * @returns {Array.<string>} Property names.
-*/
-function propertyNames_(value, prefix = "") {
-  Basic.requireObject(value, "value")
-
-  prefix = prefix.replace(/^\./, "")
-  let properties = []
-
-  for (let property in value) {
-    let path = `${prefix}.${property}`.replace(/^\./, "")
-    if (typeof value[property] !== "object")
-      properties.push(path)
+  /**
+   * Clone a `value` deeply.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {any} A deep copy.
+  */
+  static cloneWhenObject(value) {
+    if (typeof value === "object" && !Array.isArray(value))
+      return this.clone(value)
     else
-      properties = [path, ...propertyNames_(value[property], path)]
+      return value
   }
 
-  return properties
+  /**
+   * Merge two objects deeply.
+   * 
+   * @param {object} first A first object.
+   * @param {object} second A second object.
+   * 
+   * @returns {object} A deep merge.
+  */
+  static merge(first, second) {
+    BasicUtils.requireObject(first, "first")
+    BasicUtils.requireObject(second, "second")
+
+    if (first === null && second === null)
+      return null
+
+    if (first !== null && second === null)
+      return this.clone(first)
+    if (second !== null && first === null)
+      return this.clone(second)
+
+    let result = {}
+
+    for (const property in first)
+      if (!second.hasOwnProperty(property))
+        result[property] = this.cloneWhenObject(first[property])
+
+    for (const property in second) {
+      let temporary = this.cloneWhenObject(second[property])
+
+      if (!first.hasOwnProperty(property)) {
+        result[property] = temporary
+      }
+      else {
+        if (typeof first[property] !== typeof second[property])
+          result[property] = temporary
+        else {
+          if (Array.isArray(first[property]) && Array.isArray(second[property]))
+            result[property] = first[property].concat(second[property])
+          else if (typeof first[property] === "object")
+            result[property] = this.merge(first[property], second[property])
+          else
+            result[property] = temporary
+        }
+      }
+    }
+
+    return result
+  }
+
+  /**
+   * Get object's property names.
+   * 
+   * @param {object} value An object.
+   * @param {string} prefix A prefix.
+   * 
+   * @returns {Array.<string>} Property names.
+  */
+  static propertyNames(value, prefix = "") {
+    BasicUtils.requireObject(value, "value")
+
+    prefix = prefix.replace(/^\./, "")
+    let properties = []
+
+    for (let property in value) {
+      let path = `${prefix}.${property}`.replace(/^\./, "")
+
+      if (typeof value[property] !== "object" || Array.isArray(value[property]))
+        properties.push(path)
+      else
+        properties = [path, ...this.propertyNames(value[property], path)]
+    }
+
+    return properties
+  }
 }
+
+
 
