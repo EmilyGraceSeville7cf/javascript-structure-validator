@@ -363,8 +363,14 @@ class UniversalValidator {
 
       this.requiredProperties_ = []
       this.optionalProperties_ = []
-      this.requiredPropertiesTree_ = {}
-      this.optionalPropertiesTree_ = {}
+      /**
+       * @type {Object.<string, UniversalValidator>}
+       */
+      this.requiredPropertiesValidators_ = {}
+      /**
+       * @type {Object.<string, UniversalValidator>}
+       */
+      this.optionalPropertiesValidators_ = {}
       this.minimumExample_ = undefined
       this.maximumExample_ = undefined
       this.default_ = undefined
@@ -464,17 +470,26 @@ class UniversalValidator {
   }
 
   /**
-   * A required properties tree.
+   * Required properties.
    * 
    * @type {object}
    */
-  get expectedRequiredPropertiesTree() {
-    if (this.expectedJSType !== "object")
-      return null
+  get expectedRequiredProperties() {
+    if (this.validatorType_ !== "object")
+      return {}
 
     let tree = {}
-    for (let property in this.requiredPropertiesTree_)
-      tree[property] = this.requiredPropertiesTree_[property].expectedRequiredPropertiesTree
+    for (let property in this.requiredPropertiesValidators_) {
+      const validator = this.requiredPropertiesValidators_[property]
+
+      if (!validator.containsNestedValidators) {
+        if (!ArrayUtils.equal(validator.expectedJSTypes, ["object"]))
+          tree[property] = validator.expectedJSTypes
+        else if (Object.keys(validator.expectedRequiredProperties).length !== 0)
+            tree[property] = validator.expectedRequiredProperties
+      } else
+        tree[property] = validator.expectedJSTypes
+    }
 
     return tree
   }
@@ -484,13 +499,22 @@ class UniversalValidator {
    * 
    * @type {object}
    */
-  get expectedOptionalPropertiesTree() {
-    if (this.expectedJSType !== "object")
-      return null
+  get expectedOptionalProperties() {
+    if (this.validatorType_ !== "object")
+      return {}
 
     let tree = {}
-    for (let property in this.optionalPropertiesTree_)
-      tree[property] = this.optionalPropertiesTree_[property].expectedOptionalPropertiesTree
+    for (let property in this.optionalPropertiesValidators_) {
+      const validator = this.optionalPropertiesValidators_[property]
+
+      if (!validator.containsNestedValidators) {
+        if (!ArrayUtils.equal(validator.expectedJSTypes, ["object"]))
+          tree[property] = validator.expectedJSTypes
+        else if (Object.keys(validator.expectedOptionalProperties).length !== 0)
+            tree[property] = validator.expectedOptionalProperties
+      } else
+        tree[property] = validator.expectedJSTypes
+    }
 
     return tree
   }
@@ -1192,7 +1216,7 @@ class UniversalValidator {
     BasicUtils.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
 
-    this.requiredPropertiesTree_ = properties
+    this.requiredPropertiesValidators_ = properties
 
     for (let requiredProperty in properties)
       this.requiredProperties_.push(requiredProperty)
@@ -1238,7 +1262,7 @@ class UniversalValidator {
     BasicUtils.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
 
-    this.optionalPropertiesTree_ = properties
+    this.optionalPropertiesValidators_ = properties
 
     for (let optionalProperty in properties)
       this.optionalProperties_.push(optionalProperty)
