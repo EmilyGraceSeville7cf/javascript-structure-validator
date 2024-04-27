@@ -1,5 +1,5 @@
 /**
- * Return BasicUtils class.
+ * Return `BasicUtils` class.
  * 
  * @returns {BasicUtils}
  */
@@ -8,7 +8,7 @@ function getBasicUtils() {
 }
 
 /**
- * Return ObjectUtils class.
+ * Return `ObjectUtils` class.
  * 
  * @returns {ObjectUtils}
  */
@@ -17,7 +17,7 @@ function getObjectUtils() {
 }
 
 /**
- * Return UniversalValidator class.
+ * Return `UniversalValidator` class.
  * 
  * @returns {UniversalValidator}
  */
