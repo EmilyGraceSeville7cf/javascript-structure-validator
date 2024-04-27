@@ -110,7 +110,7 @@ class BasicUtils {
    * @returns {boolean} Whether a `value` is a regular expression.
    */
   static isRegExp(value) {
-    return value?.constructor.toString() == "function RegExp() { [native code] }"
+    return value?.constructor.name === RegExp.name
   }
 
   /**
@@ -200,7 +200,7 @@ class BasicUtils {
    * @returns {boolean} Whether a `value` is a validator value.
    */
   static isValidator(value) {
-    return value instanceof UniversalValidator
+    return value?.constructor.name === UniversalValidator.name
   }
 
   /**
