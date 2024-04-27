@@ -16,3 +16,11 @@ function getObjectUtils() {
   return ObjectUtils
 }
 
+/**
+ * Return UniversalValidator class.
+ * 
+ * @returns {UniversalValidator}
+ */
+function getUniversalValidator() {
+  return UniversalValidator
+}
