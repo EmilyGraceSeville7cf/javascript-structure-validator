@@ -368,6 +368,7 @@ class UniversalValidator {
       this.minimumExample_ = undefined
       this.maximumExample_ = undefined
       this.default_ = undefined
+      this.itemValidator_ = undefined
     } else {
       const types = [...StringifiedTypes.baseTypeIdentifiers, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
 
@@ -391,11 +392,36 @@ class UniversalValidator {
   }
 
   /**
-   * An expected type.
+   * Whether validator contains nested anyOf|oneOf|allOf validators.
    * 
-   * @type {string}
+   * @type {boolean}
    */
-  get expectedJSType() {
+  get containsNestedValidators() {
+    return typeof this.mode_ !== "undefined"
+  }
+
+  /**
+   * Expected types.
+   * If nested validators contain just nested validators an empty array is returned.
+   * 
+   * @type {Array.<string>}
+   */
+  get expectedTypes() {
+    if (!this.containsNestedValidators)
+      return [this.validatorType_]
+
+    const types = new Set(this.nestedValidators_.filter(validator => !validator.containsNestedValidators)
+      .map(validator => validator.expectedTypes).reduce((previous, current) => [...previous, ...current], []))
+
+    return [...types]
+  }
+
+  /**
+   * Expected JS types.
+   * 
+   * @type {Array.<string>}
+   */
+  get expectedJSTypes() {
     const supportedTypes = {
       boolean: "boolean",
       number: "number",
@@ -403,11 +429,38 @@ class UniversalValidator {
       string: "string",
       bigint: "bigint",
       symbol: "symbol",
-      array: "array",
+      array: "Array",
       object: "object"
     }
 
-    return supportedTypes[this.validatorType_]
+    if (!this.containsNestedValidators) {
+      if (this.validatorType_ !== "array" || typeof this.itemValidator_ === "undefined")
+        return [supportedTypes[this.validatorType_]]
+
+      if (!this.itemValidator_.containsNestedValidators)
+        return [`Array.<${this.itemValidator_.expectedJSTypes[0]}>`]
+
+      const simpleValidators = this.itemValidator_.nestedValidators_.filter(validator => !validator.containsNestedValidators)
+
+      const types = new Set(simpleValidators
+        .map(validator => validator.expectedJSTypes).reduce((previous, current) => [...previous, ...current], []))
+
+      const result = [...types]
+      if (result.length > 0)
+        return [`Array.<${result.join(" | ")}>`]
+
+      return ["Array"]
+    }
+
+    const simpleValidators = this.nestedValidators_.filter(validator => !validator.containsNestedValidators)
+    const types = new Set(simpleValidators
+      .map(validator => validator.expectedJSTypes).reduce((previous, current) => [...previous, ...current], []))
+
+    const result = [...types]
+    if (result.length > 0)
+      return result
+
+    return ["any"]
   }
 
   /**
@@ -940,6 +993,8 @@ class UniversalValidator {
     this.requireType_()
     this.requireArrayType_()
     BasicUtils.requireValidator(items, "items")
+
+    this.itemValidator_ = items
 
     this.actions_.push(new ReadonlyActionInfo_(OperationType.BE,
       OperationTargetType.ITEMS,
