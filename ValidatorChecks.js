@@ -24,7 +24,7 @@ function throwOnFailure(input, validator, message) {
 
   if (!validator.validate(input))
     if (typeof message === "undefined")
-      throw new Error(`Expected object that: ${JSON.stringify(validator.toJSONSchema_())}`)
+      throw new Error(`Expected object that: ${validator.toString()}`)
     else
       throw new Error(`Expected ${message}`)
 }
