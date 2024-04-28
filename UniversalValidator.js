@@ -178,6 +178,20 @@ class UniversalValidator {
   }
 
   /**
+   * @param {Object.<string, UniversalValidator | boolean>} properties
+   */
+  requireValidValidators_(properties) {
+    for (const property in properties) {
+      const validator = properties[property]
+
+      if (typeof validator !== "boolean")
+        BasicUtils.requireValidator(validator, "validator")
+      else
+        this.requireTrue_()
+    }
+  }
+
+  /**
    * @param {object} properties
    */
   deleteValidatorPlaceholders_(properties) {
@@ -640,7 +654,7 @@ class UniversalValidator {
   get requiredPropertiesDescriptionsData() {
     if (this.validatorType_ !== "object")
       return this.requiredPropertiesDescriptionsData_
-    
+
     return {
       $name: this.descriptionData,
       ...this.requiredPropertiesDescriptionsData_
@@ -655,7 +669,7 @@ class UniversalValidator {
   get optionalPropertiesDescriptionsData() {
     if (this.validatorType_ !== "object")
       return this.optionalPropertiesDescriptionsData_
-    
+
     return {
       $name: this.descriptionData,
       ...this.optionalPropertiesDescriptionsData_
@@ -1379,6 +1393,7 @@ class UniversalValidator {
     BasicUtils.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
     this.requireNotReservedProperties_(properties)
+    this.requireValidValidators_(properties)
 
     this.requiredPropertiesValidators_ = { ...properties }
     this.deleteValidatorPlaceholders_(this.requiredPropertiesValidators_)
@@ -1396,15 +1411,10 @@ class UniversalValidator {
           if (!input.hasOwnProperty(requiredProperty))
             return false
 
-          let validator = this.preprocessValue_(properties[requiredProperty])
+          let validator = properties[requiredProperty]
 
-          if (typeof validator !== "boolean") {
-            BasicUtils.requireValidator(validator, "validator")
-
-            if (!validator.validate(input[requiredProperty]))
-              return false
-          } else
-            this.requireTrue_(validator)
+          if (BasicUtils.isValidator(validator) && !validator.validate(input[requiredProperty]))
+            return false
         }
 
         return true
@@ -1427,6 +1437,7 @@ class UniversalValidator {
     BasicUtils.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
     this.requireNotReservedProperties_(properties)
+    this.requireValidValidators_(properties)
 
     this.optionalPropertiesValidators_ = { ...properties }
     this.deleteValidatorPlaceholders_(this.optionalPropertiesValidators_)
@@ -1441,15 +1452,10 @@ class UniversalValidator {
       properties,
       input => {
         for (let optionalProperty in properties) {
-          let validator = this.preprocessValue_(properties[optionalProperty])
+          let validator = properties[optionalProperty]
 
-          if (typeof validator !== "boolean") {
-            BasicUtils.requireValidator(validator, "validator")
-
-            if (input.hasOwnProperty(optionalProperty) && !validator.validate(input[optionalProperty]))
-              return false
-          } else
-            this.requireTrue_(validator)
+          if (BasicUtils.isValidator(validator) && !validator.validate(input[optionalProperty]))
+            return false
         }
 
         return true
