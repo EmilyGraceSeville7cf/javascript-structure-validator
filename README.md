@@ -39,17 +39,95 @@ code versions pulled with the help of `clasp` CLI tool.
 ## Wrapper libraries
 
 Wrapper libraries are small additions to this library. They usually are not
-published to GitHub and have very stable and small API. There is no separate README
-page documentation available for them, their possibilities are discoverable via
-IntelliSence. For code examples consult their code comments in `Sample.gs` file
-(click library name to open its source code and find this file).
+published to GitHub and have very stable and small API.
 
-| Name                                                        | Description                                                                                                             | Identifier                                                  |
-| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [short functions][short_functions]                          | One-letter functions for a quick validator creation.                                                                    | `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO` |
-| [PropertiesService validator][properties_service_validator] | Functions to validate PropertiesService properties.                                                                     | `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8` |
-| [extras][extras]                                            | Functions for a quick validator creation. Similar to short_functions library, but intended for more complex validators. | `1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG` |
+### lisp like wrappers
 
-[short_functions]: https://script.google.com/d/1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO/edit?usp=sharing
-[properties_service_validator]: https://script.google.com/d/1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8/edit?usp=sharing
-[extras]: https://script.google.com/d/1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG/edit?usp=sharing
+Provides functions to create validators in the backward order.
+
+> :white_check_mark: This library may be useful if you rely on IntelliSence
+> heavily because it doesn't show class members from libraries.
+
+Library identifier: `1AOZebkZKAEkdnias6W6o8W8l33gKjc0crN8s5qBReipduxoh8GTjFAwq`
+
+```javascript
+/**
+ * Check whether a person:
+ * - has a name which contains at least one non-space character and is longer
+ *   than 3 characters
+ * - has age in [0..100] range
+ */
+function main() {
+  // "r" is a name symbol to reference this library, while "v" is used to access
+  // the main library functionality
+
+  const schema1 = r.defineRequiredPropertiesFor(r.requireObject(), {
+    name: r.requireMatchFor(r.requireLengthGreaterThanFor(r.requireString(), 3), /[^ ]/),
+    age: r.requireInRangeFor(r.requireInteger(), 0, 100)
+  })
+
+  const schema2 = v.isObject().withRequiredProperties({
+    name: v.isString().withLengthGreaterThan(3).matching(/[^ ]/),
+    age: v.isInteger().inRange(0, 100)
+  })
+
+  const person = {
+    name: "Emily",
+    age: 24
+  }
+
+  console.log(schema1.validate(person) === schema2.validate(person))
+}
+```
+
+### short functions
+
+Provides functions to quickly create validators with less typing.
+
+Library identifier: `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO`
+
+```javascript
+/**
+ * Check whether a value:
+ * - is a boolean one
+ */
+function main() {
+  // "r" is a name symbol to reference this library, while "v" is used to access
+  // the main library functionality
+
+  const schema1 = r.b()
+  const schema2 = v.isBoolean()
+
+  const value = true
+
+  console.log(schema1.validate(value) === schema2.validate(value))
+}
+```
+
+### PropertiesService validator
+
+Provides functions to validate script, document, and user properties against
+regular expressions in a simplified form. To negate some check add `!` at the
+beginning of the property name:
+
+> :white_check_mark: This library may be useful if you don't want create
+> validators explicitly yourself.
+
+Library identifier: `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8`
+
+```javascript
+/**
+ * Check whether a script property "name":
+ * - has at least one non-space character
+ */
+function main() {
+  // "r" is a name symbol to reference this library
+
+  PropertiesService.getScriptProperties().setProperty("name", "Emily")
+  r.withScriptProperties({
+    name: /[^ ]/
+  })
+  
+  console.log(r.validateScriptProperties())
+}
+```
