@@ -416,6 +416,27 @@ class UniversalValidator {
   }
 
   /**
+   * @param {any} value
+   * 
+   * @returns {any}
+   */
+  preprocessValue_(value) {
+    if (this.propertyPreprocessors_.length === 0)
+      return value
+
+    let processedValue = null
+
+    for (const preprocessor of this.propertyPreprocessors_) {
+      processedValue = preprocessor(value)
+
+      if (processedValue !== null && BasicUtils.isValidator(processedValue))
+        return processedValue
+    }
+
+    throw new Error('No preprocessors handled the value successfully')
+  }
+
+  /**
    * @param {BaseType | JoinType_} type A type.
    */
   constructor(type) {
@@ -454,6 +475,10 @@ class UniversalValidator {
       this.maximumExample_ = undefined
       this.default_ = undefined
       this.itemValidator_ = undefined
+      /**
+       * @type {Array.<PropertyPreprocessor>}
+       */
+      this.propertyPreprocessors_ = []
     } else {
       const types = [...StringifiedTypes.baseTypeIdentifiers, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
 
@@ -1321,6 +1346,26 @@ class UniversalValidator {
   }
 
   /**
+   * Inject specified property preprocessors which are used to convert arbitrary values to validators in
+   * `withRequiredProperties` and `withOptionalProperties` methods.
+   * 
+   * @param {Array.<PropertyPreprocessor>} preprocessors Property preprocessors.
+   * 
+   * @returns {UniversalValidator} The current validator.
+   */
+  withPropertyPreprocessors(...preprocessors) {
+    this.tryInvoke_("withPropertyPreprocessors")
+    this.requireType_()
+    this.requireObjectType_()
+    BasicUtils.requireArray(preprocessors, "preprocessors")
+    preprocessors.forEach((preprocessor, index) => BasicUtils.requireFunction(preprocessor, "preprocessors", index))
+
+    this.propertyPreprocessors_ = preprocessors
+
+    return this
+  }
+
+  /**
    * Require specified properties.
    * 
    * @param {Object.<string, UniversalValidator>} properties A constraint.
@@ -1351,7 +1396,7 @@ class UniversalValidator {
           if (!input.hasOwnProperty(requiredProperty))
             return false
 
-          let validator = properties[requiredProperty]
+          let validator = this.preprocessValue_(properties[requiredProperty])
 
           if (typeof validator !== "boolean") {
             BasicUtils.requireValidator(validator, "validator")
@@ -1396,7 +1441,7 @@ class UniversalValidator {
       properties,
       input => {
         for (let optionalProperty in properties) {
-          let validator = properties[optionalProperty]
+          let validator = this.preprocessValue_(properties[optionalProperty])
 
           if (typeof validator !== "boolean") {
             BasicUtils.requireValidator(validator, "validator")
