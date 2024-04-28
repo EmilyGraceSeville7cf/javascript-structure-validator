@@ -519,7 +519,7 @@ class UniversalValidator {
       if (!validator.containsNestedValidators) {
         if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
           tree[property] = validator.jsTypesData
-        else if (Object.keys(validator.requiredPropertiesData).length !== 0)
+        else
           tree[property] = validator.requiredPropertiesData
       } else
         tree[property] = validator.jsTypesData
@@ -544,7 +544,7 @@ class UniversalValidator {
       if (!validator.containsNestedValidators) {
         if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
           tree[property] = validator.jsTypesData
-        else if (Object.keys(validator.optionalPropertiesData).length !== 0)
+        else
           tree[property] = validator.optionalPropertiesData
       } else
         tree[property] = validator.jsTypesData
@@ -569,7 +569,7 @@ class UniversalValidator {
       if (!validator.containsNestedValidators) {
         if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
           tree[property] = validator.descriptionData
-        else if (Object.keys(validator.requiredPropertiesDescriptionsData).length !== 0) {
+        else {
           tree[property] = validator.requiredPropertiesDescriptionsData
 
           if (typeof validator.descriptionData !== "undefined")
@@ -598,7 +598,7 @@ class UniversalValidator {
       if (!validator.containsNestedValidators) {
         if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
           tree[property] = validator.descriptionData
-        else if (Object.keys(validator.optionalPropertiesDescriptionsData).length !== 0) {
+        else {
           tree[property] = validator.optionalPropertiesDescriptionsData
 
           if (typeof validator.descriptionData !== "undefined")
