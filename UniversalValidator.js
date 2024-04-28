@@ -438,6 +438,9 @@ class UniversalValidator {
     if (this.propertyPreprocessors_.length === 0)
       return value
 
+    if (BasicUtils.isValidator(value) || value === true)
+      return value
+
     let processedValue = null
 
     for (const preprocessor of this.propertyPreprocessors_) {
@@ -448,6 +451,21 @@ class UniversalValidator {
     }
 
     throw new Error('No preprocessors handled the value successfully')
+  }
+
+  /**
+   * @param {object} value
+   */
+  preprocessProperties_(properties) {
+    for (const property in properties)
+      properties[property] = this.preprocessValue_(properties[property])
+  }
+
+  /**
+   * @param {any} value
+   */
+  isIterable_(value) {
+    return typeof value[Symbol.iterator] === 'function';
   }
 
   /**
@@ -492,7 +510,7 @@ class UniversalValidator {
       /**
        * @type {Array.<PropertyPreprocessor>}
        */
-      this.propertyPreprocessors_ = []
+      this.propertyPreprocessors_ = [regexPreprocessor_, rangePreprocessor_, negativeRegexPreprocessor_, negativeRangePreprocessor_]
     } else {
       const types = [...StringifiedTypes.baseTypeIdentifiers, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
 
@@ -1181,6 +1199,9 @@ class UniversalValidator {
       OperationTargetType.ITEMS,
       items,
       input => {
+        if (!this.isIterable_(input))
+          return false
+        
         for (let item of input)
           if (!items.validate(item))
             return false
@@ -1380,6 +1401,41 @@ class UniversalValidator {
   }
 
   /**
+   * Inject specified property preprocessors which are used to convert arbitrary values to validators in
+   * `withRequiredProperties` and `withOptionalProperties` methods.
+   * 
+   * @param {Array.<PropertyPreprocessor>} preprocessors Property preprocessors.
+   * 
+   * @returns {UniversalValidator} The current validator.
+   */
+  withAddedPropertyPreprocessors(...preprocessors) {
+    this.tryInvoke_("withPropertyPreprocessors")
+    this.requireType_()
+    this.requireObjectType_()
+    BasicUtils.requireArray(preprocessors, "preprocessors")
+    preprocessors.forEach((preprocessor, index) => BasicUtils.requireFunction(preprocessor, "preprocessors", index))
+
+    preprocessors.forEach(preprocessor => this.propertyPreprocessors_.push(preprocessor))
+
+    return this
+  }
+
+  /**
+   * Disable property preprocessors
+   * 
+   * @returns {UniversalValidator} The current validator.
+   */
+  withNotPropertyPreprocessors() {
+    this.tryInvoke_("withPropertyPreprocessors")
+    this.requireType_()
+    this.requireObjectType_()
+
+    this.propertyPreprocessors_ = []
+
+    return this
+  }
+
+  /**
    * Require specified properties.
    * 
    * @param {Object.<string, UniversalValidator>} properties A constraint.
@@ -1393,6 +1449,7 @@ class UniversalValidator {
     BasicUtils.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
     this.requireNotReservedProperties_(properties)
+    this.preprocessProperties_(properties)
     this.requireValidValidators_(properties)
 
     this.requiredPropertiesValidators_ = { ...properties }
@@ -1437,6 +1494,7 @@ class UniversalValidator {
     BasicUtils.requireObject(properties, "properties")
     this.requirePublicProperties_(properties)
     this.requireNotReservedProperties_(properties)
+    this.preprocessProperties_(properties)
     this.requireValidValidators_(properties)
 
     this.optionalPropertiesValidators_ = { ...properties }
