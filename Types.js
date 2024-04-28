@@ -17,6 +17,17 @@
  */
 
 /**
+ * A property preprocessor.
+ * It's used to convert arbitrary values into validators.
+ * If a preprocessor can't convert some value it should return null, it can't throw exceptions. 
+ * 
+ * @callback PropertyPreprocessor
+ * @param {any} input An input.
+ * 
+ * @returns {UniversalValidator} A validator.
+ */
+
+/**
  * A basic type.
  * 
  * @typedef {"boolean" | "number" | "integer" | "string" | "bigint" | "symbol" | "array" | "object"} BaseType
