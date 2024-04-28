@@ -1037,6 +1037,59 @@ Get object's property names.
 | value  | <code>object</code> | An object.  |
 | prefix | <code>string</code> | A prefix.   |
 
+## Functions
+
+<dl>
+<dt><a href="#regexPreprocessor_">regexPreprocessor_(regex)</a> ⇒ <code>UniversalValidator</code></dt>
+<dd></dd>
+<dt><a href="#rangePreprocessor_">rangePreprocessor_(range)</a> ⇒ <code>UniversalValidator</code></dt>
+<dd></dd>
+<dt><a href="#negativeRegexPreprocessor_">negativeRegexPreprocessor_(options)</a> ⇒ <code>UniversalValidator</code></dt>
+<dd></dd>
+<dt><a href="#negativeRangePreprocessor_">negativeRangePreprocessor_(options)</a> ⇒ <code>UniversalValidator</code></dt>
+<dd></dd>
+</dl>
+
+<a name="regexPreprocessor_"></a>
+
+## regexPreprocessor\_(regex) ⇒ <code>UniversalValidator</code>
+
+**Kind**: global function
+
+| Param | Type                |
+| ----- | ------------------- |
+| regex | <code>RegExp</code> |
+
+<a name="rangePreprocessor_"></a>
+
+## rangePreprocessor\_(range) ⇒ <code>UniversalValidator</code>
+
+**Kind**: global function
+
+| Param | Type                         |
+| ----- | ---------------------------- |
+| range | <code>Array.\<number></code> |
+
+<a name="negativeRegexPreprocessor_"></a>
+
+## negativeRegexPreprocessor\_(options) ⇒ <code>UniversalValidator</code>
+
+**Kind**: global function
+
+| Param   | Type                |
+| ------- | ------------------- |
+| options | <code>object</code> |
+
+<a name="negativeRangePreprocessor_"></a>
+
+## negativeRangePreprocessor\_(options) ⇒ <code>UniversalValidator</code>
+
+**Kind**: global function
+
+| Param   | Type                |
+| ------- | ------------------- |
+| options | <code>object</code> |
+
 <a name="ReadonlyActionInfo_"></a>
 
 ## ReadonlyActionInfo\_
@@ -1115,35 +1168,6 @@ Base supported type identifiers.
 Base supported comparable type identifiers.
 
 **Kind**: static property of [<code>StringifiedTypes</code>](#StringifiedTypes)
-
-## Functions
-
-<dl>
-<dt><a href="#regexPreprocessor">regexPreprocessor(regex)</a> ⇒ <code>UniversalValidator</code></dt>
-<dd></dd>
-<dt><a href="#arrayRangePreprocessor">arrayRangePreprocessor(range)</a> ⇒ <code>UniversalValidator</code></dt>
-<dd></dd>
-</dl>
-
-<a name="regexPreprocessor"></a>
-
-## regexPreprocessor(regex) ⇒ <code>UniversalValidator</code>
-
-**Kind**: global function
-
-| Param | Type                |
-| ----- | ------------------- |
-| regex | <code>RegExp</code> |
-
-<a name="arrayRangePreprocessor"></a>
-
-## arrayRangePreprocessor(range) ⇒ <code>UniversalValidator</code>
-
-**Kind**: global function
-
-| Param | Type                         |
-| ----- | ---------------------------- |
-| range | <code>Array.\<number></code> |
 
 ## Typedefs
 
@@ -1329,6 +1353,7 @@ JSON schema and JSDoc generation is also supported from schemas.
   - [.requireTrue\_(value)](#UniversalValidator+requireTrue_)
   - [.requireCount\_(value, argumentName)](#UniversalValidator+requireCount_)
   - [.requireRange\_(from, to)](#UniversalValidator+requireRange_)
+  - [.requireValidValidators\_(properties)](#UniversalValidator+requireValidValidators_)
   - [.deleteValidatorPlaceholders\_(properties)](#UniversalValidator+deleteValidatorPlaceholders_)
   - [.tryInvoke\_(name)](#UniversalValidator+tryInvoke_)
   - [.regexToPlainString\_(regex)](#UniversalValidator+regexToPlainString_)
@@ -1338,6 +1363,8 @@ JSON schema and JSDoc generation is also supported from schemas.
   - [.addPropertyCountConstraints\_(schema, simpleSubschemas, action)](#UniversalValidator+addPropertyCountConstraints_)
   - [.addProperties\_(schema, action)](#UniversalValidator+addProperties_)
   - [.preprocessValue\_(value)](#UniversalValidator+preprocessValue_) ⇒ <code>any</code>
+  - [.preprocessProperties\_(value)](#UniversalValidator+preprocessProperties_)
+  - [.isIterable\_(value)](#UniversalValidator+isIterable_)
   - [.clone()](#UniversalValidator+clone) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withDescription(description)](#UniversalValidator+withDescription) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withDefault(value)](#UniversalValidator+withDefault) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
@@ -1371,6 +1398,8 @@ JSON schema and JSDoc generation is also supported from schemas.
   - [.withItemCountInRange(from, to)](#UniversalValidator+withItemCountInRange) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withItemCountNotInRange(from, to)](#UniversalValidator+withItemCountNotInRange) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withPropertyPreprocessors(...preprocessors)](#UniversalValidator+withPropertyPreprocessors) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
+  - [.withAddedPropertyPreprocessors(...preprocessors)](#UniversalValidator+withAddedPropertyPreprocessors) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
+  - [.withNotPropertyPreprocessors()](#UniversalValidator+withNotPropertyPreprocessors) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withRequiredProperties(properties)](#UniversalValidator+withRequiredProperties) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withOptionalProperties(properties)](#UniversalValidator+withOptionalProperties) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
   - [.withAdditionalProperties(properties)](#UniversalValidator+withAdditionalProperties) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
@@ -1573,6 +1602,16 @@ Optional property's descriptions.
 | from  | <code>any</code> |
 | to    | <code>any</code> |
 
+<a name="UniversalValidator+requireValidValidators_"></a>
+
+### universalValidator.requireValidValidators\_(properties)
+
+**Kind**: instance method of [<code>UniversalValidator</code>](#UniversalValidator)
+
+| Param      | Type                                                         |
+| ---------- | ------------------------------------------------------------ |
+| properties | <code>Object.\<string, (UniversalValidator\|boolean)></code> |
+
 <a name="UniversalValidator+deleteValidatorPlaceholders_"></a>
 
 ### universalValidator.deleteValidatorPlaceholders\_(properties)
@@ -1665,6 +1704,26 @@ Optional property's descriptions.
 <a name="UniversalValidator+preprocessValue_"></a>
 
 ### universalValidator.preprocessValue\_(value) ⇒ <code>any</code>
+
+**Kind**: instance method of [<code>UniversalValidator</code>](#UniversalValidator)
+
+| Param | Type             |
+| ----- | ---------------- |
+| value | <code>any</code> |
+
+<a name="UniversalValidator+preprocessProperties_"></a>
+
+### universalValidator.preprocessProperties\_(value)
+
+**Kind**: instance method of [<code>UniversalValidator</code>](#UniversalValidator)
+
+| Param | Type                |
+| ----- | ------------------- |
+| value | <code>object</code> |
+
+<a name="UniversalValidator+isIterable_"></a>
+
+### universalValidator.isIterable\_(value)
 
 **Kind**: instance method of [<code>UniversalValidator</code>](#UniversalValidator)
 
@@ -2103,6 +2162,28 @@ Inject specified property preprocessors which are used to convert arbitrary valu
 | ---------------- | ------------------------------------------ | ----------------------- |
 | ...preprocessors | <code>Array.\<PropertyPreprocessor></code> | Property preprocessors. |
 
+<a name="UniversalValidator+withAddedPropertyPreprocessors"></a>
+
+### universalValidator.withAddedPropertyPreprocessors(...preprocessors) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
+
+Inject specified property preprocessors which are used to convert arbitrary values to validators in
+`withRequiredProperties` and `withOptionalProperties` methods.
+
+**Kind**: instance method of [<code>UniversalValidator</code>](#UniversalValidator)\
+**Returns**: [<code>UniversalValidator</code>](#UniversalValidator) - The current validator.
+
+| Param            | Type                                       | Description             |
+| ---------------- | ------------------------------------------ | ----------------------- |
+| ...preprocessors | <code>Array.\<PropertyPreprocessor></code> | Property preprocessors. |
+
+<a name="UniversalValidator+withNotPropertyPreprocessors"></a>
+
+### universalValidator.withNotPropertyPreprocessors() ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
+
+Disable property preprocessors
+
+**Kind**: instance method of [<code>UniversalValidator</code>](#UniversalValidator)\
+**Returns**: [<code>UniversalValidator</code>](#UniversalValidator) - The current validator.\
 <a name="UniversalValidator+withRequiredProperties"></a>
 
 ### universalValidator.withRequiredProperties(properties) ⇒ [<code>UniversalValidator</code>](#UniversalValidator)
