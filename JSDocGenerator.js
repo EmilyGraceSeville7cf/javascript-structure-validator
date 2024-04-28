@@ -39,6 +39,10 @@ class JSDocGenerator {
     BasicUtils.requireObject(value, "value")
 
     prefix = prefix.replace(/^\./, "")
+
+    if (prefix === "")
+      this.description_ = value.$name
+
     let properties = {}
 
     for (let property in value) {
@@ -70,10 +74,16 @@ class JSDocGenerator {
   }
 
   /**
+   * @param {string} A type name.
    * @param {UniversalValidator} validator A validator.
    */
-  constructor(validator) {
+  constructor(name, validator) {
+    BasicUtils.requireString(name, "name")
+    BasicUtils.requireValidator(validator, "validator")
+
+    this.name_ = name
     this.validator_ = validator
+    this.description_ = undefined
   }
 
   /**
@@ -96,6 +106,8 @@ class JSDocGenerator {
       properties.push(this.toPropertyDefinition_(optionalProperties[property], property, optionalPropertiesDescriptions[property]))
 
     return `/**
+ * @typedef ${this.name_} ${this.description_}
+ *
 ${properties.join("\n")}
  */`
   }

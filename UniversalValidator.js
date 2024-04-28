@@ -6,6 +6,60 @@
  */
 class UniversalValidator {
   /**
+   * @type {object}
+   */
+  get requiredPropertiesDescriptionsData_() {
+    if (this.validatorType_ !== "object")
+      return this.descriptionData
+
+    let tree = {}
+    for (let property in this.requiredPropertiesValidators_) {
+      const validator = this.requiredPropertiesValidators_[property]
+
+      if (!validator.containsNestedValidators) {
+        if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
+          tree[property] = validator.descriptionData
+        else {
+          tree[property] = validator.requiredPropertiesDescriptionsData_
+
+          if (typeof validator.descriptionData !== "undefined")
+            tree[property] = { $name: validator.descriptionData, ...tree[property] }
+        }
+      } else
+        tree[property] = validator.requiredPropertiesDescriptionsData_
+    }
+
+    return tree
+  }
+
+  /**
+   * @type {object}
+   */
+  get optionalPropertiesDescriptionsData_() {
+    if (this.validatorType_ !== "object")
+      return this.descriptionData
+
+    let tree = {}
+    for (let property in this.optionalPropertiesValidators_) {
+      const validator = this.optionalPropertiesValidators_[property]
+
+      if (!validator.containsNestedValidators) {
+        if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
+          tree[property] = validator.descriptionData
+        else {
+          tree[property] = validator.optionalPropertiesDescriptionsData_
+
+          if (typeof validator.descriptionData !== "undefined")
+            tree[property] = { $name: validator.descriptionData, ...tree[property] }
+        }
+      } else
+        tree[property] = validator.optionalPropertiesDescriptionsData_
+    }
+
+    return tree
+  }
+
+  /**
    * @param {string} property
    */
   isPrivateProperty_(property) {
@@ -560,26 +614,12 @@ class UniversalValidator {
    */
   get requiredPropertiesDescriptionsData() {
     if (this.validatorType_ !== "object")
-      return this.descriptionData
-
-    let tree = {}
-    for (let property in this.requiredPropertiesValidators_) {
-      const validator = this.requiredPropertiesValidators_[property]
-
-      if (!validator.containsNestedValidators) {
-        if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
-          tree[property] = validator.descriptionData
-        else {
-          tree[property] = validator.requiredPropertiesDescriptionsData
-
-          if (typeof validator.descriptionData !== "undefined")
-            tree[property] = { $name: validator.descriptionData, ...tree[property] }
-        }
-      } else
-        tree[property] = validator.requiredPropertiesDescriptionsData
+      return this.requiredPropertiesDescriptionsData_
+    
+    return {
+      $name: this.descriptionData,
+      ...this.requiredPropertiesDescriptionsData_
     }
-
-    return tree
   }
 
   /**
@@ -589,26 +629,12 @@ class UniversalValidator {
    */
   get optionalPropertiesDescriptionsData() {
     if (this.validatorType_ !== "object")
-      return this.descriptionData
-
-    let tree = {}
-    for (let property in this.optionalPropertiesValidators_) {
-      const validator = this.optionalPropertiesValidators_[property]
-
-      if (!validator.containsNestedValidators) {
-        if (!ArrayUtils.equal(validator.jsTypesData, ["object"]))
-          tree[property] = validator.descriptionData
-        else {
-          tree[property] = validator.optionalPropertiesDescriptionsData
-
-          if (typeof validator.descriptionData !== "undefined")
-            tree[property] = { $name: validator.descriptionData, ...tree[property] }
-        }
-      } else
-        tree[property] = validator.optionalPropertiesDescriptionsData
+      return this.optionalPropertiesDescriptionsData_
+    
+    return {
+      $name: this.descriptionData,
+      ...this.optionalPropertiesDescriptionsData_
     }
-
-    return tree
   }
 
   /**
