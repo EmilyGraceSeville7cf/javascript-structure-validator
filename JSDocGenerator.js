@@ -88,9 +88,6 @@ class JSDocGenerator {
     const requiredPropertiesDescriptions = this.mapDescriptionData_(this.validator_.requiredPropertiesDescriptionsData)
     const optionalPropertiesDescriptions = this.mapDescriptionData_(this.validator_.optionalPropertiesDescriptionsData)
 
-    console.log(requiredProperties)
-    console.log(requiredPropertiesDescriptions)
-
     let properties = []
 
     for (const property in requiredPropertiesDescriptions)
