@@ -24,3 +24,12 @@ function getObjectUtils() {
 function getUniversalValidator() {
   return UniversalValidator
 }
+
+/**
+ * Return `JSDocGenerator` class.
+ * 
+ * @returns {JSDocGenerator}
+ */
+function getJSDocGenerator() {
+  return JSDocGenerator
+}
