@@ -131,9 +131,3 @@ function main() {
   console.log(r.validateScriptProperties())
 }
 ```
-
-| Name             | Description                                                                                                             | Identifier                                                  |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [extras][extras] | Functions for a quick validator creation. Similar to short_functions library, but intended for more complex validators. | `1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG` |
-
-[extras]: https://script.google.com/d/1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG/edit?usp=sharing
