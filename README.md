@@ -110,6 +110,9 @@ Provides functions to validate script, document, and user properties against
 regular expressions in a simplified form. To negate some check add `!` at the
 beginning of the property name:
 
+> :white_check_mark: This library may be useful if you don't want create
+> validators explicitly yourself.
+
 Library identifier: `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8`
 
 ```javascript
