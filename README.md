@@ -104,10 +104,33 @@ function main() {
 }
 ```
 
-| Name                                                        | Description                                                                                                             | Identifier                                                  |
-| ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [PropertiesService validator][properties_service_validator] | Functions to validate PropertiesService properties.                                                                     | `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8` |
-| [extras][extras]                                            | Functions for a quick validator creation. Similar to short_functions library, but intended for more complex validators. | `1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG` |
+### PropertiesService validator
 
-[properties_service_validator]: https://script.google.com/d/1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8/edit?usp=sharing
+Provides functions to validate script, document, and user properties against
+regular expressions in a simplified form. To negate some check add `!` at the
+beginning of the property name:
+
+Library identifier: `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8`
+
+```javascript
+/**
+ * Check whether a script property "name":
+ * - has at least one non-space character
+ */
+function main() {
+  // "r" is a name symbol to reference this library
+
+  PropertiesService.getScriptProperties().setProperty("name", "Emily")
+  r.withScriptProperties({
+    name: /[^ ]/
+  })
+  
+  console.log(r.validateScriptProperties())
+}
+```
+
+| Name             | Description                                                                                                             | Identifier                                                  |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| [extras][extras] | Functions for a quick validator creation. Similar to short_functions library, but intended for more complex validators. | `1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG` |
+
 [extras]: https://script.google.com/d/1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG/edit?usp=sharing
