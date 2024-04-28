@@ -80,12 +80,34 @@ function main() {
 }
 ```
 
+### short functions
+
+Provides functions to quickly create validators with less typing.
+
+Library identifier: `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO`
+
+```javascript
+/**
+ * Check whether a value:
+ * - is a boolean one
+ */
+function main() {
+  // "r" is a name symbol to reference this library, while "v" is used to access
+  // the main library functionality
+
+  const schema1 = r.b()
+  const schema2 = v.isBoolean()
+
+  const value = true
+
+  console.log(schema1.validate(value) === schema2.validate(value))
+}
+```
+
 | Name                                                        | Description                                                                                                             | Identifier                                                  |
 | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| [short functions][short_functions]                          | One-letter functions for a quick validator creation.                                                                    | `1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO` |
 | [PropertiesService validator][properties_service_validator] | Functions to validate PropertiesService properties.                                                                     | `1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8` |
 | [extras][extras]                                            | Functions for a quick validator creation. Similar to short_functions library, but intended for more complex validators. | `1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG` |
 
-[short_functions]: https://script.google.com/d/1QV-QQytWy0t5e0Y9xjuJjLE8WtKYZ9DKYpvgW7ZgODrYRUZZNxy5NEWO/edit?usp=sharing
 [properties_service_validator]: https://script.google.com/d/1B9kXHA8YJGnfwuD0NkP6VNkzcExJigKWS5_YyMjrq7EUEZzV-QA1I9L8/edit?usp=sharing
 [extras]: https://script.google.com/d/1qMQ1FyTCcfrT0h7XKqNxbf3-ol3g3uR3VJmKeobd-QLKunwZKsWQFHJG/edit?usp=sharing
