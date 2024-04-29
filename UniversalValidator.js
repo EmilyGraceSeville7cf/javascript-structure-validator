@@ -437,7 +437,6 @@ class UniversalValidator {
   preprocessValue_(value) {
     if (this.propertyPreprocessors_.length === 0)
       return value
-
     if (BasicUtils.isValidator(value) || value === true)
       return value
 
@@ -510,7 +509,8 @@ class UniversalValidator {
       /**
        * @type {Array.<PropertyPreprocessor>}
        */
-      this.propertyPreprocessors_ = [regexPreprocessor_, rangePreprocessor_, negativeRegexPreprocessor_, negativeRangePreprocessor_]
+      this.propertyPreprocessors_ = [regexPreprocessor_, enumPreprocessor_, rangePreprocessor_,
+        negativeRegexPreprocessor_, negativeEnumPreprocessor_, negativeRangePreprocessor_]
     } else {
       const types = [...StringifiedTypes.baseTypeIdentifiers, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
 
