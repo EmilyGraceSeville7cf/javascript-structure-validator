@@ -204,6 +204,17 @@ class BasicUtils {
   }
 
   /**
+   * Check whether a `value` is a record entry.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a record entry.
+   */
+  static isRecordEntry(value) {
+    return value?.constructor.name === RecordEntry.name
+  }
+
+  /**
    * Check whether a `value` is a boolean value or undefined.
    * 
    * @param {any} value A value.
@@ -322,6 +333,17 @@ class BasicUtils {
    */
   static isValidatorOrUndefined(value) {
     return value?.constructor.name === UniversalValidator.name || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a record entry or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a record entry or undefined.
+   */
+  static isRecordEntryOrUndefined(value) {
+    return value?.constructor.name === RecordEntry.name || typeof value === "undefined"
   }
 
   /**
@@ -535,6 +557,17 @@ class BasicUtils {
   }
 
   /**
+   * Check whether a `value` is a record entry and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireRecordEntry(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isRecordEntry, "RecordEntry", value, argumentName, argumentIndex)
+  }
+
+  /**
    * Check whether a `value` is a boolean value or undefined and throw if not.
    * 
    * @param {any} value A value.
@@ -653,5 +686,16 @@ class BasicUtils {
    */
   static requireValidatorOrUndefined(value, argumentName, argumentIndex) {
     this.requireTypeByPredicate_(this.isValidatorOrUndefined, "UniversalValidator | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a record entry or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireRecordEntryOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isRecordEntryOrUndefined, "RecordEntry | undefined", value, argumentName, argumentIndex)
   }
 }
