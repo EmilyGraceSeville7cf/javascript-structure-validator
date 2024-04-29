@@ -1201,7 +1201,7 @@ class UniversalValidator {
       input => {
         if (!this.isIterable_(input))
           return false
-        
+
         for (let item of input)
           if (!items.validate(item))
             return false
@@ -1512,7 +1512,9 @@ class UniversalValidator {
         for (let optionalProperty in properties) {
           let validator = properties[optionalProperty]
 
-          if (BasicUtils.isValidator(validator) && !validator.validate(input[optionalProperty]))
+          if (BasicUtils.isValidator(validator) &&
+            typeof input[optionalProperty] !== "undefined" &&
+            !validator.validate(input[optionalProperty]))
             return false
         }
 
