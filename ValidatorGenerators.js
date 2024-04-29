@@ -1,3 +1,5 @@
+const BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_ = "Either both range bounds are undefined, or none of them; if an object is passed instead of the first parameter it should contain either 'from' or 'to' property"
+
 /**
  * Require value to be boolean.
  * 
@@ -10,37 +12,141 @@ function isBoolean() {
 /**
  * Require value to be number.
  * 
+ * @param {number} from A lowest boundary.
+ * @param {number} to A highest boundary.
+ * 
  * @returns {UniversalValidator} The validator.
  */
-function isNumber() {
-  return new UniversalValidator("number")
+function isNumber(from, to) {
+  if (typeof from !== "undefined" && typeof to !== "undefined") {
+    BasicUtils.requireNumber(from, "from")
+    BasicUtils.requireNumber(to, "to")
+
+    return new UniversalValidator("number").inRange(from, to)
+  }
+  if (typeof from !== "undefined" && typeof to === "undefined") {
+    if (BasicUtils.isNumber(from))
+      return new UniversalValidator("number").equalTo(from)
+
+    const options = from
+    if (isObject().withRequiredProperties({
+      from: isNumber()
+    }).validate(options))
+      return new UniversalValidator("number").greaterThanOrEqualTo(options.from)
+    if (isObject().withRequiredProperties({
+      to: isNumber()
+    }).validate(options))
+      return new UniversalValidator("number").lessThanOrEqualTo(options.to)
+  }
+  if (typeof from === "undefined" && typeof to === "undefined")
+    return new UniversalValidator("number")
+
+  throw new Error(BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_)
 }
 
 /**
  * Require value to be integer.
  * 
+ * @param {number} from A lowest boundary.
+ * @param {number} to A highest boundary.
+ *
  * @returns {UniversalValidator} The validator.
  */
-function isInteger() {
-  return new UniversalValidator("integer")
+function isInteger(from, to) {
+  if (typeof from !== "undefined" && typeof to !== "undefined") {
+    BasicUtils.requireInteger(from, "from")
+    BasicUtils.requireInteger(to, "to")
+
+    return new UniversalValidator("integer").inRange(from, to)
+  }
+  if (typeof from !== "undefined" && typeof to === "undefined") {
+    if (BasicUtils.isInteger(from))
+      return new UniversalValidator("integer").equalTo(from)
+
+    const options = from
+    if (isObject().withRequiredProperties({
+      from: isInteger()
+    }).validate(options))
+      return new UniversalValidator("integer").greaterThanOrEqualTo(options.from)
+    if (isObject().withRequiredProperties({
+      to: isInteger()
+    }).validate(options))
+      return new UniversalValidator("integer").lessThanOrEqualTo(options.to)
+  }
+  if (typeof from === "undefined" && typeof to === "undefined")
+    return new UniversalValidator("integer")
+
+  throw new Error(BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_)
 }
 
 /**
  * Require value to be string.
  * 
+ * @param {number} from A lowest boundary.
+ * @param {number} to A highest boundary. 
+ *
  * @returns {UniversalValidator} The validator.
  */
-function isString() {
-  return new UniversalValidator("string")
+function isString(from, to) {
+  if (typeof from !== "undefined" && typeof to !== "undefined") {
+    BasicUtils.requireInteger(from, "from")
+    BasicUtils.requireInteger(to, "to")
+
+    return new UniversalValidator("string").withLengthInRange(from, to)
+  }
+  if (typeof from !== "undefined" && typeof to === "undefined") {
+    if (BasicUtils.isInteger(from))
+      return new UniversalValidator("string").withLengthEqualTo(from)
+
+    const options = from
+    if (isObject().withRequiredProperties({
+      from: isInteger()
+    }).validate(options))
+      return new UniversalValidator("string").withLengthGreaterThanOrEqualTo(options.from)
+    if (isObject().withRequiredProperties({
+      to: isInteger()
+    }).validate(options))
+      return new UniversalValidator("string").withLengthLessThanOrEqualTo(options.to)
+  }
+  if (typeof from === "undefined" && typeof to === "undefined")
+    return new UniversalValidator("string")
+
+  throw new Error(BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_)
 }
 
 /**
  * Require value to be bigint.
  * 
+ * @param {number} from A lowest boundary.
+ * @param {number} to A highest boundary. 
+ * 
  * @returns {UniversalValidator} The validator.
  */
-function isBigint() {
-  return new UniversalValidator("bigint")
+function isBigint(from, to) {
+  if (typeof from !== "undefined" && typeof to !== "undefined") {
+    BasicUtils.requireBigint(from, "from")
+    BasicUtils.requireBigint(to, "to")
+
+    return new UniversalValidator("bigint").inRange(from, to)
+  }
+  if (typeof from !== "undefined" && typeof to === "undefined") {
+    if (BasicUtils.isBigint(from))
+      return new UniversalValidator("bigint").equalTo(from)
+
+    const options = from
+    if (isObject().withRequiredProperties({
+      from: isBigint()
+    }).validate(options))
+      return new UniversalValidator("bigint").greaterThanOrEqualTo(options.from)
+    if (isObject().withRequiredProperties({
+      to: isBigint()
+    }).validate(options))
+      return new UniversalValidator("bigint").lessThanOrEqualTo(options.to)
+  }
+  if (typeof from === "undefined" && typeof to === "undefined")
+    return new UniversalValidator("bigint")
+
+  throw new Error(BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_)
 }
 
 /**
@@ -55,19 +161,71 @@ function isSymbol() {
 /**
  * Require value to be array.
  * 
+ * @param {number} from A lowest boundary.
+ * @param {number} to A highest boundary.
+ * 
  * @returns {UniversalValidator} The validator.
  */
-function isArray() {
-  return new UniversalValidator("array")
+function isArray(from, to) {
+  if (typeof from !== "undefined" && typeof to !== "undefined") {
+    BasicUtils.requireInteger(from, "from")
+    BasicUtils.requireInteger(to, "to")
+
+    return new UniversalValidator("array").withItemCountInRange(from, to)
+  }
+  if (typeof from !== "undefined" && typeof to === "undefined") {
+    if (BasicUtils.isInteger(from))
+      return new UniversalValidator("array").withItemCountEqualTo(from)
+
+    const options = from
+    if (isObject().withRequiredProperties({
+      from: isInteger()
+    }).validate(options))
+      return new UniversalValidator("array").withItemCountGreaterThanOrEqualTo(options.from)
+    if (isObject().withRequiredProperties({
+      to: isInteger()
+    }).validate(options))
+      return new UniversalValidator("array").withItemCountLessThanOrEqualTo(options.to)
+  }
+  if (typeof from === "undefined" && typeof to === "undefined")
+    return new UniversalValidator("array")
+
+  throw new Error(BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_)
 }
 
 /**
  * Require value to be object.
  * 
+ * @param {number} from A lowest boundary.
+ * @param {number} to A highest boundary.
+ * 
  * @returns {UniversalValidator} The validator.
  */
-function isObject() {
-  return new UniversalValidator("object")
+function isObject(from, to) {
+  if (typeof from !== "undefined" && typeof to !== "undefined") {
+    BasicUtils.requireInteger(from, "from")
+    BasicUtils.requireInteger(to, "to")
+
+    return new UniversalValidator("object").withPropertyCountInRange(from, to)
+  }
+  if (typeof from !== "undefined" && typeof to === "undefined") {
+    if (BasicUtils.isInteger(from))
+      return new UniversalValidator("object").withPropertyCountEqualTo(from)
+
+    const options = from
+    if (isObject().withRequiredProperties({
+      from: isInteger()
+    }).validate(options))
+      return new UniversalValidator("object").withPropertyCountGreaterThanOrEqualTo(options.from)
+    if (isObject().withRequiredProperties({
+      to: isInteger()
+    }).validate(options))
+      return new UniversalValidator("object").withPropertyCountLessThanOrEqualTo(options.to)
+  }
+  if (typeof from === "undefined" && typeof to === "undefined")
+    return new UniversalValidator("object")
+
+  throw new Error(BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_)
 }
 
 /**
@@ -107,6 +265,8 @@ function isAllOf(...validators) {
  * Get is* functions.
  * 
  * @enum
+ * 
+ * @deprecated Use is* functions instead as they provide more flexibility. This object will remain for the backward compatibility purposes.
  */
 var is = Object.freeze({
   get boolean() {

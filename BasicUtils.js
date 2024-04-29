@@ -11,7 +11,7 @@ class BasicUtils {
     if (typeof value === "object")
       return JSON.stringify(value)
     
-    return value.toString()
+    return value?.toString()
   }
 
   /**
@@ -201,6 +201,127 @@ class BasicUtils {
    */
   static isValidator(value) {
     return value?.constructor.name === UniversalValidator.name
+  }
+
+  /**
+   * Check whether a `value` is a boolean value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a boolean value or undefined.
+   */
+  static isBooleanOrUndefined(value) {
+    return typeof value === "boolean" || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a number value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a number value or undefined.
+   */
+  static isNumberOrUndefined(value) {
+    return typeof value === "number" || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is an integer value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is an integer value or undefined.
+   */
+  static isIntegerOrUndefined(value) {
+    return Number.isInteger(value) || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a string value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a string value or undefined.
+   */
+  static isStringOrUndefined(value) {
+    return typeof value === "string" || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a bigint value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a bigint value or undefined.
+   */
+  static isBigintOrUndefined(value) {
+    return typeof value === "bigint" || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a symbol value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a symbol value or undefined.
+   */
+  static isSymbolOrUndefined(value) {
+    return typeof value === "symbol" || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is an array value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is an array value or undefined.
+   */
+  static isArrayOrUndefined(value) {
+    return Array.isArray(value) || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is an object value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is an object value or undefined.
+   */
+  static isObjectOrUndefined(value) {
+    return (typeof value === "object" && !Array.isArray(value)) || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a regular expression or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a regular expression or undefined.
+   */
+  static isRegExpOrUndefined(value) {
+    return value?.constructor.name === RegExp.name || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a function or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a function or undefined.
+   */
+  static isFunctionOrUndefined(value) {
+    return typeof value === "function" || typeof value === "undefined"
+  }
+
+  /**
+   * Check whether a `value` is a validator value or undefined.
+   * 
+   * @param {any} value A value.
+   * 
+   * @returns {boolean} Whether a `value` is a validator value or undefined.
+   */
+  static isValidatorOrUndefined(value) {
+    return value?.constructor.name === UniversalValidator.name || typeof value === "undefined"
   }
 
   /**
@@ -411,5 +532,126 @@ class BasicUtils {
    */
   static requireValidator(value, argumentName, argumentIndex) {
     this.requireTypeByPredicate_(this.isValidator, "UniversalValidator", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a boolean value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireBooleanOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isBooleanOrUndefined, "boolean | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a number value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireNumberOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isNumberOrUndefined, "number | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is an integer value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireIntegerOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isIntegerOrUndefined, "integer | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a string value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireStringOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isStringOrUndefined, "string | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a bigint value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireBigintOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isBigintOrUndefined, "bigint | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a symbol value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireSymbolOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isSymbolOrUndefined, "symbol | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is an array value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireArrayOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isArrayOrUndefined, "array | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is an object value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireObjectOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isObjectOrUndefined, "object | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a regular expression value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireRegExpOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isRegExpOrUndefined, "regular expression | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a function value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireFunctionOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isFunctionOrUndefined, "function | undefined", value, argumentName, argumentIndex)
+  }
+
+  /**
+   * Check whether a `value` is a validator value or undefined and throw if not.
+   * 
+   * @param {any} value A value.
+   * @param {string} argumentName An argument name.
+   * @param {number} argumentIndex An argument index.
+   */
+  static requireValidatorOrUndefined(value, argumentName, argumentIndex) {
+    this.requireTypeByPredicate_(this.isValidatorOrUndefined, "UniversalValidator | undefined", value, argumentName, argumentIndex)
   }
 }
