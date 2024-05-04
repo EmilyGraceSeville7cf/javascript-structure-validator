@@ -1,6 +1,9 @@
 /**
  * Check whether `value` satisfies all conditions.
  * 
+ * @example
+ * checkWhether(true, isBoolean())
+ * 
  * @param {any} input An input.
  * @param {UniversalValidator} validator A validator.
  * 
@@ -14,6 +17,9 @@ function checkWhether(input, validator) {
 
 /**
  * Check whether `value` satisfies all conditions and print error in case.
+ * 
+ * @example
+ * throwOnFailure(true, isBoolean())
  * 
  * @param {any} input An input.
  * @param {UniversalValidator} validator A validator.

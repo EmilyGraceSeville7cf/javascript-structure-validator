@@ -6,7 +6,7 @@
 class JSDocGenerator {
   /**
    * @param {object} value
-   * @param {string} prefix
+   * @param {string} [prefix=""]
    * 
    * @returns {Object.<string, any>}
    */
@@ -31,7 +31,7 @@ class JSDocGenerator {
 
   /**
    * @param {object} value
-   * @param {string} prefix
+   * @param {string} [prefix=""]
    * 
    * @returns {Object.<string, any>}
    */
@@ -74,6 +74,9 @@ class JSDocGenerator {
   }
 
   /**
+   * @example
+   * new JSDocGenerator("Person", record({ name: str(), age: int() }))
+   * 
    * @param {string} A type name.
    * @param {UniversalValidator} validator A validator.
    */
@@ -88,6 +91,9 @@ class JSDocGenerator {
 
   /**
    * Converts object to string.
+   * 
+   * @example
+   * new JSDocGenerator("Person", record({ name: str(), age: int() })).toString()
    * 
    * @returns {string} A string representation.
    */

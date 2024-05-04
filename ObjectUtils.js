@@ -5,6 +5,12 @@ class ObjectUtils {
   /**
    * Clone an object deeply.
    * 
+   * @example
+   * ObjectUtils.clone({ name: "Emily" })
+   * 
+   * @example
+   * getObjectUtils().clone({ name: "Emily" })
+   * 
    * @param {object} value An object.
    * 
    * @returns {object} A deep copy.
@@ -34,7 +40,7 @@ class ObjectUtils {
    * 
    * @returns {any} A deep copy.
   */
-  static cloneWhenObject(value) {
+  static cloneWhenObject_(value) {
     if (typeof value === "object" && !Array.isArray(value))
       return this.clone(value)
     else
@@ -43,6 +49,12 @@ class ObjectUtils {
 
   /**
    * Merge two objects deeply.
+   * 
+   * @example
+   * ObjectUtils.merge({ name: "Emily" }, { age: 28 })
+   * 
+   * @example
+   * getObjectUtils().merge({ name: "Emily" }, { age: 28 })
    * 
    * @param {object} first A first object.
    * @param {object} second A second object.
@@ -65,10 +77,10 @@ class ObjectUtils {
 
     for (const property in first)
       if (!second.hasOwnProperty(property))
-        result[property] = this.cloneWhenObject(first[property])
+        result[property] = this.cloneWhenObject_(first[property])
 
     for (const property in second) {
-      let temporary = this.cloneWhenObject(second[property])
+      let temporary = this.cloneWhenObject_(second[property])
 
       if (!first.hasOwnProperty(property)) {
         result[property] = temporary
@@ -93,8 +105,14 @@ class ObjectUtils {
   /**
    * Get object's property names.
    * 
+   * @example
+   * ObjectUtils.propertyNames({ name: "Emily" })
+   * 
+   * @example
+   * getObjectUtils().propertyNames({ name: "Emily" })
+   * 
    * @param {object} value An object.
-   * @param {string} prefix A prefix.
+   * @param {string} [prefix=""] A prefix.
    * 
    * @returns {Array.<string>} Property names.
   */
@@ -114,6 +132,34 @@ class ObjectUtils {
     }
 
     return properties
+  }
+
+  /**
+   * Map object's properties.
+   * 
+   * @example
+   * ObjectUtils.mapProperties({ age: 24 }, value => value + 1)
+   * 
+   * @example
+   * getObjectUtils().mapProperties({ age: 24 }, value => value + 1)
+   * 
+   * @param {object} value An object.
+   * @param {Converter} converter A converter.
+   * 
+   * @returns {object} A new object.
+  */
+  static mapProperties(object, converter) {
+    BasicUtils.requireObject(object, "object")
+    BasicUtils.requireFunction(converter, "converter")
+
+    const mapped = {}
+
+    Object.entries(object).forEach(pair => {
+      const [property, value] = pair
+      mapped[property] = converter(value)
+    })
+
+    return mapped
   }
 }
 

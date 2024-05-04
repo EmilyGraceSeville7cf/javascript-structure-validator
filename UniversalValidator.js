@@ -437,7 +437,6 @@ class UniversalValidator {
   preprocessValue_(value) {
     if (this.propertyPreprocessors_.length === 0)
       return value
-
     if (BasicUtils.isValidator(value) || value === true)
       return value
 
@@ -510,9 +509,10 @@ class UniversalValidator {
       /**
        * @type {Array.<PropertyPreprocessor>}
        */
-      this.propertyPreprocessors_ = [regexPreprocessor_, rangePreprocessor_, negativeRegexPreprocessor_, negativeRangePreprocessor_]
+      this.propertyPreprocessors_ = [regexPreprocessor_, enumPreprocessor_, rangePreprocessor_,
+        negativeRegexPreprocessor_, negativeEnumPreprocessor_, negativeRangePreprocessor_]
     } else {
-      const types = [...StringifiedTypes.baseTypeIdentifiers, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
+      const types = [...StringifiedTypes_.baseTypeIdentifiers_, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
 
       if (![JoinType.ANY_OF, JoinType.ONE_OF, JoinType.ALL_OF].includes(type))
         throw TypeError(`Value type expected to be a ${types.join(" | ")} value (actual value: ${type})`)
@@ -1201,7 +1201,7 @@ class UniversalValidator {
       input => {
         if (!this.isIterable_(input))
           return false
-        
+
         for (let item of input)
           if (!items.validate(item))
             return false
@@ -1512,7 +1512,9 @@ class UniversalValidator {
         for (let optionalProperty in properties) {
           let validator = properties[optionalProperty]
 
-          if (BasicUtils.isValidator(validator) && !validator.validate(input[optionalProperty]))
+          if (BasicUtils.isValidator(validator) &&
+            typeof input[optionalProperty] !== "undefined" &&
+            !validator.validate(input[optionalProperty]))
             return false
         }
 
