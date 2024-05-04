@@ -52,11 +52,22 @@ function str() {
  * @example
  * record({ name: str(), age: int() })
  * 
- * @param {Object.<string, UniversalValidator>} Record properties.
+ * @example
+ * record({ names: [str()] })
+ * 
+ * @param {Object.<string, UniversalValidator | Array.<UniversalValidator>>} properties Record properties.
  * 
  * @returns {UniversalValidator} The validator.
  */
 function record(properties) {
-  return isObject().withRequiredProperties(properties)
-    .withNotAdditionalProperties()
+  return isObject().withRequiredProperties(
+    ObjectUtils.mapProperties(properties, value => {
+      if (BasicUtils.isArray(value) && value.length === 1 && BasicUtils.isValidator(value[0]))
+        return isArray().withItems(value[0])
+      if (BasicUtils.isValidator(value))
+        return value
+      else
+        throw Error("Syntax expected to be {{validator}} /* for not array validators */ | [{{validator}}] /* for array validators */")
+    })
+  ).withNotAdditionalProperties()
 }

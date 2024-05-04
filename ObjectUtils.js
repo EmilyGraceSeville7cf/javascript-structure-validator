@@ -115,6 +115,28 @@ class ObjectUtils {
 
     return properties
   }
+
+  /**
+   * Map object's properties.
+   * 
+   * @param {object} value An object.
+   * @param {Converter} converter A converter.
+   * 
+   * @returns {object} A new object.
+  */
+  static mapProperties(object, converter) {
+    BasicUtils.requireObject(object, "object")
+    BasicUtils.requireFunction(converter, "converter")
+
+    const mapped = {}
+
+    Object.entries(object).forEach(pair => {
+      const [property, value] = pair
+      mapped[property] = converter(value)
+    })
+
+    return mapped
+  }
 }
 
 
