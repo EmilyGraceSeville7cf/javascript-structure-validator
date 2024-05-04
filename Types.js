@@ -53,6 +53,39 @@
  */
 
 /**
+ * A range.
+ * 
+ * @typedef Range
+ * 
+ * @property {number} [from] A lowest boundary.
+ * @property {number} [to] A highest boundary.
+ */
+
+/**
+ * A negative regular expression preprocessor input.
+ * 
+ * @typedef NegativeRegexPreprocessorInput
+ * 
+ * @property {RegExp} not A negated regular expression.
+ */
+
+/**
+ * A negative enum preprocessor input.
+ * 
+ * @typedef NegativeEnumPreprocessorInput
+ * 
+ * @property {Array} not A negated enum values.
+ */
+
+/**
+ * A negative range preprocessor input.
+ * 
+ * @typedef NegativeRangePreprocessorInput
+ * 
+ * @property {Range} not A negated range.
+ */
+
+/**
  * A schema join type.
  * 
  * @typedef JoinType_

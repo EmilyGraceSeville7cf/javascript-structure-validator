@@ -35,7 +35,7 @@ function regexPreprocessor_(regex) {
 }
 
 /**
- * @param {Array.<any>} values
+ * @param {Array} values
  * 
  * @returns {UniversalValidator}
  */
@@ -50,7 +50,7 @@ function enumPreprocessor_(values) {
 }
 
 /**
- * @param {Object.<string, number>} range
+ * @param {Range} range
  * 
  * @returns {UniversalValidator}
  */
@@ -80,7 +80,7 @@ function rangePreprocessor_(range) {
 }
 
 /**
- * @param {Object.<string, RegExp>} regexOptions
+ * @param {NegativeRegexPreprocessorInput} regexOptions
  * 
  * @returns {UniversalValidator}
  */
@@ -97,7 +97,7 @@ function negativeRegexPreprocessor_(regexOptions) {
 }
 
 /**
- * @param {object} valuesOptions
+ * @param {NegativeEnumPreprocessorInput} valuesOptions
  * 
  * @returns {UniversalValidator}
  */
@@ -114,7 +114,7 @@ function negativeEnumPreprocessor_(valuesOptions) {
 }
 
 /**
- * @param {object} rangeOptions
+ * @param {NegativeRangePreprocessorInput} rangeOptions
  * 
  * @returns {UniversalValidator}
  */

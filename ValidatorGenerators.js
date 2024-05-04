@@ -3,6 +3,9 @@ const BOTH_OR_NONE_BOUNDS_ERROR_MESSAGE_ = "Either both range bounds are undefin
 /**
  * Require value to be boolean.
  * 
+ * @example
+ * isBoolean()
+ * 
  * @returns {UniversalValidator} The validator.
  */
 function isBoolean() {
@@ -12,8 +15,11 @@ function isBoolean() {
 /**
  * Require value to be number.
  * 
- * @param {number} from A lowest boundary.
- * @param {number} to A highest boundary.
+ * @example
+ * isNumber()
+ * 
+ * @param {number | Range} [from] A lowest boundary.
+ * @param {number} [to] A highest boundary.
  * 
  * @returns {UniversalValidator} The validator.
  */
@@ -47,8 +53,11 @@ function isNumber(from, to) {
 /**
  * Require value to be integer.
  * 
- * @param {number} from A lowest boundary.
- * @param {number} to A highest boundary.
+ * @example
+ * isInteger()
+ * 
+ * @param {number | Range} [from] A lowest boundary.
+ * @param {number} [to] A highest boundary.
  *
  * @returns {UniversalValidator} The validator.
  */
@@ -82,8 +91,11 @@ function isInteger(from, to) {
 /**
  * Require value to be string.
  * 
- * @param {number} from A lowest boundary.
- * @param {number} to A highest boundary. 
+ * @example
+ * isString()
+ * 
+ * @param {number | Range} [from] A lowest boundary.
+ * @param {number} [to] A highest boundary. 
  *
  * @returns {UniversalValidator} The validator.
  */
@@ -117,8 +129,11 @@ function isString(from, to) {
 /**
  * Require value to be bigint.
  * 
- * @param {number} from A lowest boundary.
- * @param {number} to A highest boundary. 
+ * @example
+ * isBigint()
+ * 
+ * @param {number | Range} [from] A lowest boundary.
+ * @param {number} [to] A highest boundary. 
  * 
  * @returns {UniversalValidator} The validator.
  */
@@ -152,6 +167,9 @@ function isBigint(from, to) {
 /**
  * Require value to be symbol.
  * 
+ * @example
+ * isSymbol()
+ * 
  * @returns {UniversalValidator} The validator.
  */
 function isSymbol() {
@@ -161,8 +179,11 @@ function isSymbol() {
 /**
  * Require value to be array.
  * 
- * @param {number} from A lowest boundary.
- * @param {number} to A highest boundary.
+ * @example
+ * isArray()
+ * 
+ * @param {number | Range} [from] A lowest boundary.
+ * @param {number} [to] A highest boundary.
  * 
  * @returns {UniversalValidator} The validator.
  */
@@ -196,8 +217,11 @@ function isArray(from, to) {
 /**
  * Require value to be object.
  * 
- * @param {number} from A lowest boundary.
- * @param {number} to A highest boundary.
+ * @example
+ * isObject()
+ * 
+ * @param {number | Range} [from] A lowest boundary.
+ * @param {number} [to] A highest boundary.
  * 
  * @returns {UniversalValidator} The validator.
  */
@@ -231,6 +255,9 @@ function isObject(from, to) {
 /**
  * Require any of constraints to be satisfied.
  * 
+ * @example
+ * isAnyOf(isBoolean(), isInteger())
+ * 
  * @param {Array.<UniversalValidator>} validators Validators.
  * 
  * @returns {UniversalValidator} The validator.
@@ -241,6 +268,9 @@ function isAnyOf(...validators) {
 
 /**
  * Require one of constraints to be satisfied.
+ * 
+ * @example
+ * isAnyOf(isBoolean(), isInteger())
  * 
  * @param {Array.<UniversalValidator>} validators Validators.
  * 
