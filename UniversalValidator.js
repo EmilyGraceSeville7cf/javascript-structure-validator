@@ -512,7 +512,7 @@ class UniversalValidator {
       this.propertyPreprocessors_ = [regexPreprocessor_, enumPreprocessor_, rangePreprocessor_,
         negativeRegexPreprocessor_, negativeEnumPreprocessor_, negativeRangePreprocessor_]
     } else {
-      const types = [...StringifiedTypes.baseTypeIdentifiers, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
+      const types = [...StringifiedTypes_.baseTypeIdentifiers_, "JoinType.ANY_OF", "JoinType.ONE_OF", "JoinType.ALL_OF"]
 
       if (![JoinType.ANY_OF, JoinType.ONE_OF, JoinType.ALL_OF].includes(type))
         throw TypeError(`Value type expected to be a ${types.join(" | ")} value (actual value: ${type})`)

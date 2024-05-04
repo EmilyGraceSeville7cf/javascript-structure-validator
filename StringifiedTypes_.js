@@ -1,40 +1,32 @@
 /**
  * Stringified type representations.
  */
-class StringifiedTypes {
+class StringifiedTypes_ {
   /**
-   * Base supported types.
-   * 
    * @type {Array.<string>}
    */
-  static get baseTypes() {
+  static get baseTypes_() {
     return ["boolean", "number", "string", "bigint", "symbol", "object"]
   }
 
   /**
-   * Base supported comparable types.
-   * 
    * @type {Array.<string>}
    */
-  static get baseComparableTypes() {
+  static get baseComparableTypes_() {
     return ["boolean", "number", "string", "bigint", "symbol"]
   }
 
   /**
-   * Base supported type identifiers.
-   * 
    * @type {Array.<string>}
    */
-  static get baseTypeIdentifiers() {
+  static get baseTypeIdentifiers_() {
     return ["boolean", "number", "integer", "string", "bigint", "symbol", "array", "object"]
   }
 
   /**
-   * Base supported comparable type identifiers.
-   * 
    * @type {Array.<string>}
    */
-  static get baseComparableTypeIdentifiers() {
+  static get baseComparableTypeIdentifiers_() {
     return ["boolean", "number", "integer", "string", "bigint", "symbol"]
   }
 }

@@ -262,7 +262,7 @@ class BasicUtils {
    * @returns {boolean} Whether a `identifier` is a supported validator type identifier.
    */
   static isSupportedTypeIdentifier(identifier) {
-    return StringifiedTypes.baseTypeIdentifiers.includes(identifier)
+    return StringifiedTypes_.baseTypeIdentifiers_.includes(identifier)
   }
 
   /**
@@ -279,7 +279,7 @@ class BasicUtils {
    * @returns {boolean} Whether a `identifier` is a supported comparable validator type identifier.
    */
   static isComparableSupportedTypeIdentifier(identifier) {
-    return StringifiedTypes.baseComparableTypeIdentifiers.includes(identifier)
+    return StringifiedTypes_.baseComparableTypeIdentifiers_.includes(identifier)
   }
 
   /**
@@ -721,7 +721,7 @@ class BasicUtils {
    * @param {number} argumentIndex An argument index.
    */
   static requireSupported(value, argumentName, argumentIndex) {
-    this.requireTypeByPredicate_(this.isSupported, StringifiedTypes.baseTypes.join(" | "), value, argumentName, argumentIndex)
+    this.requireTypeByPredicate_(this.isSupported, StringifiedTypes_.baseTypes_.join(" | "), value, argumentName, argumentIndex)
   }
 
   /**
@@ -738,7 +738,7 @@ class BasicUtils {
    * @param {number} argumentIndex An argument index.
    */
   static requireComparableSupported(value, argumentName, argumentIndex) {
-    this.requireTypeByPredicate_(this.isComparableSupported, StringifiedTypes.baseComparableTypes.join(" | "), value, argumentName, argumentIndex)
+    this.requireTypeByPredicate_(this.isComparableSupported, StringifiedTypes_.baseComparableTypes_.join(" | "), value, argumentName, argumentIndex)
   }
 
   /**
@@ -755,7 +755,7 @@ class BasicUtils {
    * @param {number} argumentIndex An argument index.
    */
   static requireSupportedTypeIdentifier(identifier, argumentName, argumentIndex) {
-    this.requireTypeIdentifierByPredicate_(this.isSupportedTypeIdentifier, StringifiedTypes.baseTypeIdentifiers.join(" | "), identifier, argumentName, argumentIndex)
+    this.requireTypeIdentifierByPredicate_(this.isSupportedTypeIdentifier, StringifiedTypes_.baseTypeIdentifiers_.join(" | "), identifier, argumentName, argumentIndex)
   }
 
   /**
@@ -772,7 +772,7 @@ class BasicUtils {
    * @param {number} argumentIndex An argument index.
    */
   static requireComparableSupportedTypeIdentifier(identifier, argumentName, argumentIndex) {
-    this.requireTypeIdentifierByPredicate_(this.isComparableSupportedTypeIdentifier, StringifiedTypes.baseComparableTypeIdentifiers.join(" | "), identifier, argumentName, argumentIndex)
+    this.requireTypeIdentifierByPredicate_(this.isComparableSupportedTypeIdentifier, StringifiedTypes_.baseComparableTypeIdentifiers_.join(" | "), identifier, argumentName, argumentIndex)
   }
 
   /**
