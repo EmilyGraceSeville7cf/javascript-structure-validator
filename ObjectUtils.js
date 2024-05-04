@@ -40,7 +40,7 @@ class ObjectUtils {
    * 
    * @returns {any} A deep copy.
   */
-  static cloneWhenObject(value) {
+  static cloneWhenObject_(value) {
     if (typeof value === "object" && !Array.isArray(value))
       return this.clone(value)
     else
@@ -77,10 +77,10 @@ class ObjectUtils {
 
     for (const property in first)
       if (!second.hasOwnProperty(property))
-        result[property] = this.cloneWhenObject(first[property])
+        result[property] = this.cloneWhenObject_(first[property])
 
     for (const property in second) {
-      let temporary = this.cloneWhenObject(second[property])
+      let temporary = this.cloneWhenObject_(second[property])
 
       if (!first.hasOwnProperty(property)) {
         result[property] = temporary
