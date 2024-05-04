@@ -6,7 +6,7 @@
 class JSDocGenerator {
   /**
    * @param {object} value
-   * @param {string} prefix
+   * @param {string} [prefix=""]
    * 
    * @returns {Object.<string, any>}
    */
@@ -31,7 +31,7 @@ class JSDocGenerator {
 
   /**
    * @param {object} value
-   * @param {string} prefix
+   * @param {string} [prefix=""]
    * 
    * @returns {Object.<string, any>}
    */

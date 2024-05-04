@@ -112,7 +112,7 @@ class ObjectUtils {
    * getObjectUtils().propertyNames({ name: "Emily" })
    * 
    * @param {object} value An object.
-   * @param {string} prefix A prefix.
+   * @param {string} [prefix=""] A prefix.
    * 
    * @returns {Array.<string>} Property names.
   */
