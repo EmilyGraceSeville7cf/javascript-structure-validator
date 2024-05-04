@@ -8,6 +8,15 @@ function getBasicUtils() {
 }
 
 /**
+ * Return `ArrayUtils` class.
+ * 
+ * @returns {ArrayUtils}
+ */
+function getArrayUtils() {
+  return ArrayUtils
+}
+
+/**
  * Return `ObjectUtils` class.
  * 
  * @returns {ObjectUtils}
