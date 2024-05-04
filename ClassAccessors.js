@@ -1,6 +1,9 @@
 /**
  * Return `BasicUtils` class.
  * 
+ * @example
+ * getBasicUtils().isBoolean(true)
+ * 
  * @returns {BasicUtils}
  */
 function getBasicUtils() {
@@ -9,6 +12,9 @@ function getBasicUtils() {
 
 /**
  * Return `ArrayUtils` class.
+ * 
+ * @example
+ * getArrayUtils().equal([1], [1])
  * 
  * @returns {ArrayUtils}
  */
@@ -19,6 +25,9 @@ function getArrayUtils() {
 /**
  * Return `ObjectUtils` class.
  * 
+ * @example
+ * getObjectUtils().clone({ name: "Emily" })
+ * 
  * @returns {ObjectUtils}
  */
 function getObjectUtils() {
@@ -28,6 +37,9 @@ function getObjectUtils() {
 /**
  * Return `UniversalValidator` class.
  * 
+ * @example
+ * new (getUniversalValidator())("boolean")
+ * 
  * @returns {UniversalValidator}
  */
 function getUniversalValidator() {
@@ -36,6 +48,9 @@ function getUniversalValidator() {
 
 /**
  * Return `JSDocGenerator` class.
+ * 
+ * @example
+ * new (getJSDocGenerator())("Person", record({ name: str(), age: int() }))
  * 
  * @returns {JSDocGenerator}
  */
