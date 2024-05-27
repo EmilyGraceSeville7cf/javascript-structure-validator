@@ -20,9 +20,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isBoolean(true)
    * 
-   * @example
-   * getBasicUtils().isBoolean(true)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a boolean value.
@@ -36,9 +33,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isNumber(1)
-   * 
-   * @example
-   * getBasicUtils().isNumber(1)
    * 
    * @param {any} [value] A value.
    * 
@@ -54,9 +48,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isInteger(1)
    * 
-   * @example
-   * getBasicUtils().isInteger(1)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is an integer value.
@@ -70,9 +61,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isString("Emily")
-   * 
-   * @example
-   * getBasicUtils().isString("Emily")
    * 
    * @param {any} [value] A value.
    * 
@@ -88,9 +76,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isBigint(9007199254740991n)
    * 
-   * @example
-   * getBasicUtils().isBigint(9007199254740991n)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a bigint value.
@@ -104,9 +89,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isSymbol(Symbol())
-   * 
-   * @example
-   * getBasicUtils().isSymbol(Symbol())
    * 
    * @param {any} [value] A value.
    * 
@@ -122,9 +104,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isArray([1])
    * 
-   * @example
-   * getBasicUtils().isArray([1])
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is an array value.
@@ -138,9 +117,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isObject({ name: "Emily" })
-   * 
-   * @example
-   * getBasicUtils().isObject({ name: "Emily" })
    * 
    * @param {any} [value] A value.
    * 
@@ -156,9 +132,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isRegExp(/name/)
    * 
-   * @example
-   * getBasicUtils().isRegExp(/name/)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a regular expression.
@@ -172,9 +145,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isFunction(() => console.log("Emily"))
-   * 
-   * @example
-   * getBasicUtils().isFunction(() => console.log("Emily"))
    * 
    * @param {any} [value] A value.
    * 
@@ -190,9 +160,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isExisting(true)
    * 
-   * @example
-   * getBasicUtils().isExisting(true)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a not null or undefined value.
@@ -206,9 +173,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isSupported(true)
-   * 
-   * @example
-   * getBasicUtils().isSupported(true)
    * 
    * @param {any} [value] A value.
    * 
@@ -231,9 +195,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isComparableSupported(true)
    * 
-   * @example
-   * getBasicUtils().isComparableSupported(true)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a supported comparable validator type value.
@@ -254,9 +215,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isSupportedTypeIdentifier("boolean")
    * 
-   * @example
-   * getBasicUtils().isSupportedTypeIdentifier("boolean")
-   * 
    * @param {any} [identifier] An identifier.
    * 
    * @returns {boolean} Whether a `identifier` is a supported validator type identifier.
@@ -270,9 +228,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isComparableSupportedTypeIdentifier("boolean")
-   * 
-   * @example
-   * getBasicUtils().isComparableSupportedTypeIdentifier("boolean")
    * 
    * @param {any} [identifier] An identifier.
    * 
@@ -288,9 +243,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isValidator(isBoolean())
    * 
-   * @example
-   * getBasicUtils().isValidator(isBoolean())
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a validator value.
@@ -304,9 +256,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isBooleanOrUndefined(true)
-   * 
-   * @example
-   * getBasicUtils().isBooleanOrUndefined(true)
    * 
    * @param {any} [value] A value.
    * 
@@ -322,9 +271,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isNumberOrUndefined(1)
    * 
-   * @example
-   * getBasicUtils().isNumberOrUndefined(1)
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a number value or undefined.
@@ -338,9 +284,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isIntegerOrUndefined(1)
-   * 
-   * @example
-   * getBasicUtils().isIntegerOrUndefined(1)
    * 
    * @param {any} [value] A value.
    * 
@@ -356,9 +299,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isStringOrUndefined("Emily")
    * 
-   * @example
-   * getBasicUtils().isStringOrUndefined("Emily")
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a string value or undefined.
@@ -372,9 +312,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isBigintOrUndefined(9007199254740991n)
-   * 
-   * @example
-   * getBasicUtils().isBigintOrUndefined(9007199254740991n)
    * 
    * @param {any} [value] A value.
    * 
@@ -390,9 +327,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isSymbolOrUndefined(Symbol())
    * 
-   * @example
-   * getBasicUtils().isSymbolOrUndefined(Symbol())
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a symbol value or undefined.
@@ -406,9 +340,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isArrayOrUndefined([1])
-   * 
-   * @example
-   * getBasicUtils().isArrayOrUndefined([1])
    * 
    * @param {any} [value] A value.
    * 
@@ -424,9 +355,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isObjectOrUndefined({ name: "Emily" })
    * 
-   * @example
-   * getBasicUtils().isObjectOrUndefined({ name: "Emily" })
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is an object value or undefined.
@@ -440,9 +368,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isRegExpOrUndefined(/name/)
-   * 
-   * @example
-   * getBasicUtils().isRegExpOrUndefined(/name/)
    * 
    * @param {any} [value] A value.
    * 
@@ -458,9 +383,6 @@ class BasicUtils {
    * @example
    * BasicUtils.isFunctionOrUndefined(() => console.log("Emily"))
    * 
-   * @example
-   * getBasicUtils().isFunctionOrUndefined(() => console.log("Emily"))
-   * 
    * @param {any} [value] A value.
    * 
    * @returns {boolean} Whether a `value` is a function or undefined.
@@ -474,9 +396,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.isValidatorOrUndefined(isBoolean())
-   * 
-   * @example
-   * getBasicUtils().isValidatorOrUndefined(isBoolean())
    * 
    * @param {any} [value] A value.
    * 
@@ -526,9 +445,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireBoolean(true, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireBoolean(true, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -542,9 +458,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireNumber(1, "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireNumber(1, "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -560,9 +473,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireInteger(1, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireInteger(1, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -576,9 +486,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireString("Emily", "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireString("Emily", "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -594,9 +501,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireBigint(9007199254740991n, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireBigint(9007199254740991n, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -610,9 +514,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireSymbol(Symbol(), "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireSymbol(Symbol(), "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -628,9 +529,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireArray([1], "parameter")
    * 
-   * @example
-   * getBasicUtils().requireArray([1], "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -644,9 +542,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireObject({ name: "Emily" }, "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireObject({ name: "Emily" }, "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -662,9 +557,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireRegExp(/name/, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireRegExp(/name/, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -678,9 +570,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireFunction(() => console.log("Emily"), "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireFunction(() => console.log("Emily"), "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -696,9 +585,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireExisting(true, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireExisting(true, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -712,9 +598,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireSupported(true, "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireSupported(true, "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -730,9 +613,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireComparableSupported(true, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireComparableSupported(true, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -746,9 +626,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireSupportedTypeIdentifier("boolean", "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireSupportedTypeIdentifier("boolean", "parameter")
    * 
    * @param {any} identifier An identifier.
    * @param {string} argumentName An argument name.
@@ -764,9 +641,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireComparableSupportedTypeIdentifier("boolean", "parameter")
    * 
-   * @example
-   * getBasicUtils().requireComparableSupportedTypeIdentifier("boolean", "parameter")
-   * 
    * @param {any} identifier An identifier.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -780,9 +654,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireValidator(isBoolean(), "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireValidator(isBoolean(), "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -798,9 +669,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireBooleanOrUndefined(true, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireBooleanOrUndefined(true, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -814,9 +682,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireNumberOrUndefined(1, "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireNumberOrUndefined(1, "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -832,9 +697,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireIntegerOrUndefined(1, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireIntegerOrUndefined(1, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -848,9 +710,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireStringOrUndefined("Emily", "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireStringOrUndefined("Emily", "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -866,9 +725,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireBigintOrUndefined(9007199254740991n, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireBigintOrUndefined(9007199254740991n, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -882,9 +738,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireSymbolOrUndefined(Symbol(), "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireSymbolOrUndefined(Symbol(), "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -900,9 +753,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireArrayOrUndefined([1], "parameter")
    * 
-   * @example
-   * getBasicUtils().requireArrayOrUndefined([1], "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -916,9 +766,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireObjectOrUndefined({ name: "Emily" }, "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireObjectOrUndefined({ name: "Emily" }, "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
@@ -934,9 +781,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireRegExpOrUndefined(/name/, "parameter")
    * 
-   * @example
-   * getBasicUtils().requireRegExpOrUndefined(/name/, "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -951,9 +795,6 @@ class BasicUtils {
    * @example
    * BasicUtils.requireFunctionOrUndefined(() => console.log("Emily"), "parameter")
    * 
-   * @example
-   * getBasicUtils().requireFunctionOrUndefined(() => console.log("Emily"), "parameter")
-   * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
    * @param {number} argumentIndex An argument index.
@@ -967,9 +808,6 @@ class BasicUtils {
    * 
    * @example
    * BasicUtils.requireValidatorOrUndefined(isBoolean(), "parameter")
-   * 
-   * @example
-   * getBasicUtils().requireValidatorOrUndefined(isBoolean(), "parameter")
    * 
    * @param {any} [value=undefined] A value.
    * @param {string} argumentName An argument name.
