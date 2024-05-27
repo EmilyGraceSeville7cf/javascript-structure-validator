@@ -468,6 +468,9 @@ class UniversalValidator {
   }
 
   /**
+   * @example
+   * isBoolean()
+   * 
    * @param {BaseType | JoinType_} type A type.
    */
   constructor(type) {
@@ -536,6 +539,9 @@ class UniversalValidator {
   /**
    * A description.
    * 
+   * @example
+   * isBoolean().withDescription("Whether to remove .exe after compilation").descriptionData
+   * 
    * @type {string}
    */
   get descriptionData() {
@@ -544,6 +550,9 @@ class UniversalValidator {
 
   /**
    * Whether validator contains nested anyOf|oneOf|allOf validators.
+   * 
+   * @example
+   * isAnyOf(isInteger(), isBoolean()).containsNestedValidators
    * 
    * @type {boolean}
    */
@@ -554,6 +563,9 @@ class UniversalValidator {
   /**
    * Expected types.
    * If nested validators contain just nested validators an empty array is returned.
+   * 
+   * @example
+   * isAnyOf(isInteger(), isBoolean()).typesData
    * 
    * @type {Array.<string>}
    */
@@ -569,6 +581,9 @@ class UniversalValidator {
 
   /**
    * Expected JS types.
+   * 
+   * @example
+   * isAnyOf(isInteger(), isBoolean()).jsTypesData
    * 
    * @type {Array.<string>}
    */
@@ -617,6 +632,12 @@ class UniversalValidator {
   /**
    * Required properties.
    * 
+   * @example
+   * record({
+   *   name: isString(),
+   *   age: isInteger()
+   * }).requiredPropertiesData
+   * 
    * @type {object}
    */
   get requiredPropertiesData() {
@@ -642,6 +663,12 @@ class UniversalValidator {
   /**
    * An optional properties tree.
    * 
+   * @example
+   * isObject().withOptionalProperties({
+   *   name: isString(),
+   *   age: isInteger()
+   * }).optionalPropertiesData
+   *  
    * @type {object}
    */
   get optionalPropertiesData() {
@@ -667,6 +694,12 @@ class UniversalValidator {
   /**
    * Required property's descriptions.
    * 
+   * @example
+   * record({
+   *   name: isString().withDescription("A name"),
+   *   age: isInteger().withDescription("An age")
+   * }).requiredPropertiesDescriptionsData
+   * 
    * @type {object}
    */
   get requiredPropertiesDescriptionsData() {
@@ -682,6 +715,12 @@ class UniversalValidator {
   /**
    * Optional property's descriptions.
    * 
+   * @example
+   * isObject().withOptionalProperties({
+   *   name: isString().withDescription("A name"),
+   *   age: isInteger().withDescription("An age")
+   * }).optionalPropertiesDescriptionsData
+   * 
    * @type {object}
    */
   get optionalPropertiesDescriptionsData() {
@@ -696,6 +735,9 @@ class UniversalValidator {
 
   /**
    * Clone the current validator.
+   * 
+   * @example
+   * isBoolean().clone()
    * 
    * @returns {UniversalValidator} A validator clone.
    */
@@ -716,6 +758,9 @@ class UniversalValidator {
   /**
    * Add a description.
    * 
+   * @example
+   * isBoolean().withDescription("Whether to remove .exe after compilation")
+   * 
    * @param {string} description A description.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -731,6 +776,9 @@ class UniversalValidator {
 
   /**
    * Add a default value.
+   * 
+   * @example
+   * isBoolean().withDefault(true)
    * 
    * @param {string} value A default value.
    * 
@@ -748,6 +796,9 @@ class UniversalValidator {
 
   /**
    * Require value to be less than a constant.
+   * 
+   * @example
+   * isNumber().lessThan(0)
    * 
    * @param {BaseComparableType} constant A constant.
    * 
@@ -772,6 +823,9 @@ class UniversalValidator {
   /**
    * Require value to be greater than a constant.
    * 
+   * @example
+   * isNumber().greaterThan(0)
+   * 
    * @param {BaseComparableType} constant A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -794,6 +848,9 @@ class UniversalValidator {
 
   /**
    * Require value to be less than or equal to a constant.
+   * 
+   * @example
+   * isNumber().lessThanOrEqualTo(0)
    * 
    * @param {BaseComparableType} constant A constant.
    * 
@@ -818,6 +875,9 @@ class UniversalValidator {
   /**
    * Require value to be greater than or equal to a constant.
    * 
+   * @example
+   * isNumber().greaterThanOrEqualTo(0)
+   * 
    * @param {BaseComparableType} constant A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -840,6 +900,9 @@ class UniversalValidator {
 
   /**
    * Require value to be equal to a constant.
+   * 
+   * @example
+   * isNumber().equalTo(0)
    * 
    * @param {BaseComparableType} constant A constant.
    * 
@@ -864,6 +927,9 @@ class UniversalValidator {
   /**
    * Require value to be not equal to a constant.
    * 
+   * @example
+   * isNumber().notEqualTo(0)
+   * 
    * @param {BaseComparableType} constant A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -882,6 +948,9 @@ class UniversalValidator {
 
   /**
    * Require value to be within a range.
+   * 
+   * @example
+   * isNumber().inRange(0, 10)
    * 
    * @param {BaseComparableType} from A lowest boundary.
    * @param {BaseComparableType} to A highest boundary.
@@ -912,6 +981,9 @@ class UniversalValidator {
   /**
    * Require value to be outside of a range.
    * 
+   * @example
+   * isNumber().notInRange(0, 10)
+   * 
    * @param {BaseComparableType} from A lowest boundary.
    * @param {BaseComparableType} to A highest boundary.
    * 
@@ -934,6 +1006,9 @@ class UniversalValidator {
   /**
    * Require value to be equal to one of constants.
    * 
+   * @example
+   * isNumber().withValueOneOf(0, 2, 4)
+   * 
    * @param {Array} constants Constants.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -954,6 +1029,9 @@ class UniversalValidator {
   /**
    * Require value to be not equal to one of constants.
    * 
+   * @example
+   * isNumber().withValueNotOneOf(0, 2, 4)
+   * 
    * @param {Array} constants Constants.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -973,6 +1051,9 @@ class UniversalValidator {
 
   /**
    * Require length to be shorter than a constant.
+   * 
+   * @example
+   * isString().withLengthLessThan(5)
    * 
    * @param {number} count A constant.
    * 
@@ -995,6 +1076,9 @@ class UniversalValidator {
   /**
    * Require length to be longer than a constant.
    * 
+   * @example
+   * isString().withLengthGreaterThan(5)
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1015,6 +1099,9 @@ class UniversalValidator {
 
   /**
    * Require length to be shorter than or is a constant.
+   * 
+   * @example
+   * isString({ to: 5 })
    * 
    * @param {number} count A constant.
    * 
@@ -1037,6 +1124,9 @@ class UniversalValidator {
   /**
    * Require length to be longer than or is a constant.
    * 
+   * @example
+   * isString({ from: 5 })
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1057,6 +1147,9 @@ class UniversalValidator {
 
   /**
    * Require length to be equal to a constant.
+   * 
+   * @example
+   * isString(5)
    * 
    * @param {number} count A constant.
    * 
@@ -1079,6 +1172,9 @@ class UniversalValidator {
   /**
    * Require length not to be equal to a constant.
    * 
+   * @example
+   * isString().withLengthNotEqualTo(5)
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1098,6 +1194,9 @@ class UniversalValidator {
 
   /**
    * Require length to be within a range.
+   * 
+   * @example
+   * isString(1, 5)
    * 
    * @param {number} from A lowest boundary.
    * @param {number} to A highest boundary.
@@ -1121,6 +1220,9 @@ class UniversalValidator {
   /**
    * Require length to be outside of a range.
    * 
+   * @example
+   * isString().withLengthNotInRange(1, 5)
+   * 
    * @param {number} from A lowest boundary.
    * @param {number} to A highest boundary.
    * 
@@ -1141,6 +1243,9 @@ class UniversalValidator {
 
   /**
    * Require value to match a regular expression.
+   * 
+   * @example
+   * isString().matching(/Emily/)
    * 
    * @param {RegExp} regex A regular expression.
    * 
@@ -1163,6 +1268,9 @@ class UniversalValidator {
   /**
    * Require value not to match a regular expression.
    * 
+   * @example
+   * isString().notMatching(/Emily/)
+   * 
    * @param {RegExp} regex A regular expression.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1182,6 +1290,9 @@ class UniversalValidator {
 
   /**
    * Require items to satisfy their constraints.
+   * 
+   * @example
+   * isArray().withItems(isBoolean())
    * 
    * @param {UniversalValidator} items Constraints.
    * 
@@ -1215,6 +1326,9 @@ class UniversalValidator {
   /**
    * Require item count to be less than a constant.
    * 
+   * @example
+   * isArray().withItemCountLessThan(5)
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1235,6 +1349,9 @@ class UniversalValidator {
 
   /**
    * Require item count to be greater than a constant.
+   * 
+   * @example
+   * isArray().withItemCountGreaterThan(5)
    * 
    * @param {number} count A constant.
    * 
@@ -1257,6 +1374,9 @@ class UniversalValidator {
   /**
    * Require item count to be less than or equal to a constant.
    * 
+   * @example
+   * isArray({ to: 5 })
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1277,6 +1397,9 @@ class UniversalValidator {
 
   /**
    * Require item count to be greater than or equal to a constant.
+   * 
+   * @example
+   * isArray({ from: 5 })
    * 
    * @param {number} count A constant.
    * 
@@ -1299,6 +1422,9 @@ class UniversalValidator {
   /**
    * Require item count to be equal to a constant.
    * 
+   * @example
+   * isArray(5)
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1320,6 +1446,9 @@ class UniversalValidator {
   /**
    * Require item count not to be equal to a constant.
    * 
+   * @example
+   * isArray().withItemCountNotEqualTo(5)
+   * 
    * @param {number} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1339,6 +1468,9 @@ class UniversalValidator {
 
   /**
    * Require length to be within a range.
+   * 
+   * @example
+   * isArray(1, 5)
    * 
    * @param {number} from A lowest boundary.
    * @param {number} to A highest boundary.
@@ -1362,6 +1494,9 @@ class UniversalValidator {
   /**
    * Require length to be outside of a range.
    * 
+   * @example
+   * isArray().withItemCountNotInRange(1, 5)
+   * 
    * @param {number} from A lowest boundary.
    * @param {number} to A highest boundary.
    * 
@@ -1384,6 +1519,9 @@ class UniversalValidator {
    * Inject specified property preprocessors which are used to convert arbitrary values to validators in
    * `withRequiredProperties` and `withOptionalProperties` methods.
    * 
+   * @example
+   * record({ pattern: "*" }).withPropertyPreprocessors(globPreprocessor)
+   * 
    * @param {Array.<PropertyPreprocessor>} preprocessors Property preprocessors.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1404,6 +1542,9 @@ class UniversalValidator {
    * Inject specified property preprocessors which are used to convert arbitrary values to validators in
    * `withRequiredProperties` and `withOptionalProperties` methods.
    * 
+   * @example
+   * record({ pattern: "*" }).withAddedPropertyPreprocessors(globPreprocessor)
+   * 
    * @param {Array.<PropertyPreprocessor>} preprocessors Property preprocessors.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1421,7 +1562,10 @@ class UniversalValidator {
   }
 
   /**
-   * Disable property preprocessors
+   * Disable property preprocessors.
+   * 
+   * @example
+   * record({ name: isString() }).withNotPropertyPreprocessors()
    * 
    * @returns {UniversalValidator} The current validator.
    */
@@ -1437,6 +1581,12 @@ class UniversalValidator {
 
   /**
    * Require specified properties.
+   * 
+   * @example
+   * record({
+   *   name: isString(),
+   *   age: isInteger()
+   * })
    * 
    * @param {Object.<string, UniversalValidator>} properties A constraint.
    * 
@@ -1483,6 +1633,12 @@ class UniversalValidator {
   /**
    * Permit specified optional properties.
    * 
+   * @example
+   * isObject().withOptionalProperties({
+   *   name: isString(),
+   *   age: isInteger()
+   * })
+   * 
    * @param {Object.<string, UniversalValidator>} properties A constraint.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1528,6 +1684,9 @@ class UniversalValidator {
   /**
    * Permit additional properties.
    * 
+   * @example
+   * isObject().withAdditionalProperties(isBoolean())
+   * 
    * @param {UniversalValidator} properties A constraint.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1560,6 +1719,12 @@ class UniversalValidator {
   /**
    * Require no additional properties.
    * 
+   * @example
+   * record({
+   *   name: isString(),
+   *   age: isInteger()
+   * })
+   * 
    * @returns {UniversalValidator} The current validator.
    */
   withNotAdditionalProperties() {
@@ -1589,6 +1754,9 @@ class UniversalValidator {
   /**
    * Require property amount to be less than a constant.
    * 
+   * @example
+   * isObject().withPropertyCountLessThan(5)
+   * 
    * @param {BaseComparableType} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1609,6 +1777,9 @@ class UniversalValidator {
 
   /**
    * Require property amount to be greater than a constant.
+   * 
+   * @example
+   * isObject().withPropertyCountGreaterThan(5)
    * 
    * @param {BaseComparableType} count A constant.
    * 
@@ -1631,6 +1802,9 @@ class UniversalValidator {
   /**
    * Require property amount to be less than or equal to a constant.
    * 
+   * @example
+   * isObject({ to: 5 })
+   * 
    * @param {BaseComparableType} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1651,6 +1825,9 @@ class UniversalValidator {
 
   /**
    * Require property amount to be greater than or equal to a constant.
+   * 
+   * @example
+   * isObject({ from: 5 })
    * 
    * @param {BaseComparableType} count A constant.
    * 
@@ -1673,6 +1850,9 @@ class UniversalValidator {
   /**
    * Require property amount to be equal to a constant.
    * 
+   * @example
+   * isObject(5)
+   * 
    * @param {BaseComparableType} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1694,6 +1874,9 @@ class UniversalValidator {
   /**
    * Require property amount not to be equal to a constant.
    * 
+   * @example
+   * isObject().withPropertyCountNotEqualTo(5)
+   * 
    * @param {BaseComparableType} count A constant.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1713,6 +1896,9 @@ class UniversalValidator {
 
   /**
    * Require property amount to be within a range.
+   * 
+   * @example
+   * isObject(1, 5)
    * 
    * @param {number} from A lowest boundary.
    * @param {number} to A highest boundary.
@@ -1739,6 +1925,9 @@ class UniversalValidator {
   /**
    * Require property amount to be outside of a range.
    * 
+   * @example
+   * isObject().withPropertyCountNotInRange(1, 5)
+   * 
    * @param {number} from A lowest boundary.
    * @param {number} to A highest boundary.
    * 
@@ -1763,6 +1952,8 @@ class UniversalValidator {
   /**
    * Require property relationships.
    * 
+   * @deprecated Use `whereValue` instead.
+   * 
    * @param {WherePredicate} predicate A predicate.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1784,6 +1975,9 @@ class UniversalValidator {
   /**
    * Require value constraints.
    * 
+   * @example
+   * isInteger().whereValue(value => value % 2 === 0)
+   * 
    * @param {Predicate} predicate A predicate.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1804,6 +1998,9 @@ class UniversalValidator {
   /**
    * Require specified nested validators.
    * 
+   * @example
+   * isAnyOf(isInteger(), isBoolean())
+   * 
    * @param {Array.<UniversalValidator>} nestedValidators Nested validators.
    * 
    * @returns {UniversalValidator} The current validator.
@@ -1819,6 +2016,9 @@ class UniversalValidator {
 
   /**
    * Check whether an input value satisfies all conditions.
+   * 
+   * @example
+   * checkWhether(true, isBoolean())
    * 
    * @param {any} input An input to validate.
    * 
@@ -1845,6 +2045,9 @@ class UniversalValidator {
   /**
    * Converts object to string.
    * 
+   * @example
+   * isBoolean().toString()
+   * 
    * @returns {string} A string representation.
    */
   toString() {
@@ -1853,6 +2056,9 @@ class UniversalValidator {
 
   /**
    * Convert object to JSON schema (draft 07) representation.
+   * 
+   * @example
+   * isBoolean().toJSONSchema()
    * 
    * @returns {object} JSON schema (draft 07) representation.
    */
