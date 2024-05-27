@@ -8,9 +8,6 @@ class ArrayUtils {
    * @example
    * ArrayUtils.equal([1], [1])
    * 
-   * @example
-   * getArrayUtils().equal([1], [1])
-   * 
    * @param {Array} first A first array.
    * @param {Array} second A second array.
    * 

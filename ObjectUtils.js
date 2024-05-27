@@ -8,9 +8,6 @@ class ObjectUtils {
    * @example
    * ObjectUtils.clone({ name: "Emily" })
    * 
-   * @example
-   * getObjectUtils().clone({ name: "Emily" })
-   * 
    * @param {object} value An object.
    * 
    * @returns {object} A deep copy.
@@ -52,9 +49,6 @@ class ObjectUtils {
    * 
    * @example
    * ObjectUtils.merge({ name: "Emily" }, { age: 28 })
-   * 
-   * @example
-   * getObjectUtils().merge({ name: "Emily" }, { age: 28 })
    * 
    * @param {object} first A first object.
    * @param {object} second A second object.
@@ -108,9 +102,6 @@ class ObjectUtils {
    * @example
    * ObjectUtils.propertyNames({ name: "Emily" })
    * 
-   * @example
-   * getObjectUtils().propertyNames({ name: "Emily" })
-   * 
    * @param {object} value An object.
    * @param {string} [prefix=""] A prefix.
    * 
@@ -139,9 +130,6 @@ class ObjectUtils {
    * 
    * @example
    * ObjectUtils.mapProperties({ age: 24 }, value => value + 1)
-   * 
-   * @example
-   * getObjectUtils().mapProperties({ age: 24 }, value => value + 1)
    * 
    * @param {object} value An object.
    * @param {Converter} converter A converter.
