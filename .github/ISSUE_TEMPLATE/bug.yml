@@ -1,0 +1,26 @@
+name: Bug report
+description: A bug report
+labels: ["bug"]
+assignees: ["EmilyGraceSeville7cf"]
+
+body:
+  - type: textarea
+    attributes:
+      label: What happened?
+      description: Explain what happened.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: What was expected?
+      description: Explain what was expected.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: How to reproduce?
+      description: Explain step-by-step way to reproduce an issue.
+    validations:
+      required: true
