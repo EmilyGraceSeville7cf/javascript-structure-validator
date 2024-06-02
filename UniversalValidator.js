@@ -742,15 +742,23 @@ class UniversalValidator {
    * @returns {UniversalValidator} A validator clone.
    */
   clone() {
-    let validator = new UniversalValidator(this.validatorType_)
-    validator.alreadyInvoked_ = new Set(this.alreadyInvoked_)
+    let validator = new UniversalValidator(typeof this.validatorType_ !== "undefined" ? this.validatorType_ : this.mode_)
+
     validator.actions_ = Array.from(this.actions_)
+
     validator.requiredProperties_ = Array.from(this.requiredProperties_)
     validator.optionalProperties_ = Array.from(this.optionalProperties_)
+
+    validator.requiredPropertiesValidators_ = { ...this.requiredPropertiesValidators_ }
+    validator.optionalPropertiesValidators_ = { ...this.optionalPropertiesValidators_ }
+
     validator.minimumExample_ = this.minimumExample_
     validator.maximumExample_ = this.maximumExample_
-    validator.description_ = this.description_
     validator.default_ = this.default_
+    validator.itemValidator_ = this.itemValidator_
+    validator.propertyPreprocessors_ = Array.from(this.propertyPreprocessors_)
+
+    validator.mode_ = this.mode_
 
     return validator
   }
