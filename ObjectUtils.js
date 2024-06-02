@@ -149,6 +149,32 @@ class ObjectUtils {
 
     return mapped
   }
+
+  /**
+   * Filter object's properties.
+   * 
+   * @example
+   * ObjectUtils.filterProperties({ age: 24 }, value => value > 20)
+   * 
+   * @param {object} value An object.
+   * @param {Predicate} predicate A converter.
+   * 
+   * @returns {object} A new object.
+  */
+  static filterProperties(object, predicate) {
+    BasicUtils.requireObject(object, "object")
+    BasicUtils.requireFunction(predicate, "predicate")
+
+    const filtered = {}
+
+    Object.entries(object).forEach(pair => {
+      const [property, value] = pair
+      if (predicate(value))
+        filtered[property] = value
+    })
+
+    return filtered
+  }
 }
 
 
