@@ -1,5 +1,7 @@
 # Structure validator
 
+> :warning: Project is not accepting any new features, just bug fixes are considered.
+
 [![documentation](https://img.shields.io/badge/Documentation-open-blue)](./Documentation.md)
 [![editor](https://img.shields.io/badge/Web%20editor-open-red)](https://script.google.com/d/1qEHq1x99G4OOAWbchj3emkcBk3bgdOWvMrzqp597FxHS_8mezPm9X18F/edit?usp=sharing)
 [![group](https://img.shields.io/badge/Group-open-white)](https://groups.google.com/g/javascript-structure-validator)
